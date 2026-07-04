@@ -50,7 +50,7 @@ export default function Footer() {
             </h3>
             <div className="font-mono tracking-[0.3em] text-xl mb-6 shimmer-text">恋殇</div>
             <p className="text-gray-600 leading-relaxed">
-              独立创作者，专注平面设计、摄影与游戏策划。以简洁克制的视觉语言，为品牌与项目提供创意解决方案。
+              集游戏项目管理、视觉创作、桌面运维能力于一体的复合型从业者。深耕音游赛道，拥有原创项目从 0 到 1 全周期 PM 经验，可统筹多管线与外包资源，主导项目 TapTap 预约 10w+；精通 Blender、PR、AE，覆盖商业摄影、平面设计、3D 美术全链路，服务广电、酒店、游戏等多领域客户；具备硬件采购 - 部署 - 运维全流程桌面运维能力，累计管理终端 110 + 台，硬件兼容故障率 0%。跨领域适配性强，执行力突出，可高效支撑项目全链路落地
             </p>
           </div>
 
