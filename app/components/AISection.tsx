@@ -137,14 +137,14 @@ export default function AISection() {
 
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="border-2 border-gray-200 p-6 bg-white">
-                  <div className="text-xs font-mono text-gray-500 mb-2">参与项目</div>
+                  <div className="text-xs font-mono text-gray-500 mb-2">参与小项目</div>
                   <div className="text-3xl font-mono font-bold">8+</div>
                   <div className="text-xs text-gray-500">独立 / 商业</div>
                 </div>
                 <div className="border-2 border-gray-200 p-6 bg-white">
-                  <div className="text-xs font-mono text-gray-500 mb-2">设计文档</div>
+                  <div className="text-xs font-mono text-gray-500 mb-2">设计素材</div>
                   <div className="text-3xl font-mono font-bold">50+</div>
-                  <div className="text-xs text-gray-500">策划案</div>
+                  <div className="text-xs text-gray-500">素材量</div>
                 </div>
               </div>
             </div>
