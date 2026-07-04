@@ -52,6 +52,14 @@ export default function OpsSection() {
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">运维</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand" />
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">桌面运维 · 保障设备与系统稳定高效运行</p>
+          <div className="text-gray-400 max-w-3xl mx-auto mt-8 space-y-4 text-sm font-light leading-relaxed text-left sm:text-center">
+            <p>
+              桌面运维负责人，主导公司内部办公设备与终端系统的全量运维管理工作，确保设备与网络的稳定高效。
+            </p>
+            <p>
+              累计服务 4 家企业，覆盖文旅、商业零售、文化传媒多场景，具备硬件采购选型 — 终端部署交付 — 日常运维保障 — 资产台账管理全链路能力。全量运维管理终端设备 110 + 台，服务内部员工 150 + 人，累计承接技术支持与售后保障服务 4000 + 人次；独立主导 2 项终端批量采购与标准化部署项目，累计采购管控电脑整机及配件 50 + 套，全流程把控需求调研、选型比价、成本管控、验收入库环节，最终实现硬件兼容故障率降至 0%，单次故障处理效率提升 30%，终端整体故障率下降 40%
+            </p>
+          </div>
         </Reveal>
 
         {/* live metrics bar */}
@@ -78,18 +86,6 @@ export default function OpsSection() {
               </Reveal>
             )
           })}
-        </div>
-
-        {/* detailed description */}
-        <div className="mb-16">
-          <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-            <div className="mb-4">
-              桌面运维负责人，主导公司内部办公设备与终端系统的全量运维管理工作，确保设备与网络的稳定高效。
-            </div>
-            <div className="text-sm font-light leading-relaxed px-7">
-              累计服务 4 家企业，覆盖文旅、商业零售、文化传媒多场景，具备硬件采购选型 — 终端部署交付 — 日常运维保障 — 资产台账管理全链路能力。全量运维管理终端设备 110 + 台，服务内部员工 150 + 人，累计承接技术支持与售后保障服务 4000 + 人次；独立主导 2 项终端批量采购与标准化部署项目，累计采购管控电脑整机及配件 50 + 套，全流程把控需求调研、选型比价、成本管控、验收入库环节，最终实现硬件兼容故障率降至 0%，单次故障处理效率提升 30%，终端整体故障率下降 40%
-            </div>
-          </p>
         </div>
 
         {/* service cards */}
