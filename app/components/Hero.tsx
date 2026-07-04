@@ -1,13 +1,14 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import CountUp from "./CountUp"
-import ParticleGlobe from "./ParticleGlobe"
+import ParticleLogo from "./ParticleLogo"
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
 
 export default function Hero() {
   const [progress, setProgress] = useState(0)
+  const tiltRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let raf = 0
@@ -26,9 +27,35 @@ export default function Hero() {
     }
   }, [])
 
-  // 向下滑动：地球逐渐放大并淡出，仿佛穿越进入地球
-  const globeScale = 1 + progress * 2.4
-  const globeOpacity = clamp(1 - progress * 1.5, 0, 1)
+  // 鼠标晃动时文案轻微 3D 视差（幅度很小，保持可读）
+  useEffect(() => {
+    const el = tiltRef.current
+    if (!el) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    let raf = 0
+    let tx = 0
+    let ty = 0
+    const onMove = (e: MouseEvent) => {
+      const nx = (e.clientX / window.innerWidth) * 2 - 1
+      const ny = (e.clientY / window.innerHeight) * 2 - 1
+      tx = -ny * 7
+      ty = nx * 7
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `rotateX(${tx.toFixed(2)}deg) rotateY(${ty.toFixed(2)}deg)`
+      })
+    }
+    window.addEventListener("mousemove", onMove, { passive: true })
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  // 向下滑动：标志逐渐放大并淡出，仿佛穿越进入
+  const logoScale = 1 + progress * 2.4
+  const logoOpacity = clamp(1 - progress * 1.5, 0, 1)
   // 文案随之上移淡出，让位给下一屏
   const contentOpacity = clamp(1 - progress * 1.4, 0, 1)
   const contentShift = -progress * 60
@@ -70,29 +97,24 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      {/* 粒子地球：居中背景层，与文案穿插；向下滑动时放大淡出 */}
+      {/* 粒子标志：居中背景层，粒子从四面八方汇聚成 Logo；向下滑动时放大淡出 */}
       <div
-        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform"
-        style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
+        className="absolute inset-0 z-0 pointer-events-none will-change-transform"
+        style={{ transform: `scale(${logoScale})`, opacity: logoOpacity, transition: "none" }}
         aria-hidden="true"
       >
-        <div className="relative aspect-square w-[min(128vw,940px)] opacity-40 animate-heroReveal" style={{ animationDelay: "0.1s" }}>
-          <ParticleGlobe />
-          <div
-            className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
-            style={{ animationDuration: "36s" }}
-          ></div>
-          <div
-            className="absolute inset-[12%] border border-gray-400 rounded-full opacity-[0.1] animate-spin"
-            style={{ animationDuration: "24s", animationDirection: "reverse" }}
-          ></div>
-        </div>
+        <ParticleLogo />
       </div>
 
       {/* 主内容：位于地球之上，文案凸显 */}
       <div
         className="relative z-10 text-center max-w-6xl mx-auto px-6 flex flex-col items-center will-change-transform"
-        style={{ opacity: contentOpacity, transform: `translateY(${contentShift}px)`, transition: "none" }}
+        style={{
+          opacity: contentOpacity,
+          transform: `translateY(${contentShift}px)`,
+          transition: "none",
+          perspective: "1200px",
+        }}
       >
         {/* 文案后方白色光晕，确保在地球上清晰可读 */}
         <div
@@ -104,6 +126,11 @@ export default function Hero() {
           aria-hidden="true"
         />
 
+        <div
+          ref={tiltRef}
+          className="relative flex flex-col items-center w-full"
+          style={{ transition: "transform 0.2s ease-out", transformStyle: "preserve-3d" }}
+        >
         <h1
           className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono animate-heroReveal"
           style={{ animationDelay: "0.15s", textShadow: "0 4px 40px rgba(255,255,255,0.95)" }}
@@ -112,7 +139,7 @@ export default function Hero() {
         </h1>
 
         <div
-          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed animate-heroReveal"
+          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono leading-relaxed animate-heroReveal"
           style={{ animationDelay: "0.3s" }}
         >
           恋殇
@@ -164,6 +191,7 @@ export default function Hero() {
             </div>
             <div className="text-xs text-gray-500 font-mono">及时/准时率</div>
           </div>
+        </div>
         </div>
       </div>
 

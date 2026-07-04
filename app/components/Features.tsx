@@ -122,7 +122,7 @@ export default function Features() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">图片展示</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <div className="text-gray-600 max-w-3xl mx-auto text-lg">
             <p>平面设计、摄影与视觉作品精选，点击作品可展开查看全图</p>

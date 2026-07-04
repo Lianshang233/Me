@@ -38,7 +38,7 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">联系</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">欢迎洽谈合作、约稿与项目委托</p>
         </Reveal>
@@ -48,7 +48,7 @@ export default function Footer() {
             <h3 className="font-mono font-bold text-4xl mb-1 tracking-wider">
               Lian<span className="font-bold">shang</span>
             </h3>
-            <div className="font-mono tracking-[0.3em] text-xl mb-5 shimmer-text">恋殇</div>
+            <div className="font-mono tracking-[0.3em] text-xl mb-5">恋殇</div>
             <div className="text-gray-600 leading-relaxed text-xs font-light space-y-0">
               <p>集游戏项目管理、视觉创作、桌面运维能力于一体的复合型从业者。</p>
               <p className="mt-2">深耕音游赛道，拥有原创项目从 0 到 1 全周期 PM 经验，可统筹多管线与外包资源，主导项目 TapTap 预约 10w+；</p>
