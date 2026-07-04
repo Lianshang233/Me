@@ -243,7 +243,7 @@ export default function Hero() {
           <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
             个人作品集/在线简历
             <br />
-            <span className="font-mono text-xs md:text-sm">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维</span>
+            <span className="font-mono text-xs md:text-sm mt-9 block">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购</span>
           </p>
         </div>
 
