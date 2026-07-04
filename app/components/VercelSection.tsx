@@ -7,33 +7,31 @@ type VideoItem = {
   category: string
   code: string
   src: string
+  description: string
 }
 
 export default function VercelSection() {
   const videos: VideoItem[] = [
     {
-      title: "作品集短片",
-      category: "剪辑",
+      title: "酒店文旅宣传",
+      category: "实拍",
       code: "VID_001",
-      src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      src: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/fYqJ/983d4bf0a93c14c22ead1e2283c5683b.mp4",
+      description: "酒店文旅宣传实拍作品，实景拍摄与剪辑，呈现空间氛围与品牌调性。",
     },
     {
-      title: "动态视觉",
-      category: "动效",
+      title: "3D 后期作品",
+      category: "3D / 后期",
       code: "VID_002",
-      src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      src: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/Nogi/3053af9e12487d7f257647383cd51bcb.mp4",
+      description: "以 3D 为主的后期合成作品，Blender 为主、AE 为辅助，注重画面质感与镜头表现。",
     },
     {
-      title: "宣传片段",
-      category: "商业",
+      title: "低预算快制作品",
+      category: "快制",
       code: "VID_003",
-      src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    },
-    {
-      title: "幕后花絮",
-      category: "记录",
-      code: "VID_004",
-      src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      src: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/a29g/cf1d5d07f3dc3fcd4e5d3603bde7ced0.mp4",
+      description: "低预算作品，制作周期短、效率高，效果略有取舍，适合快速交付的需求。",
     },
   ]
 
@@ -64,7 +62,10 @@ export default function VercelSection() {
         <div className="text-center mb-20">
           <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8"></div>
-          <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示（示例视频，可替换为真实内容）</p>
+          <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示</p>
+          <p className="text-gray-500 max-w-3xl mx-auto text-sm font-mono mt-4">
+            如需了解更多请转到下面《联系》
+          </p>
         </div>
 
         <div className="mb-12 border-2 border-gray-700 bg-gray-900 p-4 md:p-6">
@@ -92,9 +93,11 @@ export default function VercelSection() {
               您的浏览器不支持视频播放。
             </video>
           </div>
+
+          <p className="text-sm text-gray-400 leading-relaxed mt-4 font-mono">{videos[activeVideo].description}</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {videos.map((video, index) => (
             <button
               key={video.code}

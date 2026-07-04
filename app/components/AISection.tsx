@@ -14,7 +14,7 @@ export default function AISection() {
       tags: ["关卡设计", "数值策划", "叙事"],
       stats: ["12 关卡", "3 结局", "8 小时流程"],
       icon: Gamepad2,
-      color: "#111111",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/fYqJ/983d4bf0a93c14c22ead1e2283c5683b.mp4",
     },
     {
       title: "谜境：齿轮之城",
@@ -23,7 +23,7 @@ export default function AISection() {
       tags: ["谜题设计", "系统策划", "体验优化"],
       stats: ["40+ 谜题", "5 章节", "Steam 上架"],
       icon: Puzzle,
-      color: "#2b2b2b",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/Nogi/3053af9e12487d7f257647383cd51bcb.mp4",
     },
     {
       title: "群星战线",
@@ -32,7 +32,7 @@ export default function AISection() {
       tags: ["平衡设计", "经济系统", "多人对战"],
       stats: ["24 兵种", "PVP", "赛季机制"],
       icon: Swords,
-      color: "#3d3d3d",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/a29g/cf1d5d07f3dc3fcd4e5d3603bde7ced0.mp4",
     },
   ]
 
@@ -42,7 +42,7 @@ export default function AISection() {
         <div className="text-center mb-20">
           <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目（封面为占位色块，可替换为真实截图）</p>
+          <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目，点击切换查看项目视频预览</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -98,13 +98,19 @@ export default function AISection() {
                 <span className="text-xs font-mono text-gray-400">{`0${activePanel + 1} / 0${projects.length}`}</span>
               </div>
 
-              <div
-                className="aspect-video w-full flex items-center justify-center relative border-2 border-black transition-colors duration-500"
-                style={{ backgroundColor: projects[activePanel].color }}
-              >
-                <span className="font-mono text-white/40 text-sm tracking-widest">GAME PREVIEW</span>
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/40"></div>
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/40"></div>
+              <div className="relative border-2 border-black">
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/60 z-10 pointer-events-none"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/60 z-10 pointer-events-none"></div>
+                <video
+                  key={projects[activePanel].video}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full aspect-video bg-black block"
+                >
+                  <source src={projects[activePanel].video} type="video/mp4" />
+                  您的浏览器不支持视频播放。
+                </video>
               </div>
 
               <div className="mt-6">
