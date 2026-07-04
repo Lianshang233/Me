@@ -93,7 +93,10 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center bg-white overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden"
+    >
       <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
 
       <div className="absolute inset-0 opacity-5">
@@ -117,19 +120,17 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
-        <div className="mb-20 flex justify-center">
-          <div className="relative w-96 h-96" style={{ transform: `scale(${pulseScale})` }}>
+      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center">
+        <div className="mb-8 flex justify-center">
+          <div className="relative w-56 h-56 md:w-72 md:h-72" style={{ transform: `scale(${pulseScale})` }}>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-sm font-mono text-black opacity-70 tracking-widest">可约稿</div>
               </div>
             </div>
             <svg
-              width="384"
-              height="384"
               viewBox="0 0 384 384"
-              className="absolute inset-0"
+              className="absolute inset-0 w-full h-full"
               style={{ transform: `rotate(${rotation}deg)` }}
             >
               <defs>
@@ -235,22 +236,22 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mb-12">
-          <h1 className="text-8xl font-light tracking-wider mb-6 font-mono">
+        <div className="mb-10">
+          <h1 className="text-6xl md:text-8xl font-light tracking-wider mb-4 font-mono">
             Lian<span className="font-bold">shang</span>
           </h1>
-          <div className="text-3xl font-light tracking-[0.3em] mb-6 font-mono">恋 殇</div>
-          <div className="w-40 h-px bg-black mx-auto mb-8 relative">
+          <div className="text-2xl md:text-3xl font-light tracking-[0.3em] mb-6 font-mono">恋 殇</div>
+          <div className="w-40 h-px bg-black mx-auto mb-6 relative">
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
-          <p className="text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
             个人创作作品集
             <br />
-            <span className="font-mono text-lg">平面设计 • 摄影 • 游戏策划</span>
+            <span className="font-mono text-base md:text-lg">平面设计 • 摄影 • 游戏策划</span>
           </p>
         </div>
 
-        <div className="flex justify-center space-x-16 text-sm font-mono mb-12">
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-sm font-mono mb-12">
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
             <span className="group-hover:text-gray-600 transition-colors">接单中</span>
@@ -289,11 +290,26 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-black rounded-full mt-2 animate-bounce"></div>
-        </div>
-      </div>
+      <button
+        onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 group cursor-pointer"
+        aria-label="向下滑动了解更多"
+      >
+        <span className="text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
+          向下滑动了解更多
+        </span>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          className="text-black animate-bounce"
+        >
+          <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </section>
   )
 }
