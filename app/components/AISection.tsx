@@ -15,24 +15,24 @@ export default function AISection() {
 
   const panels = [
     {
-      title: "WORKFLOW AUTOMATION",
-      description: "Intelligent process optimization and task scheduling with machine learning algorithms",
-      metrics: ["99.9% Uptime", "< 50ms Response", "Auto-scaling", "ML-powered"],
-      processes: ["Data Ingestion", "Pattern Recognition", "Decision Making", "Action Execution"],
+      title: "工作流自动化",
+      description: "基于机器学习算法的智能流程优化与任务调度",
+      metrics: ["99.9% 可用率", "< 50ms 响应", "自动扩缩容", "ML 驱动"],
+      processes: ["数据摄取", "模式识别", "决策制定", "动作执行"],
       icon: Settings,
     },
     {
-      title: "PREDICTIVE ANALYTICS",
-      description: "Advanced pattern recognition and usage forecasting using deep learning models",
-      metrics: ["Real-time Analysis", "95% Accuracy", "Data-driven", "Trend Prediction"],
-      processes: ["Data Collection", "Feature Extraction", "Model Training", "Prediction Output"],
+      title: "预测分析",
+      description: "使用深度学习模型进行先进的模式识别与用量预测",
+      metrics: ["实时分析", "95% 准确率", "数据驱动", "趋势预测"],
+      processes: ["数据采集", "特征提取", "模型训练", "预测输出"],
       icon: Brain,
     },
     {
-      title: "SMART PROVISIONING",
-      description: "Automated eSIM deployment and configuration management with zero-touch operations",
-      metrics: ["Zero-touch Deploy", "Bulk Operations", "Error Recovery", "Auto-healing"],
-      processes: ["Profile Creation", "Validation", "Deployment", "Monitoring"],
+      title: "智能配置",
+      description: "自动化 eSIM 部署与配置管理，实现零接触运维",
+      metrics: ["零接触部署", "批量操作", "错误恢复", "自动修复"],
+      processes: ["配置文件创建", "验证", "部署", "监控"],
       icon: Zap,
     },
   ]
@@ -63,11 +63,11 @@ export default function AISection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">
-            ONE<span className="font-bold">X</span>™ AI ENGINE
+            ONE<span className="font-bold">X</span>™ AI 引擎
           </h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            Advanced artificial intelligence powering next-generation eSIM management and automation
+            先进的人工智能，驱动新一代 eSIM 管理与自动化
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export default function AISection() {
                 >
                   {activePanel === index && processingData && (
                     <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                      <div className="text-sm font-mono text-black animate-pulse">PROCESSING...</div>
+                      <div className="text-sm font-mono text-black animate-pulse">处理中...</div>
                     </div>
                   )}
 
@@ -112,7 +112,7 @@ export default function AISection() {
                       </div>
 
                       <div className="space-y-3">
-                        <div className="text-sm font-mono text-gray-500 mb-3">PROCESS FLOW:</div>
+                        <div className="text-sm font-mono text-gray-500 mb-3">流程：</div>
                         {panel.processes.map((process, i) => (
                           <div key={i} className="flex items-center space-x-3 text-sm">
                             <div
@@ -132,7 +132,7 @@ export default function AISection() {
 
           <div className="space-y-8">
             <div className="relative h-96 border-2 border-gray-200 bg-gray-50 p-8">
-              <h4 className="font-mono font-bold text-lg mb-6">NEURAL NETWORK ACTIVITY</h4>
+              <h4 className="font-mono font-bold text-lg mb-6">神经网络活动</h4>
               <div className="relative h-full">
                 <svg width="100%" height="100%" className="absolute inset-0">
                   <g>
@@ -268,34 +268,34 @@ export default function AISection() {
                 </svg>
 
                 <div className="absolute bottom-4 left-0 right-0 flex justify-between text-xs font-mono text-gray-500">
-                  <span>INPUT</span>
-                  <span>HIDDEN</span>
-                  <span>HIDDEN</span>
-                  <span>OUTPUT</span>
+                  <span>输入</span>
+                  <span>隐藏层</span>
+                  <span>隐藏层</span>
+                  <span>输出</span>
                 </div>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">THROUGHPUT</div>
+                <div className="text-xs font-mono text-gray-500 mb-2">吞吐量</div>
                 <div className="text-3xl font-mono font-bold">{metrics.throughput.toLocaleString()}</div>
-                <div className="text-xs text-gray-500">req/sec</div>
+                <div className="text-xs text-gray-500">请求/秒</div>
               </div>
               <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">ACCURACY</div>
+                <div className="text-xs font-mono text-gray-500 mb-2">准确率</div>
                 <div className="text-3xl font-mono font-bold">{metrics.accuracy.toFixed(1)}%</div>
-                <div className="text-xs text-gray-500">prediction</div>
+                <div className="text-xs text-gray-500">预测</div>
               </div>
               <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">LATENCY</div>
+                <div className="text-xs font-mono text-gray-500 mb-2">延迟</div>
                 <div className="text-3xl font-mono font-bold">{metrics.latency}ms</div>
-                <div className="text-xs text-gray-500">avg response</div>
+                <div className="text-xs text-gray-500">平均响应</div>
               </div>
               <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">EFFICIENCY</div>
+                <div className="text-xs font-mono text-gray-500 mb-2">效率</div>
                 <div className="text-3xl font-mono font-bold">{metrics.efficiency.toFixed(1)}%</div>
-                <div className="text-xs text-gray-500">resource util</div>
+                <div className="text-xs text-gray-500">资源利用率</div>
               </div>
             </div>
           </div>

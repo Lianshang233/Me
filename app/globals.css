@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --font-inter: "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* CJK 系统字体回退，确保中文在所有平台（Windows / macOS / iOS / Android / Linux）正确显示 */
+  --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Source Han Sans SC",
+    "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+  --font-inter: "Inter", var(--font-cjk);
+  --font-mono: "JetBrains Mono", var(--font-cjk);
 }
 
 * {

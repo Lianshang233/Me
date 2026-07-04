@@ -9,12 +9,11 @@ export default function Features() {
 
   const features = [
     {
-      title: "ICCID SEARCH",
-      description:
-        "Real-time ICCID validation and lookup system with global database integration and instant verification protocols",
+      title: "ICCID 查询",
+      description: "实时 ICCID 校验与查询系统，集成全球数据库，提供即时验证协议",
       code: "SEARCH_001",
-      metrics: { accuracy: "99.9%", speed: "<100ms", coverage: "Global", database: "Real-time" },
-      status: "ACTIVE",
+      metrics: { 准确率: "99.9%", 速度: "<100ms", 覆盖范围: "全球", 数据库: "实时" },
+      status: "运行中",
       icon: Search,
       schematic: (
         <svg width="100%" height="60" viewBox="0 0 200 60">
@@ -27,12 +26,11 @@ export default function Features() {
       ),
     },
     {
-      title: "SM-DP+ INTEGRATION",
-      description:
-        "Seamless subscription manager integration for profile management with GSMA-compliant protocols and security",
+      title: "SM-DP+ 集成",
+      description: "无缝集成订阅管理器进行配置文件管理，采用符合 GSMA 标准的协议与安全机制",
       code: "SMDP_002",
-      metrics: { compliance: "SGP.22", security: "TLS 1.3", availability: "24/7", profiles: "Unlimited" },
-      status: "OPERATIONAL",
+      metrics: { 合规: "SGP.22", 安全: "TLS 1.3", 可用性: "24/7", 配置文件: "无限" },
+      status: "已就绪",
       icon: Cpu,
       schematic: (
         <svg width="100%" height="60" viewBox="0 0 200 60">
@@ -44,12 +42,11 @@ export default function Features() {
       ),
     },
     {
-      title: "QR CODE ACTIVATION",
-      description:
-        "Instant eSIM activation through secure QR code generation with encrypted profile delivery and validation",
+      title: "二维码激活",
+      description: "通过安全的二维码生成实现 eSIM 即时激活，配置文件加密传输与验证",
       code: "QR_003",
-      metrics: { generation: "Instant", encryption: "AES-256", success: "99.8%", delivery: "Secure" },
-      status: "READY",
+      metrics: { 生成: "即时", 加密: "AES-256", 成功率: "99.8%", 传输: "安全" },
+      status: "就绪",
       icon: QrCode,
       schematic: (
         <svg width="100%" height="60" viewBox="0 0 200 60">
@@ -109,10 +106,10 @@ export default function Features() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">CORE FEATURES</h2>
+          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">核心功能</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            Advanced eSIM management capabilities powered by AI and GSMA compliance standards
+            由 AI 驱动、符合 GSMA 合规标准的先进 eSIM 管理能力
           </p>
         </div>
 
@@ -155,7 +152,7 @@ export default function Features() {
                     <div className="space-y-3 mb-6 animate-fadeIn">
                       {Object.entries(feature.metrics).map(([key, value]) => (
                         <div key={key} className="flex justify-between text-xs font-mono">
-                          <span className="text-gray-500 uppercase">{key}:</span>
+                          <span className="text-gray-500">{key}:</span>
                           <span className="text-black font-bold">{value}</span>
                         </div>
                       ))}
@@ -205,14 +202,14 @@ export default function Features() {
         </div>
 
         <div className="mt-20 bg-white border-2 border-gray-200 p-8">
-          <h3 className="font-mono font-bold text-xl mb-8 text-center">REAL-TIME DATA FLOW</h3>
+          <h3 className="font-mono font-bold text-xl mb-8 text-center">实时数据流</h3>
           <div className="flex justify-center items-center space-x-12">
             <div className="text-center">
               <div className="w-16 h-16 border-2 border-black flex items-center justify-center mb-3 relative">
                 <span className="text-sm font-mono">REQ</span>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-black animate-ping"></div>
               </div>
-              <span className="text-xs text-gray-500 font-mono">REQUEST</span>
+              <span className="text-xs text-gray-500 font-mono">请求</span>
             </div>
 
             <div className="flex-1 h-px bg-gray-300 relative">
@@ -224,7 +221,7 @@ export default function Features() {
               <div className="w-16 h-16 border-2 border-black flex items-center justify-center mb-3">
                 <span className="text-sm font-mono">AI</span>
               </div>
-              <span className="text-xs text-gray-500 font-mono">PROCESS</span>
+              <span className="text-xs text-gray-500 font-mono">处理</span>
             </div>
 
             <div className="flex-1 h-px bg-gray-300 relative">
@@ -237,7 +234,7 @@ export default function Features() {
                 <span className="text-sm font-mono">RES</span>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-black animate-ping"></div>
               </div>
-              <span className="text-xs text-gray-500 font-mono">RESPONSE</span>
+              <span className="text-xs text-gray-500 font-mono">响应</span>
             </div>
           </div>
         </div>

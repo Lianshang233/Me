@@ -5,20 +5,20 @@ import { Mail, Phone, MapPin } from "lucide-react"
 
 export default function Footer() {
   const [systemStatus, setSystemStatus] = useState({
-    api: "OPERATIONAL",
-    database: "HEALTHY",
-    network: "OPTIMAL",
-    security: "SECURE",
+    API: "运行正常",
+    数据库: "健康",
+    网络: "最佳",
+    安全: "已保护",
   })
 
   useEffect(() => {
     const statusInterval = setInterval(() => {
-      const statuses = ["OPERATIONAL", "HEALTHY", "OPTIMAL"]
-      setSystemStatus((prev) => ({
-        api: statuses[Math.floor(Math.random() * statuses.length)],
-        database: statuses[Math.floor(Math.random() * statuses.length)],
-        network: statuses[Math.floor(Math.random() * statuses.length)],
-        security: "SECURE",
+      const statuses = ["运行正常", "健康", "最佳"]
+      setSystemStatus(() => ({
+        API: statuses[Math.floor(Math.random() * statuses.length)],
+        数据库: statuses[Math.floor(Math.random() * statuses.length)],
+        网络: statuses[Math.floor(Math.random() * statuses.length)],
+        安全: "已保护",
       }))
     }, 15000)
 
@@ -53,18 +53,12 @@ export default function Footer() {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="mb-16 bg-white border-2 border-gray-200 p-6">
           <div className="flex items-center justify-between">
-            <h3 className="font-mono font-bold text-lg">SYSTEM STATUS</h3>
+            <h3 className="font-mono font-bold text-lg">系统状态</h3>
             <div className="flex items-center space-x-6 text-sm font-mono">
               {Object.entries(systemStatus).map(([key, status]) => (
                 <div key={key} className="flex items-center space-x-2">
-                  <div
-                    className={`w-3 h-3 ${
-                      status === "SECURE" || status === "OPERATIONAL" || status === "HEALTHY" || status === "OPTIMAL"
-                        ? "bg-black animate-pulse"
-                        : "bg-gray-400"
-                    }`}
-                  ></div>
-                  <span className="uppercase">
+                  <div className="w-3 h-3 bg-black animate-pulse"></div>
+                  <span>
                     {key}: {status}
                   </span>
                 </div>
@@ -80,8 +74,7 @@ export default function Footer() {
               <sup className="text-lg">™</sup>
             </h3>
             <p className="text-gray-600 mb-10 leading-relaxed text-lg">
-              Advanced eSIM and IoT connectivity platform designed for Myanmar's digital infrastructure. GSMA-compliant
-              solutions powered by artificial intelligence and deployed on Vercel's cutting-edge infrastructure.
+              专为缅甸数字基础设施打造的先进 eSIM 与物联网连接平台。由人工智能驱动、符合 GSMA 标准的解决方案，部署于 Vercel 前沿基础设施之上。
             </p>
 
             <div className="border-2 border-gray-300 p-8 inline-block hover:border-black transition-colors duration-300 mb-8">
@@ -90,53 +83,53 @@ export default function Footer() {
                   <span className="text-2xl font-mono font-bold">G</span>
                 </div>
                 <div>
-                  <div className="text-xl font-mono font-bold">GSMA CERTIFIED</div>
-                  <div className="text-sm text-gray-500 font-mono">SGP.22 COMPLIANT • SECURITY ASSURED</div>
-                  <div className="text-xs text-gray-400 font-mono mt-1">CERTIFICATE ID: GSMA-SGP22-2024-001</div>
+                  <div className="text-xl font-mono font-bold">GSMA 认证</div>
+                  <div className="text-sm text-gray-500 font-mono">符合 SGP.22 标准 • 安全有保障</div>
+                  <div className="text-xs text-gray-400 font-mono mt-1">证书编号：GSMA-SGP22-2024-001</div>
                 </div>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-6 text-sm">
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">API VERSION</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">API 版本</div>
                 <div className="font-mono font-bold text-lg">v2.1.0</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">PROTOCOL</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">协议</div>
                 <div className="font-mono font-bold text-lg">SGP.22</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">ENCRYPTION</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">加密</div>
                 <div className="font-mono font-bold text-lg">AES-256</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">COMPLIANCE</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">合规</div>
                 <div className="font-mono font-bold text-lg">GSMA</div>
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">CONTACT</h4>
+            <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">联系方式</h4>
             <div className="space-y-6">
               <div className="group">
                 <div className="flex items-center space-x-3 mb-2">
                   <MapPin size={16} className="text-gray-500" />
-                  <div className="text-gray-500 text-xs font-mono">HEADQUARTERS</div>
+                  <div className="text-gray-500 text-xs font-mono">总部</div>
                 </div>
                 <div className="group-hover:text-gray-600 transition-colors pl-7">
-                  Yangon, Myanmar
+                  缅甸仰光
                   <br />
-                  Digital Innovation District
+                  数字创新区
                   <br />
-                  Building 7, Floor 12
+                  7 号楼 12 层
                 </div>
               </div>
               <div className="group">
                 <div className="flex items-center space-x-3 mb-2">
                   <Mail size={16} className="text-gray-500" />
-                  <div className="text-gray-500 text-xs font-mono">EMAIL</div>
+                  <div className="text-gray-500 text-xs font-mono">邮箱</div>
                 </div>
                 <div className="font-mono group-hover:text-gray-600 transition-colors pl-7">
                   contact@nexorasim.com
@@ -147,46 +140,46 @@ export default function Footer() {
               <div className="group">
                 <div className="flex items-center space-x-3 mb-2">
                   <Phone size={16} className="text-gray-500" />
-                  <div className="text-gray-500 text-xs font-mono">SUPPORT</div>
+                  <div className="text-gray-500 text-xs font-mono">支持热线</div>
                 </div>
                 <div className="font-mono group-hover:text-gray-600 transition-colors pl-7">
-                  24/7 TECHNICAL
+                  7×24 技术支持
                   <br />
                   +95-1-NEXORA-1
                   <br />
-                  Emergency: +95-1-NEXORA-911
+                  紧急：+95-1-NEXORA-911
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">PERFORMANCE</h4>
+            <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">性能指标</h4>
             <div className="space-y-6">
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">UPTIME</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">可用率</div>
                 <div className="font-mono font-bold text-2xl">99.99%</div>
-                <div className="text-xs text-gray-400">SLA Guaranteed</div>
+                <div className="text-xs text-gray-400">SLA 保障</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">LATENCY</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">延迟</div>
                 <div className="font-mono font-bold text-2xl">{"< 30ms"}</div>
-                <div className="text-xs text-gray-400">Global Average</div>
+                <div className="text-xs text-gray-400">全球平均</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">THROUGHPUT</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">吞吐量</div>
                 <div className="font-mono font-bold text-2xl">10K+</div>
-                <div className="text-xs text-gray-400">req/sec</div>
+                <div className="text-xs text-gray-400">请求/秒</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">AVAILABILITY</div>
-                <div className="font-mono font-bold text-2xl">GLOBAL</div>
-                <div className="text-xs text-gray-400">23 Regions</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">覆盖范围</div>
+                <div className="font-mono font-bold text-2xl">全球</div>
+                <div className="text-xs text-gray-400">23 个区域</div>
               </div>
               <div>
-                <div className="text-gray-500 text-xs font-mono mb-2">SCALING</div>
-                <div className="font-mono font-bold text-2xl">AUTO</div>
-                <div className="text-xs text-gray-400">Vercel Edge</div>
+                <div className="text-gray-500 text-xs font-mono mb-2">扩缩容</div>
+                <div className="font-mono font-bold text-2xl">自动</div>
+                <div className="text-xs text-gray-400">Vercel 边缘</div>
               </div>
             </div>
           </div>
@@ -195,40 +188,40 @@ export default function Footer() {
         <div className="mt-20 pt-10 border-t-2 border-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-gray-500 font-mono mb-6 md:mb-0">
-              © 2024 NEXORASIM™. ALL RIGHTS RESERVED. • MYANMAR DIGITAL INFRASTRUCTURE
+              © 2024 NEXORASIM™. 保留所有权利。• 缅甸数字基础设施
             </div>
 
             <div className="flex items-center space-x-8 text-sm font-mono">
               <span className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-black animate-pulse"></div>
-                <span className="group-hover:text-gray-600 transition-colors">POWERED BY VERCEL</span>
+                <span className="group-hover:text-gray-600 transition-colors">由 Vercel 驱动</span>
               </span>
               <span className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-gray-400"></div>
-                <span className="group-hover:text-gray-600 transition-colors">AI-DRIVEN</span>
+                <span className="group-hover:text-gray-600 transition-colors">AI 驱动</span>
               </span>
               <span className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-black"></div>
-                <span className="group-hover:text-gray-600 transition-colors">MYANMAR READY</span>
+                <span className="group-hover:text-gray-600 transition-colors">缅甸就绪</span>
               </span>
               <span className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-gray-600"></div>
-                <span className="group-hover:text-gray-600 transition-colors">GSMA COMPLIANT</span>
+                <span className="group-hover:text-gray-600 transition-colors">GSMA 合规</span>
               </span>
             </div>
           </div>
 
           <div className="mt-10 pt-6 border-t border-gray-200 text-center">
             <div className="text-xs font-mono text-gray-400 space-x-6">
-              <span>BUILT WITH NEXT.JS 15</span>
+              <span>基于 NEXT.JS 15 构建</span>
               <span>•</span>
-              <span>DEPLOYED ON VERCEL EDGE</span>
+              <span>部署于 VERCEL 边缘</span>
               <span>•</span>
-              <span>SECURED WITH TLS 1.3</span>
+              <span>TLS 1.3 加密保护</span>
               <span>•</span>
-              <span>MONITORED 24/7</span>
+              <span>7×24 监控</span>
               <span>•</span>
-              <span>GSMA SGP.22 CERTIFIED</span>
+              <span>GSMA SGP.22 认证</span>
             </div>
           </div>
         </div>

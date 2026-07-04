@@ -16,28 +16,31 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "NexoraSIM™ - AI-Driven eSIM & IoT Platform | Myanmar",
+  title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台 | 缅甸",
   description:
-    "GSMA-compliant eSIM and IoT connectivity platform for Myanmar. Advanced AI-powered solutions with global reach, powered by Vercel infrastructure.",
-  keywords: "eSIM, IoT, Myanmar, GSMA, AI, connectivity, telecommunications, Vercel, edge computing, SGP.22",
+    "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台。由 AI 驱动的先进解决方案，覆盖全球，基于 Vercel 基础设施。",
+  keywords: "eSIM, 物联网, 缅甸, GSMA, AI, 连接, 电信, Vercel, 边缘计算, SGP.22",
   authors: [{ name: "NexoraSIM" }],
   robots: "index, follow",
   openGraph: {
-    title: "NexoraSIM™ - AI-Driven eSIM & IoT Platform",
-    description: "GSMA-compliant eSIM and IoT connectivity platform for Myanmar",
+    title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台",
+    description: "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台",
     type: "website",
-    locale: "en_US",
+    locale: "zh_CN",
     siteName: "NexoraSIM",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NexoraSIM™ - AI-Driven eSIM & IoT Platform",
-    description: "GSMA-compliant eSIM and IoT connectivity platform for Myanmar",
+    title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台",
+    description: "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台",
   },
-  viewport: "width=device-width, initial-scale=1",
+  generator: 'v0.app'
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#000000",
-  manifest: "/manifest.json",
-    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -46,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="zh-CN" className={`${inter.variable} ${jetbrainsMono.variable} bg-white`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

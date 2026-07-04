@@ -239,47 +239,47 @@ export default function Hero() {
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
           <p className="text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            MYANMAR'S NEXT-GEN ESIM INFRASTRUCTURE
+            缅甸新一代 eSIM 基础设施
             <br />
-            <span className="font-mono text-lg">AI-DRIVEN • GSMA-COMPLIANT • VERCEL-POWERED</span>
+            <span className="font-mono text-lg">AI 驱动 • 符合 GSMA 标准 • Vercel 加持</span>
           </p>
         </div>
 
         <div className="flex justify-center space-x-16 text-sm font-mono mb-12">
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">SYSTEM ACTIVE</span>
+            <span className="group-hover:text-gray-600 transition-colors">系统运行中</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">GSMA CERTIFIED</span>
+            <span className="group-hover:text-gray-600 transition-colors">GSMA 认证</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-ping"></div>
-            <span className="group-hover:text-gray-600 transition-colors">AI ENABLED</span>
+            <span className="group-hover:text-gray-600 transition-colors">AI 已启用</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">VERCEL EDGE</span>
+            <span className="group-hover:text-gray-600 transition-colors">Vercel 边缘</span>
           </div>
         </div>
 
         <div className="grid grid-cols-4 gap-8 max-w-2xl mx-auto">
           <div className="text-center">
             <div className="text-3xl font-mono font-bold">99.9%</div>
-            <div className="text-xs text-gray-500 font-mono">UPTIME</div>
+            <div className="text-xs text-gray-500 font-mono">可用率</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-mono font-bold">{"<30ms"}</div>
-            <div className="text-xs text-gray-500 font-mono">LATENCY</div>
+            <div className="text-xs text-gray-500 font-mono">延迟</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-mono font-bold">24/7</div>
-            <div className="text-xs text-gray-500 font-mono">SUPPORT</div>
+            <div className="text-xs text-gray-500 font-mono">技术支持</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-mono font-bold">SGP.22</div>
-            <div className="text-xs text-gray-500 font-mono">COMPLIANT</div>
+            <div className="text-xs text-gray-500 font-mono">合规标准</div>
           </div>
         </div>
       </div>

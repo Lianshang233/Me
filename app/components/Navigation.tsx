@@ -13,14 +13,14 @@ export default function Navigation() {
   const navScrollRef = useRef<HTMLDivElement>(null)
 
   const navItems = [
-    { id: "hero", label: "HOME" },
-    { id: "features", label: "FEATURES" },
-    { id: "ai", label: "AI ENGINE" },
-    { id: "vercel", label: "INFRASTRUCTURE" },
-    { id: "contact", label: "CONTACT" },
-    { id: "docs", label: "DOCUMENTATION" },
+    { id: "hero", label: "首页" },
+    { id: "features", label: "核心功能" },
+    { id: "ai", label: "AI 引擎" },
+    { id: "vercel", label: "基础设施" },
+    { id: "contact", label: "联系我们" },
+    { id: "docs", label: "文档" },
     { id: "api", label: "API" },
-    { id: "support", label: "SUPPORT" },
+    { id: "support", label: "支持" },
   ]
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function Navigation() {
               <button
                 onClick={() => scrollNav("left")}
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
-                aria-label="Scroll left"
+                aria-label="向左滚动"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -129,7 +129,7 @@ export default function Navigation() {
               <button
                 onClick={() => scrollNav("right")}
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
-                aria-label="Scroll right"
+                aria-label="向右滚动"
               >
                 <ChevronRight size={16} />
               </button>
@@ -140,7 +140,7 @@ export default function Navigation() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 focus:outline-none focus:ring-2 focus:ring-black rounded"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileMenuOpen ? "关闭菜单" : "打开菜单"}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -148,7 +148,7 @@ export default function Navigation() {
 
           <div className="hidden sm:flex items-center space-x-2 shrink-0">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="text-xs font-mono">LIVE</span>
+            <span className="text-xs font-mono">在线</span>
           </div>
         </div>
       </div>
