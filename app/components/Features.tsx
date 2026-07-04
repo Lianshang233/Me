@@ -54,7 +54,7 @@ export default function Features() {
       code: "PH_002",
       color: "#2a2018",
       image:
-        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/LYKl/1850X1339/d13c0793b5116450f10ad0c56fabf019.jpg",
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/BY54/2376X1600/f499252be9397b1b6a98264621af9dbe.png",
       description: "现场纪实摄影，浅景深聚焦手持书法卡片，记录活动瞬间的情绪与仪式感。",
     },
     {
