@@ -89,7 +89,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="font-mono font-bold text-xl tracking-wider shrink-0">
-            Lianshang<span className="font-light"> · 恋殇</span>
+            Lianshang
           </div>
 
           <div className="hidden md:flex items-center relative max-w-[60%]">
