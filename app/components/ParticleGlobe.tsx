@@ -133,7 +133,7 @@ export default function ParticleGlobe() {
       // 平滑跟随鼠标目标旋转
       rotY += (targetRotY - rotY) * 0.06
       rotX += (targetRotX - rotX) * 0.06
-      autoYaw += 0.0025
+      autoYaw += 0.001
 
       const yaw = rotY + autoYaw
       const pitch = rotX

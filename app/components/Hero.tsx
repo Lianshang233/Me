@@ -39,8 +39,8 @@ export default function Hero() {
     const onMove = (e: MouseEvent) => {
       const nx = (e.clientX / window.innerWidth) * 2 - 1
       const ny = (e.clientY / window.innerHeight) * 2 - 1
-      tx = -ny * 3
-      ty = nx * 3
+      tx = -ny * 7
+      ty = nx * 7
       cancelAnimationFrame(raf)
       raf = requestAnimationFrame(() => {
         el.style.transform = `rotateX(${tx.toFixed(2)}deg) rotateY(${ty.toFixed(2)}deg)`
@@ -103,7 +103,7 @@ export default function Hero() {
         style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
         aria-hidden="true"
       >
-        <div className="relative aspect-square w-[min(128vw,940px)] opacity-40 animate-heroReveal" style={{ animationDelay: "0.1s" }}>
+        <div className="relative aspect-square w-[min(170vw,1400px)] max-w-none opacity-40 animate-heroReveal" style={{ animationDelay: "0.1s" }}>
           <ParticleGlobe />
           <div
             className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
