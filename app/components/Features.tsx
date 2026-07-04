@@ -26,7 +26,8 @@ export default function Features() {
       category: "平面设计",
       code: "GD_001",
       color: "#3a3128",
-      image: "/works/graphic-profile.jpeg",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/eSb7/2480X3508/%E7%AE%80%E5%8E%86%281%29.png",
       description: "复古做旧风格个人简介版面设计，撕纸拼贴与半调质感结合，平面排版作品。",
     },
     {
@@ -34,7 +35,8 @@ export default function Features() {
       category: "平面设计",
       code: "GD_002",
       color: "#1a2330",
-      image: "/works/graphic-poster.png",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/uyV2/1024X1369/%E7%99%BD.png",
       description: "线下演出活动《韵临律界 II》宣传主视觉海报设计，科技感排版与人物立绘结合。",
     },
     {
@@ -204,42 +206,46 @@ export default function Features() {
           aria-label={selected.title}
         >
           <div
-            className="relative bg-gray-50 border-2 border-black inline-flex flex-col w-auto max-w-[92vw] max-h-[92vh] overflow-hidden"
+            className="relative bg-gray-50 border-2 border-black flex flex-col w-full max-w-4xl max-h-[92vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black z-10"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black z-10"></div>
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black z-10 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black z-10 pointer-events-none"></div>
 
-            <div className="flex items-center justify-between border-b-2 border-black px-6 py-4">
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-mono text-gray-400">{selected.code}</span>
-                <span className="font-mono font-bold text-lg">{selected.title}</span>
+            <div className="flex items-center justify-between border-b-2 border-black px-6 py-4 shrink-0">
+              <div className="flex items-center gap-4 min-w-0">
+                <span className="text-xs font-mono text-gray-400 shrink-0">{selected.code}</span>
+                <span className="font-mono font-bold text-lg truncate">{selected.title}</span>
               </div>
               <button
                 onClick={() => setSelected(null)}
                 aria-label="关闭"
-                className="w-9 h-9 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+                className="w-9 h-9 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors shrink-0"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <img
-              src={selected.image || "/placeholder.svg"}
-              alt={selected.title}
-              className="block w-auto h-auto max-w-[92vw] max-h-[70vh] object-contain"
-            />
-
-            <div className="px-6 py-5 overflow-y-auto">
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-                <span className="bg-black text-white px-3 py-1.5 text-xs font-mono">{selected.category}</span>
-                <span className="border border-gray-300 px-3 py-1.5 text-xs font-mono text-gray-500">
-                  {selected.code}
-                </span>
+            <div className="flex flex-col md:flex-row min-h-0 flex-1">
+              <div className="flex items-center justify-center bg-black/5 p-4 md:w-1/2 md:border-r-2 md:border-black shrink-0">
+                <img
+                  src={selected.image || "/placeholder.svg"}
+                  alt={selected.title}
+                  className="block w-auto h-auto max-w-full max-h-[38vh] md:max-h-[74vh] object-contain"
+                />
               </div>
-              {selected.description && (
-                <p className="text-gray-600 leading-relaxed">{selected.description}</p>
-              )}
+
+              <div className="px-6 py-5 md:w-1/2 flex flex-col justify-center min-h-0">
+                <div className="flex flex-wrap items-center gap-3 mb-4 shrink-0">
+                  <span className="bg-black text-white px-3 py-1.5 text-xs font-mono">{selected.category}</span>
+                  <span className="border border-gray-300 px-3 py-1.5 text-xs font-mono text-gray-500">
+                    {selected.code}
+                  </span>
+                </div>
+                {selected.description && (
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-base">{selected.description}</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
