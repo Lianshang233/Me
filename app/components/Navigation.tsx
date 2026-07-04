@@ -18,9 +18,6 @@ export default function Navigation() {
     { id: "ai", label: "AI 引擎" },
     { id: "vercel", label: "基础设施" },
     { id: "contact", label: "联系我们" },
-    { id: "docs", label: "文档" },
-    { id: "api", label: "API" },
-    { id: "support", label: "支持" },
   ]
 
   useEffect(() => {
