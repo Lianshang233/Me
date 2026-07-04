@@ -119,17 +119,19 @@ export default function Footer() {
 
         <div className="flex justify-center mb-16">
           <a
-            href="mailto:lianshangowo@outlook.com"
+            href="https://qm.qq.com/q/5JkkFDevxS"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group font-mono border-2 border-black px-10 py-4 text-lg hover:bg-black hover:text-white transition-colors tracking-wide"
           >
-            开始合作 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+            面试邀约/合作 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
 
         <div className="pt-10 border-t-2 border-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-gray-500 font-mono mb-6 md:mb-0">
-              © 2024 Lianshang · 恋殇. 保留所有权利。
+              © 2026 Lianshang · 恋殇. 保留所有权利。
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-mono">
