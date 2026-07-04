@@ -5,10 +5,10 @@ import Reveal from "./Reveal"
 
 export default function Footer() {
   const services = [
-    { name: "平面设计", desc: "海报 · 品牌 · 包装" },
-    { name: "摄影约拍", desc: "人像 · 纪实 · 商业" },
-    { name: "游戏策划", desc: "关卡 · 系统 · 数值" },
-    { name: "桌面运维", desc: "终端 · 安全 · 网络" },
+    { name: "平面设计", desc: "海报 · 概念 · 3D" },
+    { name: "拍摄/制片/编导", desc: "2D · 3D · 商业" },
+    { name: "游戏策划/PM", desc: "策划 · 系统 · 统筹" },
+    { name: "桌面运维/采购", desc: "终端 · 安全 · 网络" },
   ]
 
   return (
@@ -45,16 +45,16 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="md:col-span-1">
-            <h3 className="font-mono font-bold text-4xl mb-6 tracking-wider">
-              Lian<span className="font-light">shang</span>
+            <h3 className="font-mono font-bold text-4xl mb-1 tracking-wider">
+              Lian<span className="font-bold">shang</span>
             </h3>
-            <div className="font-mono tracking-[0.3em] text-xl mb-6 shimmer-text">恋殇</div>
-            <div className="text-gray-600 leading-relaxed text-sm font-light space-y-3">
+            <div className="font-mono tracking-[0.3em] text-xl mb-5 shimmer-text">恋殇</div>
+            <div className="text-gray-600 leading-relaxed text-xs font-light space-y-0">
               <p>集游戏项目管理、视觉创作、桌面运维能力于一体的复合型从业者。</p>
-              <p>深耕音游赛道，拥有原创项目从 0 到 1 全周期 PM 经验，可统筹多管线与外包资源，主导项目 TapTap 预约 10w+；</p>
-              <p>精通 Blender、PR、AE，覆盖商业摄影、平面设计、3D 美术全链路，服务广电、酒店、游戏等多领域客户；</p>
-              <p>具备硬件采购 - 部署 - 运维全流程桌面运维能力，累计管理终端 110 + 台，硬件兼容故障率 0%。</p>
-              <p>跨领域适配性强，执行力突出，可高效支撑项目全链路落地</p>
+              <p className="mt-2">深耕音游赛道，拥有原创项目从 0 到 1 全周期 PM 经验，可统筹多管线与外包资源，主导项目 TapTap 预约 10w+；</p>
+              <p className="mt-2">精通 Blender、PR、AE，覆盖商业摄影、平面设计、3D 美术全链路，服务广电、酒店、游戏等多领域客户；</p>
+              <p className="mt-2">具备硬件采购 - 部署 - 运维全流程桌面运维能力，累计管理终端 110 + 台，硬件兼容故障率 0%。</p>
+              <p className="mt-2">跨领域适配性强，执行力突出，可高效支撑项目全链路落地</p>
             </div>
           </div>
 
