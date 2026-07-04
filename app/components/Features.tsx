@@ -124,7 +124,10 @@ export default function Features() {
         <Reveal className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">图片展示</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">平面设计、摄影与视觉作品精选，点击作品可展开查看全图<div className="mx-auto px-7 text-xs font-light leading-relaxed mt-3 text-gray-500">覆盖商业品牌、线下演出、游戏美术、零售终端、广电栏目五大领域，累计服务 7 家企业 / 独立项目，具备商业实拍 — 平面设计 —3D 美术 — 动态视觉全链路创作能力。累计产出商业摄影素材 150 + 组、平面视觉设计作品 120 + 件、3D 美术与动态视觉资产 60 + 套；作品落地于短视频平台、线下舞台、游戏客户端、官方宣传渠道、实体门店等多元载体，直接服务于品牌曝光、产品引流与用户增长。</div></p>
+          <div className="text-gray-600 max-w-3xl mx-auto text-lg">
+            <p>平面设计、摄影与视觉作品精选，点击作品可展开查看全图</p>
+            <p className="mx-auto px-7 text-xs font-light leading-relaxed mt-3 text-gray-500">覆盖商业品牌、线下演出、游戏美术、零售终端、广电栏目五大领域，累计服务 7 家企业 / 独立项目，具备商业实拍 — 平面设计 —3D 美术 — 动态视觉全链路创作能力。累计产出商业摄影素材 150 + 组、平面视觉设计作品 120 + 件、3D 美术与动态视觉资产 60 + 套；作品落地于短视频平台、线下舞台、游戏客户端、官方宣传渠道、实体门店等多元载体，直接服务于品牌曝光、产品引流与用户增长。</p>
+          </div>
         </Reveal>
 
         <div className="flex justify-center flex-wrap gap-3 mb-12">
