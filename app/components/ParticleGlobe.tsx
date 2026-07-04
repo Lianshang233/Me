@@ -47,7 +47,7 @@ export default function ParticleGlobe() {
     let particles: Particle[] = []
 
     const buildParticles = () => {
-      const count = isMobile() ? 460 : 900
+      const count = isMobile() ? 1100 : 2200
       const gAngle = Math.PI * (1 + Math.sqrt(5)) // 黄金角
       particles = Array.from({ length: count }, (_, i) => {
         // 斐波那契球均匀分布
@@ -153,7 +153,7 @@ export default function ParticleGlobe() {
         // 深度归一 (-1 近 -> 1 远)，用于透明度
         const dn = (depth + 1) / 2 // 0 近 -> 1 远
         const alpha = (1 - dn) * 0.75 + 0.12
-        const r = Math.max(0.4, scale * 1.7)
+        const r = Math.max(0.25, scale * 0.95)
         ctx.beginPath()
         ctx.fillStyle = `rgba(0,0,0,${alpha.toFixed(3)})`
         ctx.arc(sx, sy, r, 0, Math.PI * 2)
