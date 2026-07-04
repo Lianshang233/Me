@@ -80,6 +80,17 @@ export default function Footer() {
                   </div>
                 </div>
               </a>
+              <a href="mailto:lianshangowo@163.com" className="group flex items-center space-x-3">
+                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                  <Mail size={18} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-mono text-gray-500">备用邮箱</div>
+                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">
+                    lianshangowo@163.com
+                  </div>
+                </div>
+              </a>
               <div className="group flex items-center space-x-3">
                 <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <MessageCircle size={18} />
