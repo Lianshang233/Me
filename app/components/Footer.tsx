@@ -70,32 +70,32 @@ export default function Footer() {
             <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">联系方式</h4>
             <div className="space-y-6">
               <a href="mailto:lianshangowo@outlook.com" className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Mail size={18} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">邮箱</div>
-                  <div className="font-mono group-hover:text-gray-600 transition-colors break-all">
+                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">
                     lianshangowo@outlook.com
                   </div>
                 </div>
               </a>
               <div className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <MessageCircle size={18} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">微信</div>
-                  <div className="font-mono group-hover:text-gray-600 transition-colors">Lianshang_design</div>
+                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">Lianshang_design</div>
                 </div>
               </div>
               <div className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <MessageSquare size={18} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">QQ</div>
-                  <div className="font-mono group-hover:text-gray-600 transition-colors">1552309639</div>
+                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">1552309639</div>
                 </div>
               </div>
             </div>
