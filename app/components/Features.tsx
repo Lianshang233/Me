@@ -31,20 +31,21 @@ export default function Features() {
       description: "复古做旧风格个人简介版面设计，撕纸拼贴与半调质感结合，平面排版作品。",
     },
     {
-      title: "韵临律界 II 主视觉",
+      title: "Orzmic 镭射票",
       category: "平面设计",
       code: "GD_002",
       color: "#1a2330",
       image:
         "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/uyV2/1024X1369/%E7%99%BD.png",
-      description: "线下演出活动《韵临律界 II》宣传主视觉海报设计，科技感排版与人物立绘结合。",
+      description: "音乐游戏 Orzmic 主题镭射票面设计，全息渐变与光泽质感结合，收藏级平面视觉作品。",
     },
     {
       title: "夜水倒影",
       category: "摄影",
       code: "PH_001",
       color: "#0f1a2b",
-      image: "/works/photo-reflection.jpg",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/LYKl/1850X1339/d13c0793b5116450f10ad0c56fabf019.jpg",
       description: "夜晚水岸摄影，暖调灯光倒影与冷调水面形成对比，捕捉光影律动。",
     },
     {
@@ -52,16 +53,18 @@ export default function Features() {
       category: "摄影",
       code: "PH_002",
       color: "#2a2018",
-      image: "/works/photo-dream.jpg",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/LYKl/1850X1339/d13c0793b5116450f10ad0c56fabf019.jpg",
       description: "现场纪实摄影，浅景深聚焦手持书法卡片，记录活动瞬间的情绪与仪式感。",
     },
     {
-      title: "夏日写真",
-      category: "摄影",
-      code: "PH_003",
-      color: "#2b4a63",
-      image: "/works/photo-pool.jpg",
-      description: "泳池边人像写真，自然光线与清爽色调，展现夏日轻盈氛围。",
+      title: "韵临律界 II 主视觉",
+      category: "平面设计",
+      code: "GD_003",
+      color: "#1a2330",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/jQwh/1080X1920/%E9%93%81.png",
+      description: "线下演出活动《韵临律界 II》宣传主视觉海报设计，科技感排版与人物立绘结合。",
     },
     {
       title: "Mars Ashes 荧临余烬",
