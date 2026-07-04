@@ -147,12 +147,14 @@ export default function AISection() {
                 <div className="text-sm text-gray-500 font-mono">{projects[activePanel].role}</div>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-6">
+              <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
                 {projects[activePanel].preview.map((item, i) => (
-                  <div key={i} className="border-2 border-gray-200 p-6 bg-white">
+                  <div key={i} className="border-2 border-gray-200 p-4 sm:p-6 bg-white min-w-0">
                     <div className="text-xs font-mono text-gray-500 mb-2">{item.label}</div>
-                    <div className="text-3xl font-mono font-bold">{item.value}</div>
-                    <div className="text-xs text-gray-500">{item.desc}</div>
+                    <div className="text-xl sm:text-3xl font-mono font-bold break-words leading-tight">
+                      {item.value}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">{item.desc}</div>
                   </div>
                 ))}
               </div>
