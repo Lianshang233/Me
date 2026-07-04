@@ -44,7 +44,7 @@ export default function AISection() {
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/HDVw/6bf293562db0a04c83648532991edb84.mp4",
       preview: [
         { label: "交付曲绘", value: "20+", desc: "UI / 3D 曲绘" },
-        { label: "对接需求", value: "100+", desc: "排期节点" },
+        { label: "热度", value: "2840000+", desc: "排期节点" },
       ],
     },
   ]
