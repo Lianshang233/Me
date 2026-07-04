@@ -9,9 +9,9 @@ export default function AISection() {
 
   const projects = [
     {
-      title: "像素冒险：回声",
-      role: "主策划 / 关卡设计",
-      description: "一款 2D 像素平台冒险游戏，负责世界观设定、关卡节奏与核心玩法循环设计。",
+      title: "ichni",
+      role: "美术PM / 项目管理",
+      description: "主打 \"音游可视化创作\" 的差异化玩法，以极简抽象的线条视觉为核心风格，是音游赛道备受玩家关注的标杆级新作",
       tags: ["关卡设计", "美术统筹", "策划"],
       stats: ["统筹资源", "统一美术", "团队协作"],
       icon: Gamepad2,
