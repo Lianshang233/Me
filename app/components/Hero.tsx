@@ -121,7 +121,7 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center">
+      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center gap-0">
         <div className="mb-8 flex justify-center">
           <div className="relative w-56 h-56 md:w-72 md:h-72" style={{ transform: `scale(${pulseScale})` }}>
             <svg
@@ -245,25 +245,6 @@ export default function Hero() {
             <br />
             <span className="font-mono text-xs md:text-sm">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维</span>
           </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-sm font-mono mb-12">
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">平面设计</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-black rounded-full animate-ping"></div>
-            <span className="group-hover:text-gray-600 transition-colors">摄影/编导/制片</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">游戏策划/PM</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">桌面运维</span>
-          </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
