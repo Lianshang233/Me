@@ -51,56 +51,149 @@ export default function Hero() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    const prefersReduced =
+      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    let width = 0
+    let height = 0
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+
+    const isMobile = () => window.innerWidth < 768
+    const mouse = { x: -9999, y: -9999 }
+
+    type P = { x: number; y: number; vx: number; vy: number; r: number }
+    let particles: P[] = []
+
+    const buildParticles = () => {
+      const count = isMobile() ? 42 : 84
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.4 + 0.6,
+      }))
+    }
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      width = canvas.clientWidth
+      height = canvas.clientHeight
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      buildParticles()
     }
 
     resizeCanvas()
 
-    const particles: Array<{ x: number; y: number; vx: number; vy: number; opacity: number }> = []
-
-    for (let i = 0; i < 30; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.2,
-      })
-    }
+    const linkDist = () => (isMobile() ? 95 : 140)
+    const mouseDist = 170
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, width, height)
+      const maxDist = linkDist()
 
-      particles.forEach((particle) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
 
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
+        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.y < 0 || p.y > height) p.vy *= -1
 
-        ctx.fillStyle = `rgba(0, 0, 0, ${particle.opacity})`
-        ctx.fillRect(particle.x, particle.y, 1, 1)
-      })
+        // subtle attraction toward cursor for an interactive tech feel
+        const mdx = mouse.x - p.x
+        const mdy = mouse.y - p.y
+        const md = Math.hypot(mdx, mdy)
+        if (md < mouseDist && md > 0.001) {
+          const pull = (1 - md / mouseDist) * 0.04
+          p.vx += (mdx / md) * pull
+          p.vy += (mdy / md) * pull
+        }
+        // damping to keep speeds calm
+        p.vx = Math.max(-0.8, Math.min(0.8, p.vx * 0.99))
+        p.vy = Math.max(-0.8, Math.min(0.8, p.vy * 0.99))
 
-      requestAnimationFrame(animate)
+        // connect to nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j]
+          const dx = p.x - q.x
+          const dy = p.y - q.y
+          const dist = Math.hypot(dx, dy)
+          if (dist < maxDist) {
+            const alpha = (1 - dist / maxDist) * 0.18
+            ctx.strokeStyle = `rgba(0,0,0,${alpha})`
+            ctx.lineWidth = 1
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(q.x, q.y)
+            ctx.stroke()
+          }
+        }
+
+        // connect to cursor
+        if (md < mouseDist) {
+          const alpha = (1 - md / mouseDist) * 0.35
+          ctx.strokeStyle = `rgba(0,0,0,${alpha})`
+          ctx.lineWidth = 1
+          ctx.beginPath()
+          ctx.moveTo(p.x, p.y)
+          ctx.lineTo(mouse.x, mouse.y)
+          ctx.stroke()
+        }
+
+        ctx.fillStyle = "rgba(0,0,0,0.55)"
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      rafRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    const rafRef = { current: 0 as number }
+    if (!prefersReduced) {
+      rafRef.current = requestAnimationFrame(animate)
+    } else {
+      // draw a single static frame
+      ctx.fillStyle = "rgba(0,0,0,0.4)"
+      particles.forEach((p) => {
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fill()
+      })
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouse.x = e.clientX - rect.left
+      mouse.y = e.clientY - rect.top
+    }
+    const handleMouseLeave = () => {
+      mouse.x = -9999
+      mouse.y = -9999
+    }
 
     window.addEventListener("resize", resizeCanvas)
-    return () => window.removeEventListener("resize", resizeCanvas)
+    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mouseout", handleMouseLeave)
+
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      window.removeEventListener("resize", resizeCanvas)
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mouseout", handleMouseLeave)
+    }
   }, [])
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden"
+      className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-40 pointer-events-none" />
 
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-[0.04] animate-gridDrift pointer-events-none">
         <div
           className="h-full w-full"
           style={{
@@ -108,10 +201,19 @@ export default function Hero() {
             linear-gradient(to right, #000 1px, transparent 1px),
             linear-gradient(to bottom, #000 1px, transparent 1px)
           `,
-            backgroundSize: "60px 60px",
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
+
+      {/* radial spotlight vignette for depth */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 38%, rgba(0,0,0,0.05) 0%, transparent 55%), radial-gradient(circle at 50% 100%, rgba(0,0,0,0.06) 0%, transparent 60%)",
+        }}
+      />
 
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-4 h-4 border border-black opacity-20 rotate-45 animate-pulse"></div>
@@ -121,9 +223,12 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center gap-0">
-        <div className="mb-8 flex justify-center">
-          <div className="relative w-56 h-56 md:w-72 md:h-72" style={{ transform: `scale(${pulseScale})` }}>
+      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-20 pb-16 flex flex-col items-center gap-0">
+        <div className="mb-4 sm:mb-6 flex justify-center">
+          <div
+            className="relative w-36 h-36 sm:w-52 sm:h-52 md:w-64 md:h-64"
+            style={{ transform: `scale(${pulseScale})` }}
+          >
             <svg
               viewBox="0 0 384 384"
               className="absolute inset-0 w-full h-full"
@@ -232,22 +337,22 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mb-10">
-          <h1 className="text-6xl md:text-8xl font-bold tracking-wider mb-4 font-mono">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono">
             Lian<span className="font-bold">shang</span>
           </h1>
-          <div className="text-2xl md:text-3xl font-light tracking-wider mb-6 font-mono shimmer-text leading-relaxed">恋殇</div>
-          <div className="w-40 h-px bg-black mx-auto mb-6 relative animate-lineExpand">
+          <div className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed">恋殇</div>
+          <div className="w-32 sm:w-40 h-px bg-black mx-auto mb-4 sm:mb-6 relative animate-lineExpand">
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
-          <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
             个人作品集/在线简历
             <br />
-            <span className="font-mono text-xs md:text-sm mt-9 block">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购</span>
+            <span className="font-mono text-xs md:text-sm mt-4 sm:mt-9 block">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购</span>
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-2xl mx-auto w-full">
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
               <CountUp end={3} suffix="+" />
@@ -277,10 +382,10 @@ export default function Hero() {
 
       <button
         onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 group cursor-pointer"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer"
         aria-label="向下滑动了解更多"
       >
-        <span className="text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
+        <span className="hidden sm:block text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
           向下滑动了解更多
         </span>
         <svg
