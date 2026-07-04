@@ -1,6 +1,6 @@
 "use client"
 
-import { Mail, MessageCircle, Github } from "lucide-react"
+import { Mail, MessageCircle, MessageSquare } from "lucide-react"
 
 export default function Footer() {
   const services = [
@@ -85,15 +85,15 @@ export default function Footer() {
                   <div className="font-mono group-hover:text-gray-600 transition-colors">Lianshang_design</div>
                 </div>
               </div>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="group flex items-center space-x-3">
+              <div className="group flex items-center space-x-3">
                 <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                  <Github size={18} />
+                  <MessageSquare size={18} />
                 </div>
                 <div>
-                  <div className="text-xs font-mono text-gray-500">主页</div>
-                  <div className="font-mono group-hover:text-gray-600 transition-colors">github.com/lianshang</div>
+                  <div className="text-xs font-mono text-gray-500">QQ</div>
+                  <div className="font-mono group-hover:text-gray-600 transition-colors">1552309639</div>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
