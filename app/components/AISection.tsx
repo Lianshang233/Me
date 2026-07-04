@@ -16,6 +16,10 @@ export default function AISection() {
       stats: ["统筹资源", "商业化", "统一美术"],
       icon: Gamepad2,
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/K4tf/1f5464f9fe21990252257fc193ca8f94.mp4",
+      preview: [
+        { label: "参与小项目", value: "8+", desc: "独立 / 商业" },
+        { label: "设计素材", value: "50+", desc: "素材量" },
+      ],
     },
     {
       title: "Minnes",
@@ -25,6 +29,10 @@ export default function AISection() {
       stats: ["从零开始", "非商业化", "统筹"],
       icon: Puzzle,
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/mv9O/08557ff8b7729e5a4b1535e45b95711f.mp4",
+      preview: [
+        { label: "预约量", value: "150000+", desc: "独立 / 非商业" },
+        { label: "热度", value: "4000000+", desc: "曝光" },
+      ],
     },
     {
       title: "Orzmic",
@@ -34,6 +42,10 @@ export default function AISection() {
       stats: ["资源对接", "非商业化", "需求分析"],
       icon: Swords,
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/HDVw/6bf293562db0a04c83648532991edb84.mp4",
+      preview: [
+        { label: "交付曲绘", value: "20+", desc: "UI / 3D 曲绘" },
+        { label: "对接需求", value: "100+", desc: "排期节点" },
+      ],
     },
   ]
 
@@ -136,16 +148,13 @@ export default function AISection() {
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-6">
-                <div className="border-2 border-gray-200 p-6 bg-white">
-                  <div className="text-xs font-mono text-gray-500 mb-2">预约量</div>
-                  <div className="text-3xl font-mono font-bold">150000+</div>
-                  <div className="text-xs text-gray-500">独立 / 非商业</div>
-                </div>
-                <div className="border-2 border-gray-200 p-6 bg-white">
-                  <div className="text-xs font-mono text-gray-500 mb-2">热度</div>
-                  <div className="text-3xl font-mono font-bold">4000000+</div>
-                  <div className="text-xs text-gray-500">曝光</div>
-                </div>
+                {projects[activePanel].preview.map((item, i) => (
+                  <div key={i} className="border-2 border-gray-200 p-6 bg-white">
+                    <div className="text-xs font-mono text-gray-500 mb-2">{item.label}</div>
+                    <div className="text-3xl font-mono font-bold">{item.value}</div>
+                    <div className="text-xs text-gray-500">{item.desc}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>
