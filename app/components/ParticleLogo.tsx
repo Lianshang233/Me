@@ -57,9 +57,9 @@ export default function ParticleLogo() {
     // 由 SVG 生成目标点
     const buildTargets = (): Array<{ x: number; y: number }> => {
       // 宽版标志：以宽度为主导等比缩放，并限制高度不超过视口
-      let logoW = width * (isMobile() ? 0.82 : 0.6)
+      let logoW = width * (isMobile() ? 0.94 : 0.78)
       let logoH = logoW / LOGO_ASPECT
-      const maxH = height * (isMobile() ? 0.5 : 0.62)
+      const maxH = height * (isMobile() ? 0.62 : 0.8)
       if (logoH > maxH) {
         logoH = maxH
         logoW = logoH * LOGO_ASPECT
@@ -113,7 +113,7 @@ export default function ParticleLogo() {
           sx: cx + Math.cos(ang) * dist,
           sy: cy + Math.sin(ang) * dist,
           r: 0.7 + Math.random() * 1.5,
-          a: 0.28 + Math.random() * 0.34,
+          a: 0.16 + Math.random() * 0.22,
           delay: Math.random() * 500,
           dur: 900 + Math.random() * 800,
           ph: Math.random() * Math.PI * 2,
