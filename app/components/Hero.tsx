@@ -120,6 +120,11 @@ export default function Hero() {
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
         <div className="mb-20 flex justify-center">
           <div className="relative w-96 h-96" style={{ transform: `scale(${pulseScale})` }}>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-sm font-mono text-black opacity-70 tracking-widest">可约稿</div>
+              </div>
+            </div>
             <svg
               width="384"
               height="384"
