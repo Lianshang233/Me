@@ -14,7 +14,7 @@ export default function AISection() {
       tags: ["关卡设计", "数值策划", "叙事"],
       stats: ["12 关卡", "3 结局", "8 小时流程"],
       icon: Gamepad2,
-      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/fYqJ/983d4bf0a93c14c22ead1e2283c5683b.mp4",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/K4tf/1f5464f9fe21990252257fc193ca8f94.mp4",
     },
     {
       title: "谜境：齿轮之城",
@@ -23,7 +23,7 @@ export default function AISection() {
       tags: ["谜题设计", "系统策划", "体验优化"],
       stats: ["40+ 谜题", "5 章节", "Steam 上架"],
       icon: Puzzle,
-      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/Nogi/3053af9e12487d7f257647383cd51bcb.mp4",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/mv9O/08557ff8b7729e5a4b1535e45b95711f.mp4",
     },
     {
       title: "群星战线",
@@ -32,7 +32,7 @@ export default function AISection() {
       tags: ["平衡设计", "经济系统", "多人对战"],
       stats: ["24 兵种", "PVP", "赛季机制"],
       icon: Swords,
-      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/a29g/cf1d5d07f3dc3fcd4e5d3603bde7ced0.mp4",
+      video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/HDVw/6bf293562db0a04c83648532991edb84.mp4",
     },
   ]
 

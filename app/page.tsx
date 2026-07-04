@@ -3,6 +3,7 @@ import Hero from "./components/Hero"
 import Features from "./components/Features"
 import AISection from "./components/AISection"
 import VercelSection from "./components/VercelSection"
+import OpsSection from "./components/OpsSection"
 import Footer from "./components/Footer"
 import Navigation from "./components/Navigation"
 import LoadingSpinner from "./components/LoadingSpinner"
@@ -16,6 +17,7 @@ export default function Home() {
         <Features />
         <AISection />
         <VercelSection />
+        <OpsSection />
         <Footer />
       </Suspense>
     </main>

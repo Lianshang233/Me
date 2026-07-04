@@ -17,6 +17,7 @@ export default function Navigation() {
     { id: "features", label: "图片展示" },
     { id: "ai", label: "游戏项目" },
     { id: "vercel", label: "视频" },
+    { id: "ops", label: "运维" },
     { id: "contact", label: "联系" },
   ]
 
