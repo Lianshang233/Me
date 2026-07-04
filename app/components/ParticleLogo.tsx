@@ -120,7 +120,7 @@ export default function ParticleLogo() {
           delay: Math.random() * 500,
           dur: 900 + Math.random() * 800,
           ph: Math.random() * Math.PI * 2,
-          amp: 0.6 + Math.random() * 1.4,
+          amp: 2.5 + Math.random() * 5.5,
           depth: 0.35 + Math.random() * 0.65,
           twk: Math.random() * Math.PI * 2,
           tws: 0.5 + Math.random() * 1.5,
@@ -156,9 +156,9 @@ export default function ParticleLogo() {
       ctx.clearRect(0, 0, width, height)
 
       // 全局待机节律：整体缓慢呼吸（成形后生效）
-      const breath = Math.sin(now * 0.0009) * 0.5 + 0.5 // 0..1
-      const breathScale = 1 + breath * 0.018 // 轻微向外扩张
-      const waveT = now * 0.0014
+      const breath = Math.sin(now * 0.0011) * 0.5 + 0.5 // 0..1
+      const breathScale = 1 + breath * 0.06 // 明显向外扩张/回收
+      const waveT = now * 0.0018
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -176,13 +176,13 @@ export default function ParticleLogo() {
         const brX = dx * (breathScale - 1) * drift
         const brY = dy * (breathScale - 1) * drift
 
-        // 2) 横向行进波：一道柔和的波从左向右穿过标志
-        const waveY = Math.sin(waveT - baseX * 0.006 + p.ph * 0.3) * 1.6 * p.depth * drift
+        // 2) 横向行进波：一道明显的波从左向右穿过标志
+        const waveY = Math.sin(waveT - baseX * 0.008 + p.ph * 0.3) * 8 * p.depth * drift
 
-        // 3) 每颗粒子的小幅轨道漂浮
-        const orbA = now * 0.0007 * p.tws + p.orb
+        // 3) 每颗粒子的轨道漂浮
+        const orbA = now * 0.0011 * p.tws + p.orb
         const idleX = Math.cos(orbA) * p.amp * drift
-        const idleY = Math.sin(orbA) * p.amp * 0.7 * drift
+        const idleY = Math.sin(orbA) * p.amp * 0.8 * drift
 
         // 4) 鼠标视差
         const parX = px * 14 * p.depth * drift
@@ -192,8 +192,8 @@ export default function ParticleLogo() {
         const y = baseY + brY + waveY + idleY + parY
 
         // 星光闪烁：叠加波峰时更亮
-        const twinkle = 0.72 + 0.28 * Math.sin(now * 0.0016 * p.tws + p.twk)
-        const wavePulse = 1 + 0.35 * Math.max(0, Math.sin(waveT - baseX * 0.006 + p.ph * 0.3))
+        const twinkle = 0.55 + 0.45 * Math.sin(now * 0.0022 * p.tws + p.twk)
+        const wavePulse = 1 + 0.8 * Math.max(0, Math.sin(waveT - baseX * 0.008 + p.ph * 0.3))
         ctx.globalAlpha = p.a * (0.15 + e * 0.85) * twinkle
         ctx.beginPath()
         ctx.arc(x, y, p.r * (drift < 1 ? 1 : wavePulse), 0, Math.PI * 2)
