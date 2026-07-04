@@ -12,8 +12,8 @@ export default function AISection() {
       title: "像素冒险：回声",
       role: "主策划 / 关卡设计",
       description: "一款 2D 像素平台冒险游戏，负责世界观设定、关卡节奏与核心玩法循环设计。",
-      tags: ["关卡设计", "数值策划", "叙事"],
-      stats: ["12 关卡", "3 结局", "8 小时流程"],
+      tags: ["关卡设计", "美术统筹", "策划"],
+      stats: ["统筹资源", "统一美术", "团队协作"],
       icon: Gamepad2,
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/K4tf/1f5464f9fe21990252257fc193ca8f94.mp4",
     },
@@ -41,8 +41,8 @@ export default function AISection() {
     <section id="ai" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8"></div>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">游戏项目</h2>
+          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目，点击切换查看项目视频预览</p>
         </Reveal>
 
@@ -53,14 +53,22 @@ export default function AISection() {
               return (
                 <div
                   key={index}
-                  className={`border-2 p-8 cursor-pointer transition-all duration-300 relative overflow-hidden ${
+                  className={`group border-2 p-8 cursor-pointer transition-all duration-300 relative overflow-hidden ${
                     activePanel === index ? "border-black bg-gray-50" : "border-gray-200 hover:border-gray-400"
                   }`}
                   onClick={() => setActivePanel(index)}
                 >
+                  {activePanel === index && (
+                    <div className="absolute inset-y-0 -left-full w-1/2 bg-gradient-to-r from-transparent via-black/5 to-transparent skew-x-12 animate-[scan_3s_ease-in-out_infinite] pointer-events-none"></div>
+                  )}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
-                      <IconComponent size={24} className="text-gray-600" />
+                      <IconComponent
+                        size={24}
+                        className={`text-gray-600 transition-transform duration-300 ${
+                          activePanel === index ? "scale-110 animate-float" : "group-hover:scale-110"
+                        }`}
+                      />
                       <h3 className="font-mono font-bold text-xl">{project.title}</h3>
                     </div>
                     <div className={`w-4 h-4 ${activePanel === index ? "bg-black animate-pulse" : "bg-gray-300"}`}></div>
@@ -73,14 +81,22 @@ export default function AISection() {
                     <div className="space-y-6 animate-fadeIn">
                       <div className="flex flex-wrap gap-3">
                         {project.tags.map((tag, i) => (
-                          <span key={i} className="bg-black text-white px-3 py-2 text-xs font-mono">
+                          <span
+                            key={i}
+                            className="bg-black text-white px-3 py-2 text-xs font-mono animate-popIn hover:scale-105 transition-transform"
+                            style={{ animationDelay: `${i * 80}ms` }}
+                          >
                             {tag}
                           </span>
                         ))}
                       </div>
                       <div className="grid grid-cols-3 gap-3">
                         {project.stats.map((stat, i) => (
-                          <div key={i} className="border border-gray-300 px-2 py-3 text-center">
+                          <div
+                            key={i}
+                            className="border border-gray-300 px-2 py-3 text-center animate-popIn hover:border-black hover:-translate-y-1 transition-all duration-300"
+                            style={{ animationDelay: `${i * 80 + 120}ms` }}
+                          >
                             <span className="font-mono text-sm">{stat}</span>
                           </div>
                         ))}

@@ -37,8 +37,8 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8"></div>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">联系</h2>
+          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">欢迎洽谈合作、约稿与项目委托</p>
         </Reveal>
 
@@ -47,7 +47,7 @@ export default function Footer() {
             <h3 className="font-mono font-bold text-4xl mb-6 tracking-wider">
               Lian<span className="font-light">shang</span>
             </h3>
-            <div className="font-mono tracking-[0.3em] text-xl mb-6">恋 殇</div>
+            <div className="font-mono tracking-[0.3em] text-xl mb-6 shimmer-text">恋殇</div>
             <p className="text-gray-600 leading-relaxed">
               独立创作者，专注平面设计、摄影与游戏策划。以简洁克制的视觉语言，为品牌与项目提供创意解决方案。
             </p>
@@ -69,7 +69,7 @@ export default function Footer() {
             <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">联系方式</h4>
             <div className="space-y-6">
               <a href="mailto:lianshangowo@outlook.com" className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Mail size={18} />
                 </div>
                 <div>
@@ -80,7 +80,7 @@ export default function Footer() {
                 </div>
               </a>
               <div className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <MessageCircle size={18} />
                 </div>
                 <div>
@@ -89,7 +89,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="group flex items-center space-x-3">
-                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <MessageSquare size={18} />
                 </div>
                 <div>

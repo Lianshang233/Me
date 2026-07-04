@@ -122,8 +122,8 @@ export default function Features() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8"></div>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">图片展示</h2>
+          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">平面设计、摄影与视觉作品精选，点击作品可展开查看全图</p>
         </Reveal>
 
@@ -132,9 +132,9 @@ export default function Features() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 text-sm font-mono border-2 transition-all duration-300 ${
+              className={`px-5 py-2 text-sm font-mono border-2 transition-all duration-300 hover:-translate-y-0.5 ${
                 activeCategory === cat
-                  ? "border-black bg-black text-white"
+                  ? "border-black bg-black text-white scale-105"
                   : "border-gray-300 text-gray-600 hover:border-gray-500"
               }`}
             >
@@ -163,7 +163,7 @@ export default function Features() {
                   <img
                     src={item.image || "/placeholder.svg"}
                     alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 ) : (
                   <span className="font-mono text-white/40 text-sm tracking-widest">{item.code}</span>

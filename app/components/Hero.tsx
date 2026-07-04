@@ -233,11 +233,11 @@ export default function Hero() {
         </div>
 
         <div className="mb-10">
-          <h1 className="text-6xl md:text-8xl font-light tracking-wider mb-4 font-mono">
+          <h1 className="text-6xl md:text-8xl font-bold tracking-wider mb-4 font-mono">
             Lian<span className="font-bold">shang</span>
           </h1>
-          <div className="text-2xl md:text-3xl font-light tracking-[0.3em] mb-6 font-mono">恋 殇</div>
-          <div className="w-40 h-px bg-black mx-auto mb-6 relative">
+          <div className="text-2xl md:text-3xl font-light tracking-[0.3em] mb-6 font-mono shimmer-text">恋殇</div>
+          <div className="w-40 h-px bg-black mx-auto mb-6 relative animate-lineExpand">
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
           <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
