@@ -3,17 +3,12 @@
 import { useEffect, useRef } from "react"
 
 /**
- * 粒子 Logo：将 SVG 标志形状栅格化后采样为大量圆点，
+ * 粒子 Logo：加载真实标志 PNG（白色图形 + 透明背景），采样其不透明像素为大量圆点，
  * 打开页面时粒子从四面八方汇聚拼成标志，之后随鼠标轻微移动。
  */
 
-// 标志的 SVG 矢量描述（白色部分 = 采样区域）。左侧为 “A” 三角环，右侧为 “V” 三角环。
-const LOGO_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 230'>
-  <g fill='#000' fill-rule='evenodd'>
-    <path d='M95,38 L152,196 L26,196 Z M95,104 L118,172 L72,172 Z'/>
-    <path d='M158,38 L254,38 L206,196 Z M176,56 L236,56 L206,150 Z'/>
-  </g>
-</svg>`
+// 真实标志图片的原始像素宽高比（用于等比缩放采样）
+const LOGO_ASPECT = 1470 / 795
 
 type Particle = {
   tx: number
@@ -61,15 +56,15 @@ export default function ParticleLogo() {
 
     // 由 SVG 生成目标点
     const buildTargets = (): Array<{ x: number; y: number }> => {
-      const box = Math.min(width, height) * (isMobile() ? 0.66 : 0.58)
-      const aspect = 280 / 230
-      let logoW = box
-      let logoH = box / aspect
-      if (logoH > box) {
-        logoH = box
-        logoW = box * aspect
+      // 宽版标志：以宽度为主导等比缩放，并限制高度不超过视口
+      let logoW = width * (isMobile() ? 0.82 : 0.6)
+      let logoH = logoW / LOGO_ASPECT
+      const maxH = height * (isMobile() ? 0.5 : 0.62)
+      if (logoH > maxH) {
+        logoH = maxH
+        logoW = logoH * LOGO_ASPECT
       }
-      const gap = isMobile() ? 4 : 4
+      const gap = isMobile() ? 4 : 3
       const off = document.createElement("canvas")
       off.width = Math.round(logoW)
       off.height = Math.round(logoH)
@@ -122,7 +117,7 @@ export default function ParticleLogo() {
           delay: Math.random() * 500,
           dur: 900 + Math.random() * 800,
           ph: Math.random() * Math.PI * 2,
-          amp: 0.6 + Math.random() * 1.8,
+          amp: 0.25 + Math.random() * 0.6,
           depth: 0.35 + Math.random() * 0.65,
         }
       })
@@ -163,10 +158,10 @@ export default function ParticleLogo() {
 
         // 成形后叠加轻微漂浮与鼠标视差
         const drift = e
-        const idleX = Math.sin(now * 0.0011 + p.ph) * p.amp * drift
-        const idleY = Math.cos(now * 0.0009 + p.ph) * p.amp * drift
-        const parX = px * 16 * p.depth * drift
-        const parY = py * 16 * p.depth * drift
+        const idleX = Math.sin(now * 0.0006 + p.ph) * p.amp * drift
+        const idleY = Math.cos(now * 0.0005 + p.ph) * p.amp * drift
+        const parX = px * 14 * p.depth * drift
+        const parY = py * 14 * p.depth * drift
 
         const x = baseX + idleX + parX
         const y = baseY + idleY + parY
@@ -181,7 +176,7 @@ export default function ParticleLogo() {
       raf.current = requestAnimationFrame(render)
     }
 
-    // 加载 SVG
+    // 加载真实标志 PNG
     let imgLoaded = false
     const imgRef = new Image()
     imgRef.crossOrigin = "anonymous"
@@ -197,7 +192,7 @@ export default function ParticleLogo() {
         raf.current = requestAnimationFrame(render)
       }
     }
-    imgRef.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(LOGO_SVG)
+    imgRef.src = "/logo-mark.png"
 
     const onMove = (ev: MouseEvent) => {
       mnx = (ev.clientX / window.innerWidth) * 2 - 1
