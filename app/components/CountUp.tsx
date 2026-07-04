@@ -15,6 +15,11 @@ export default function CountUp({ end, suffix = "", duration = 1600, className =
   const started = useRef(false)
 
   useEffect(() => {
+    started.current = false
+    setValue(0)
+  }, [end])
+
+  useEffect(() => {
     const el = ref.current
     if (!el) return
 

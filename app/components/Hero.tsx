@@ -236,14 +236,14 @@ export default function Hero() {
           <h1 className="text-6xl md:text-8xl font-bold tracking-wider mb-4 font-mono">
             Lian<span className="font-bold">shang</span>
           </h1>
-          <div className="text-2xl md:text-3xl font-light tracking-[0.3em] mb-6 font-mono shimmer-text">恋殇</div>
+          <div className="text-2xl md:text-3xl font-light tracking-wider mb-6 font-mono shimmer-text leading-relaxed">恋殇</div>
           <div className="w-40 h-px bg-black mx-auto mb-6 relative animate-lineExpand">
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
           <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            个人创作作品集
+            个人作品集/在线简历
             <br />
-            <span className="font-mono text-base md:text-lg">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维</span>
+            <span className="font-mono text-xs md:text-sm">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维</span>
           </p>
         </div>
 
@@ -254,42 +254,42 @@ export default function Hero() {
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-ping"></div>
-            <span className="group-hover:text-gray-600 transition-colors">摄影</span>
+            <span className="group-hover:text-gray-600 transition-colors">摄影/编导/制片</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">游戏策划</span>
+            <span className="group-hover:text-gray-600 transition-colors">游戏策划/PM</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">运维</span>
+            <span className="group-hover:text-gray-600 transition-colors">桌面运维</span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={5} suffix="+" />
+              <CountUp end={3} suffix="+" />
             </div>
             <div className="text-xs text-gray-500 font-mono">年经验</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={120} suffix="+" />
+              <CountUp end={40} suffix="+" />
             </div>
             <div className="text-xs text-gray-500 font-mono">作品</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={60} suffix="+" />
+              <CountUp end={4600} suffix="+" />
             </div>
-            <div className="text-xs text-gray-500 font-mono">合作客户</div>
+            <div className="text-xs text-gray-500 font-mono">合作/服务用户</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
               <CountUp end={100} suffix="%" />
             </div>
-            <div className="text-xs text-gray-500 font-mono">好评率</div>
+            <div className="text-xs text-gray-500 font-mono">及时/准时率</div>
           </div>
         </div>
       </div>
