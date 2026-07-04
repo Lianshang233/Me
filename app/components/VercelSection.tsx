@@ -108,26 +108,28 @@ export default function VercelSection() {
             >
             <button
               onClick={() => setActiveVideo(index)}
-              className={`group text-left w-full border-2 bg-gray-900 p-4 transition-all duration-300 hover:-translate-y-1 ${
+              className={`group text-left w-full border-2 bg-gray-900 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 ${
                 activeVideo === index ? "border-white" : "border-gray-700 hover:border-gray-500"
               }`}
             >
-              <div className="aspect-video w-full bg-black border border-gray-700 flex items-center justify-center mb-3 relative overflow-hidden">
+              <div className="w-24 shrink-0 aspect-video sm:w-full bg-black border border-gray-700 flex items-center justify-center sm:mb-3 relative overflow-hidden">
                 <div
-                  className={`w-0 h-0 border-y-8 border-y-transparent border-l-[14px] transition-all duration-300 group-hover:scale-125 ${
+                  className={`w-0 h-0 border-y-6 sm:border-y-8 border-y-transparent border-l-[10px] sm:border-l-[14px] transition-all duration-300 group-hover:scale-125 ${
                     activeVideo === index
                       ? "border-l-white animate-breathe"
                       : "border-l-gray-500 group-hover:border-l-white"
                   }`}
                 ></div>
-                <span className="absolute bottom-1 right-2 text-[10px] font-mono text-gray-600">{video.code}</span>
+                <span className="absolute bottom-1 right-2 text-[10px] font-mono text-gray-600 hidden sm:block">
+                  {video.code}
+                </span>
               </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-mono font-bold text-sm">{video.title}</div>
+              <div className="flex items-center justify-between flex-1 min-w-0">
+                <div className="min-w-0">
+                  <div className="font-mono font-bold text-sm truncate">{video.title}</div>
                   <div className="text-xs text-gray-500 font-mono mt-1">{video.category}</div>
                 </div>
-                {activeVideo === index && <div className="w-2 h-2 bg-white animate-pulse"></div>}
+                {activeVideo === index && <div className="w-2 h-2 bg-white animate-pulse shrink-0 ml-2"></div>}
               </div>
             </button>
             </Reveal>
