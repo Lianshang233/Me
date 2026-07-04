@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import CountUp from "./CountUp"
-import ParticleGlobe from "./ParticleGlobe"
+import ParticleLogo from "./ParticleLogo"
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
 
@@ -53,9 +53,9 @@ export default function Hero() {
     }
   }, [])
 
-  // 向下滑动：地球逐渐放大并淡出，仿佛穿越进入地球
-  const globeScale = 1 + progress * 2.4
-  const globeOpacity = clamp(1 - progress * 1.5, 0, 1)
+  // 向下滑动：标志逐渐放大并淡出，仿佛穿越进入
+  const logoScale = 1 + progress * 2.4
+  const logoOpacity = clamp(1 - progress * 1.5, 0, 1)
   // 文案随之上移淡出，让位给下一屏
   const contentOpacity = clamp(1 - progress * 1.4, 0, 1)
   const contentShift = -progress * 60
@@ -97,23 +97,13 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      {/* 粒子地球：居中背景层，与文案穿插；向下滑动时放大淡出 */}
+      {/* 粒子标志：居中背景层，粒子从四面八方汇聚成 Logo；向下滑动时放大淡出 */}
       <div
-        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform"
-        style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
+        className="absolute inset-0 z-0 pointer-events-none will-change-transform"
+        style={{ transform: `scale(${logoScale})`, opacity: logoOpacity, transition: "none" }}
         aria-hidden="true"
       >
-        <div className="relative aspect-square w-[min(170vw,1400px)] max-w-none opacity-40 animate-heroReveal" style={{ animationDelay: "0.1s" }}>
-          <ParticleGlobe />
-          <div
-            className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
-            style={{ animationDuration: "36s" }}
-          ></div>
-          <div
-            className="absolute inset-[12%] border border-gray-400 rounded-full opacity-[0.1] animate-spin"
-            style={{ animationDuration: "24s", animationDirection: "reverse" }}
-          ></div>
-        </div>
+        <ParticleLogo />
       </div>
 
       {/* 主内容：位于地球之上，文案凸显 */}
