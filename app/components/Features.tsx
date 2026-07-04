@@ -164,7 +164,7 @@ export default function Features() {
           aria-label={selected.title}
         >
           <div
-            className="relative bg-gray-50 border-2 border-black w-auto max-w-[92vw] max-h-[92vh] overflow-y-auto"
+            className="relative bg-gray-50 border-2 border-black inline-flex flex-col w-auto max-w-[92vw] max-h-[92vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black z-10"></div>
@@ -184,15 +184,13 @@ export default function Features() {
               </button>
             </div>
 
-            <div className="flex items-center justify-center">
-              <img
-                src={selected.image || "/placeholder.svg"}
-                alt={selected.title}
-                className="block w-auto h-auto max-w-[92vw] max-h-[65vh] object-contain"
-              />
-            </div>
+            <img
+              src={selected.image || "/placeholder.svg"}
+              alt={selected.title}
+              className="block w-auto h-auto max-w-[92vw] max-h-[70vh] object-contain"
+            />
 
-            <div className="px-6 py-5">
+            <div className="px-6 py-5 overflow-y-auto">
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="bg-black text-white px-3 py-1.5 text-xs font-mono">{selected.category}</span>
                 <span className="border border-gray-300 px-3 py-1.5 text-xs font-mono text-gray-500">
