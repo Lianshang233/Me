@@ -13,7 +13,7 @@ export default function AISection() {
       role: "美术PM / 项目管理",
       description: "主打 \"音游可视化创作\" 的差异化玩法，以极简抽象的线条视觉为核心风格，是音游赛道备受玩家关注的标杆级新作",
       tags: ["关卡设计", "美术统筹", "策划"],
-      stats: ["统筹资源", "统一美术", "团队协作"],
+      stats: ["统筹资源", "商业化", "统一美术"],
       icon: Gamepad2,
       video: "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260704/K4tf/1f5464f9fe21990252257fc193ca8f94.mp4",
     },
