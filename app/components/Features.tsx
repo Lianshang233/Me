@@ -71,7 +71,8 @@ export default function Features() {
       category: "视觉",
       code: "VS_001",
       color: "#0b0f14",
-      image: "/works/mars-ashes.png",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/niB9/1920X818/%E5%90%88%E6%88%90_1_00000.png",
       description: "赛博朋克风格场景合成，青色霓虹光效与数据流氛围营造，主视觉设计。",
     },
     {
@@ -79,7 +80,8 @@ export default function Features() {
       category: "视觉",
       code: "VS_002",
       color: "#8ba06a",
-      image: "/works/lianshang-piano.png",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/K4wb/1920X818/%E8%A7%86%E8%A7%89.png",
       description: "唯美自然场景合成，水面钢琴与光晕氛围渲染，个人主视觉作品（后期协力 ZZYFISH）。",
     },
     {
@@ -87,7 +89,8 @@ export default function Features() {
       category: "视觉",
       code: "VS_003",
       color: "#1a1d24",
-      image: "/works/replace.jpeg",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/7YVW/3000X3000/Replace.png",
       description: "故障艺术专辑封面设计，等距结构与棱镜光效结合噪点质感（CHEN ING MUSIC）。",
     },
   ]
