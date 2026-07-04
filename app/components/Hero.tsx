@@ -243,15 +243,11 @@ export default function Hero() {
           <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
             个人创作作品集
             <br />
-            <span className="font-mono text-base md:text-lg">平面设计 • 摄影 • 游戏策划</span>
+            <span className="font-mono text-base md:text-lg">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维</span>
           </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-sm font-mono mb-12">
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">接单中</span>
-          </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
             <span className="group-hover:text-gray-600 transition-colors">平面设计</span>
