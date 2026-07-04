@@ -30,7 +30,7 @@ export default function OpsSection() {
       {/* animated grid backdrop */}
       <div className="absolute inset-0 opacity-[0.07]">
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 animate-gridDrift"
           style={{
             backgroundImage:
               "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
@@ -38,6 +38,8 @@ export default function OpsSection() {
           }}
         />
       </div>
+      {/* rotating glow */}
+      <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-[0.08] animate-spinSlow pointer-events-none bg-[conic-gradient(from_0deg,transparent,#fff,transparent)]" />
       {/* scanning line */}
       <div className="absolute left-0 right-0 h-px bg-white/30 animate-scan pointer-events-none" />
 
@@ -47,9 +49,16 @@ export default function OpsSection() {
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-xs font-mono tracking-widest text-gray-400">SYSTEM ONLINE</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">运维</h2>
-          <div className="w-32 h-px bg-white mx-auto mb-8" />
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">运维</h2>
+          <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand" />
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">桌面运维 · 保障设备与系统稳定高效运行</p>
+          <div className="text-gray-400 max-w-3xl mx-auto mt-8 space-y-3 text-sm font-light leading-relaxed text-left sm:text-center">
+            <p>桌面运维负责人，主导公司内部办公设备与终端系统的全量运维管理工作，确保设备与网络的稳定高效。</p>
+            <p>累计服务 4 家企业，覆盖文旅、商业零售、文化传媒多场景，具备硬件采购选型 — 终端部署交付 — 日常运维保障 — 资产台账管理全链路能力。</p>
+            <p>全量运维管理终端设备 110 + 台，服务内部员工 150 + 人，累计承接技术支持与售后保障服务 4000 + 人次；</p>
+            <p>独立主导 2 项终端批量采购与标准化部署项目，累计采购管控电脑整机及配件 50 + 套，全流程把控需求调研、选型比价、成本管控、验收入库环节；</p>
+            <p>最终实现硬件兼容故障率降至 0%，单次故障处理效率提升 30%，终端整体故障率下降 40%</p>
+          </div>
         </Reveal>
 
         {/* live metrics bar */}
@@ -65,11 +74,13 @@ export default function OpsSection() {
                   </div>
                   <span className="font-mono font-bold text-2xl tabular-nums">{m.value}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-gray-800 overflow-hidden">
+                <div className="h-1.5 w-full bg-gray-800 overflow-hidden relative">
                   <div
-                    className="h-full bg-white transition-all duration-700 ease-out"
+                    className="h-full bg-white transition-all duration-700 ease-out relative overflow-hidden"
                     style={{ width: `${m.value}%` }}
-                  />
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/40 to-transparent -translate-x-full animate-[shimmer_2.5s_linear_infinite]" />
+                  </div>
                 </div>
               </Reveal>
             )
@@ -84,13 +95,14 @@ export default function OpsSection() {
               <Reveal
                 key={s.title}
                 delay={(i % 2) * 120}
-                className="relative border-2 border-gray-800 bg-gray-950 p-8 overflow-hidden group hover:bg-gray-900 hover:border-white/40 transition-all duration-300"
+                className="relative border-2 border-gray-800 bg-gray-950 p-8 overflow-hidden group hover:bg-gray-900 hover:border-white/40 hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/30 group-hover:border-white transition-colors pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/30 group-hover:border-white transition-colors pointer-events-none" />
+                <div className="absolute inset-y-0 -left-full w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:left-full transition-all duration-700 ease-out pointer-events-none" />
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
                 <div className="flex items-start space-x-5">
-                  <div className="shrink-0 w-14 h-14 border-2 border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
-                    <Icon size={24} />
+                  <div className="shrink-0 w-14 h-14 border-2 border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:rotate-6 transition-all duration-300">
+                    <Icon size={24} className="group-hover:animate-float" />
                   </div>
                   <div>
                     <div className="flex items-center space-x-3 mb-3">

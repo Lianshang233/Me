@@ -61,8 +61,8 @@ export default function VercelSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
-          <div className="w-32 h-px bg-white mx-auto mb-8"></div>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">视频</h2>
+          <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示</p>
           <p className="text-gray-500 max-w-3xl mx-auto text-sm font-mono mt-4">
             如需了解更多请转到下面《联系》
@@ -114,8 +114,10 @@ export default function VercelSection() {
             >
               <div className="aspect-video w-full bg-black border border-gray-700 flex items-center justify-center mb-3 relative overflow-hidden">
                 <div
-                  className={`w-0 h-0 border-y-8 border-y-transparent border-l-[14px] transition-colors duration-300 ${
-                    activeVideo === index ? "border-l-white" : "border-l-gray-500 group-hover:border-l-white"
+                  className={`w-0 h-0 border-y-8 border-y-transparent border-l-[14px] transition-all duration-300 group-hover:scale-125 ${
+                    activeVideo === index
+                      ? "border-l-white animate-breathe"
+                      : "border-l-gray-500 group-hover:border-l-white"
                   }`}
                 ></div>
                 <span className="absolute bottom-1 right-2 text-[10px] font-mono text-gray-600">{video.code}</span>

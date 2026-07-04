@@ -1,106 +1,45 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import CountUp from "./CountUp"
+import ParticleGlobe from "./ParticleGlobe"
+
+const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
 
 export default function Hero() {
-  const [rotation, setRotation] = useState(0)
-  const [pulseScale, setPulseScale] = useState(1)
-  const [connectionNodes, setConnectionNodes] = useState<Array<{ x: number; y: number; active: boolean }>>([])
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const nodes = [
-      { x: 80, y: 100, active: false },
-      { x: 240, y: 120, active: false },
-      { x: 120, y: 220, active: false },
-      { x: 200, y: 200, active: false },
-      { x: 160, y: 80, active: false },
-      { x: 280, y: 180, active: false },
-    ]
-    setConnectionNodes(nodes)
-
-    const rotationInterval = setInterval(() => {
-      setRotation((prev) => prev + 0.2)
-    }, 50)
-
-    const pulseInterval = setInterval(() => {
-      setPulseScale((prev) => (prev === 1 ? 1.03 : 1))
-    }, 3000)
-
-    const nodeInterval = setInterval(() => {
-      setConnectionNodes((prev) =>
-        prev.map((node) => ({
-          ...node,
-          active: Math.random() > 0.8,
-        })),
-      )
-    }, 2000)
-
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const p = clamp(window.scrollY / (window.innerHeight * 0.7), 0, 1)
+        setProgress(p)
+      })
+    }
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
-      clearInterval(rotationInterval)
-      clearInterval(pulseInterval)
-      clearInterval(nodeInterval)
+      cancelAnimationFrame(raf)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    resizeCanvas()
-
-    const particles: Array<{ x: number; y: number; vx: number; vy: number; opacity: number }> = []
-
-    for (let i = 0; i < 30; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.2,
-      })
-    }
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      particles.forEach((particle) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${particle.opacity})`
-        ctx.fillRect(particle.x, particle.y, 1, 1)
-      })
-
-      requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    window.addEventListener("resize", resizeCanvas)
-    return () => window.removeEventListener("resize", resizeCanvas)
-  }, [])
+  // 向下滑动：地球逐渐放大并淡出，仿佛穿越进入地球
+  const globeScale = 1 + progress * 2.4
+  const globeOpacity = clamp(1 - progress * 1.5, 0, 1)
+  // 文案随之上移淡出，让位给下一屏
+  const contentOpacity = clamp(1 - progress * 1.4, 0, 1)
+  const contentShift = -progress * 60
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden"
+      className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
-
-      <div className="absolute inset-0 opacity-5">
+      {/* 背景网格 */}
+      <div className="absolute inset-0 opacity-[0.04] animate-gridDrift pointer-events-none">
         <div
           className="h-full w-full"
           style={{
@@ -108,11 +47,21 @@ export default function Hero() {
             linear-gradient(to right, #000 1px, transparent 1px),
             linear-gradient(to bottom, #000 1px, transparent 1px)
           `,
-            backgroundSize: "60px 60px",
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
 
+      {/* 径向光晕，增强纵深 */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 45%, rgba(0,0,0,0.05) 0%, transparent 55%), radial-gradient(circle at 50% 100%, rgba(0,0,0,0.06) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* 漂浮装饰 */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-4 h-4 border border-black opacity-20 rotate-45 animate-pulse"></div>
         <div className="absolute bottom-32 right-32 w-6 h-6 border border-black opacity-15 animate-bounce"></div>
@@ -121,185 +70,110 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center">
-        <div className="mb-8 flex justify-center">
-          <div className="relative w-56 h-56 md:w-72 md:h-72" style={{ transform: `scale(${pulseScale})` }}>
-            <svg
-              viewBox="0 0 384 384"
-              className="absolute inset-0 w-full h-full"
-              style={{ transform: `rotate(${rotation}deg)` }}
-            >
-              <defs>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-                <pattern id="worldMap" patternUnits="userSpaceOnUse" width="384" height="384">
-                  <path
-                    d="M100 150 Q120 140 140 150 Q160 160 180 150 Q200 140 220 150"
-                    fill="none"
-                    stroke="#000"
-                    strokeWidth="1"
-                    opacity="0.3"
-                  />
-                  <path
-                    d="M80 200 Q100 190 120 200 Q140 210 160 200"
-                    fill="none"
-                    stroke="#000"
-                    strokeWidth="1"
-                    opacity="0.2"
-                  />
-                </pattern>
-              </defs>
+      {/* 粒子地球：居中背景层，与文案穿插；向下滑动时放大淡出 */}
+      <div
+        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform"
+        style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
+        aria-hidden="true"
+      >
+        <div className="relative aspect-square w-[min(94vw,660px)] opacity-[0.55] animate-heroReveal" style={{ animationDelay: "0.1s" }}>
+          <ParticleGlobe />
+          <div
+            className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
+            style={{ animationDuration: "36s" }}
+          ></div>
+          <div
+            className="absolute inset-[12%] border border-gray-400 rounded-full opacity-[0.1] animate-spin"
+            style={{ animationDuration: "24s", animationDirection: "reverse" }}
+          ></div>
+        </div>
+      </div>
 
-              <circle
-                cx="192"
-                cy="192"
-                r="180"
-                fill="none"
-                stroke="#000"
-                strokeWidth="1"
-                opacity="0.4"
-                filter="url(#glow)"
-              />
+      {/* 主内容：位于地球之上，文案凸显 */}
+      <div
+        className="relative z-10 text-center max-w-6xl mx-auto px-6 flex flex-col items-center will-change-transform"
+        style={{ opacity: contentOpacity, transform: `translateY(${contentShift}px)`, transition: "none" }}
+      >
+        {/* 文案后方白色光晕，确保在地球上清晰可读 */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[90%] pointer-events-none -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.65) 42%, transparent 74%)",
+          }}
+          aria-hidden="true"
+        />
 
-              <circle cx="192" cy="192" r="150" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <circle cx="192" cy="192" r="120" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <circle cx="192" cy="192" r="90" fill="none" stroke="#000" strokeWidth="1" opacity="0.15" />
-              <circle cx="192" cy="192" r="60" fill="none" stroke="#000" strokeWidth="1" opacity="0.1" />
+        <h1
+          className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono animate-heroReveal"
+          style={{ animationDelay: "0.15s", textShadow: "0 4px 40px rgba(255,255,255,0.95)" }}
+        >
+          Lian<span className="font-bold">shang</span>
+        </h1>
 
-              <path d="M 192 12 Q 192 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.4" />
-              <path d="M 192 12 Q 120 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <path d="M 192 12 Q 264 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <path d="M 192 12 Q 156 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <path d="M 192 12 Q 228 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-
-              <ellipse cx="192" cy="192" rx="180" ry="60" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <ellipse cx="192" cy="192" rx="180" ry="120" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <ellipse cx="192" cy="192" rx="150" ry="40" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-
-              {connectionNodes.map((node, index) => (
-                <g key={index}>
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={node.active ? "4" : "2"}
-                    fill="#000"
-                    opacity={node.active ? "0.9" : "0.5"}
-                  />
-                  {node.active && (
-                    <circle cx={node.x} cy={node.y} r="8" fill="none" stroke="#000" strokeWidth="1" opacity="0.4">
-                      <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                  )}
-                </g>
-              ))}
-
-              <line x1="100" y1="120" x2="280" y2="140" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
-              </line>
-              <line x1="140" y1="260" x2="240" y2="240" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.5s" repeatCount="indefinite" />
-              </line>
-              <line x1="192" y1="100" x2="320" y2="220" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite" />
-              </line>
-
-              <circle cx="100" cy="120" r="1" fill="#000">
-                <animateMotion dur="3s" repeatCount="indefinite">
-                  <path d="M 0 0 L 180 20 L 140 140" />
-                </animateMotion>
-              </circle>
-              <circle cx="280" cy="140" r="1" fill="#000">
-                <animateMotion dur="4s" repeatCount="indefinite">
-                  <path d="M 0 0 L -140 100 L -40 -40" />
-                </animateMotion>
-              </circle>
-            </svg>
-
-            <div
-              className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
-              style={{ animationDuration: "30s" }}
-            ></div>
-            <div
-              className="absolute inset-8 border border-gray-400 rounded-full opacity-15 animate-spin"
-              style={{ animationDuration: "20s", animationDirection: "reverse" }}
-            ></div>
-          </div>
+        <div
+          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed animate-heroReveal"
+          style={{ animationDelay: "0.3s" }}
+        >
+          恋殇
         </div>
 
-        <div className="mb-10">
-          <h1 className="text-6xl md:text-8xl font-light tracking-wider mb-4 font-mono">
-            Lian<span className="font-bold">shang</span>
-          </h1>
-          <div className="text-2xl md:text-3xl font-light tracking-[0.3em] mb-6 font-mono">恋 殇</div>
-          <div className="w-40 h-px bg-black mx-auto mb-6 relative">
-            <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
-          </div>
-          <p className="text-xl md:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            个人创作作品集
-            <br />
-            <span className="font-mono text-base md:text-lg">平面设计 • 摄影 • 游戏策划</span>
-          </p>
+        <div
+          className="w-32 sm:w-40 h-px bg-black mx-auto mb-4 sm:mb-6 relative animate-lineExpand"
+          style={{ animationDelay: "0.45s" }}
+        >
+          <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-sm font-mono mb-12">
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">接单中</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">平面设计</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-black rounded-full animate-ping"></div>
-            <span className="group-hover:text-gray-600 transition-colors">摄影</span>
-          </div>
-          <div className="flex items-center space-x-2 group">
-            <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">游戏策划</span>
-          </div>
-        </div>
+        <p
+          className="text-lg sm:text-2xl font-light tracking-wide text-gray-700 max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-8 animate-heroReveal"
+          style={{ animationDelay: "0.55s", textShadow: "0 2px 24px rgba(255,255,255,0.95)" }}
+        >
+          个人作品集/在线简历
+          <br />
+          <span className="font-mono text-xs md:text-sm mt-4 sm:mt-9 block text-gray-600">
+            平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购
+          </span>
+        </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
+        <div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-2xl mx-auto w-full animate-heroReveal"
+          style={{ animationDelay: "0.7s" }}
+        >
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={5} suffix="+" />
+              <CountUp end={3} suffix="+" />
             </div>
             <div className="text-xs text-gray-500 font-mono">年经验</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={120} suffix="+" />
+              <CountUp end={40} suffix="+" />
             </div>
             <div className="text-xs text-gray-500 font-mono">作品</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
-              <CountUp end={60} suffix="+" />
+              <CountUp end={4600} suffix="+" />
             </div>
-            <div className="text-xs text-gray-500 font-mono">合作客户</div>
+            <div className="text-xs text-gray-500 font-mono">合作/服务用户</div>
           </div>
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
               <CountUp end={100} suffix="%" />
             </div>
-            <div className="text-xs text-gray-500 font-mono">好评率</div>
+            <div className="text-xs text-gray-500 font-mono">及时/准时率</div>
           </div>
         </div>
       </div>
 
       <button
         onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 group cursor-pointer"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer z-10"
+        style={{ opacity: contentOpacity }}
         aria-label="向下滑动了解更多"
       >
-        <span className="text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
+        <span className="hidden sm:block text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
           向下滑动了解更多
         </span>
         <svg
