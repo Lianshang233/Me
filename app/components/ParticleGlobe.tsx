@@ -42,12 +42,17 @@ export default function ParticleGlobe() {
       x: number
       y: number
       z: number
+      // 随机变化因子
+      rf: number // 大小随机 0.6 - 1.5
+      af: number // 亮度随机 0.7 - 1.25
+      tw: number // 闪烁相位
+      tws: number // 闪烁速度
     }
 
     let particles: Particle[] = []
 
     const buildParticles = () => {
-      const count = isMobile() ? 460 : 900
+      const count = isMobile() ? 2000 : 4200
       const gAngle = Math.PI * (1 + Math.sqrt(5)) // 黄金角
       particles = Array.from({ length: count }, (_, i) => {
         // 斐波那契球均匀分布
@@ -70,6 +75,10 @@ export default function ParticleGlobe() {
           x: 0,
           y: 0,
           z: 0,
+          rf: 0.6 + Math.random() * 0.9,
+          af: 0.7 + Math.random() * 0.55,
+          tw: Math.random() * Math.PI * 2,
+          tws: 0.6 + Math.random() * 1.8,
         }
       })
     }
@@ -78,7 +87,7 @@ export default function ParticleGlobe() {
       size = canvas.clientWidth
       cx = size / 2
       cy = size / 2
-      radius = size * 0.42
+      radius = size * 0.49
       canvas.width = size * dpr
       canvas.height = size * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
@@ -123,10 +132,20 @@ export default function ParticleGlobe() {
       ctx.clearRect(0, 0, size, size)
 
       // 先算屏幕坐标与深度，按深度排序（远的先画）
-      const projected: Array<{ sx: number; sy: number; scale: number; depth: number }> = []
+      const projected: Array<{
+        sx: number
+        sy: number
+        scale: number
+        depth: number
+        rf: number
+        af: number
+        tw: number
+      }> = []
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
+        // 更新闪烁相位
+        p.tw += 0.016 * p.tws
         // 从散乱位置插值到球面位置
         const ux = p.sx + (p.tx - p.sx) * e
         const uy = p.sy + (p.ty - p.sy) * e
@@ -143,17 +162,19 @@ export default function ParticleGlobe() {
         const scale = fov / (fov + z2)
         const screenX = cx + x1 * radius * scale
         const screenY = cy + y2 * radius * scale
-        projected.push({ sx: screenX, sy: screenY, scale, depth: z2 })
+        projected.push({ sx: screenX, sy: screenY, scale, depth: z2, rf: p.rf, af: p.af, tw: p.tw })
       }
 
       projected.sort((a, b) => b.depth - a.depth)
 
       for (let i = 0; i < projected.length; i++) {
-        const { sx, sy, scale, depth } = projected[i]
+        const { sx, sy, scale, depth, rf, af, tw } = projected[i]
         // 深度归一 (-1 近 -> 1 远)，用于透明度
         const dn = (depth + 1) / 2 // 0 近 -> 1 远
-        const alpha = (1 - dn) * 0.75 + 0.12
-        const r = Math.max(0.4, scale * 1.7)
+        // 闪烁：轻微亮度波动
+        const twinkle = 0.85 + Math.sin(tw) * 0.15
+        const alpha = Math.min(1, ((1 - dn) * 0.7 + 0.12) * af * twinkle)
+        const r = Math.max(0.18, scale * 0.62 * rf)
         ctx.beginPath()
         ctx.fillStyle = `rgba(0,0,0,${alpha.toFixed(3)})`
         ctx.arc(sx, sy, r, 0, Math.PI * 2)

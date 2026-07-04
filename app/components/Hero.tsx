@@ -76,7 +76,7 @@ export default function Hero() {
         style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
         aria-hidden="true"
       >
-        <div className="relative aspect-square w-[min(94vw,660px)] opacity-[0.55] animate-heroReveal" style={{ animationDelay: "0.1s" }}>
+        <div className="relative aspect-square w-[min(128vw,940px)] opacity-40 animate-heroReveal" style={{ animationDelay: "0.1s" }}>
           <ParticleGlobe />
           <div
             className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
@@ -99,7 +99,7 @@ export default function Hero() {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[90%] pointer-events-none -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.65) 42%, transparent 74%)",
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 45%, transparent 78%)",
           }}
           aria-hidden="true"
         />
