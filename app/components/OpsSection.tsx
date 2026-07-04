@@ -49,7 +49,7 @@ export default function OpsSection() {
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-xs font-mono tracking-widest text-gray-400">SYSTEM ONLINE</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">运维</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">运维</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand" />
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">桌面运维 · 保障设备与系统稳定高效运行</p>
           <div className="text-gray-400 max-w-3xl mx-auto mt-8 space-y-3 text-sm font-light leading-relaxed text-left sm:text-center">

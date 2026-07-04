@@ -61,7 +61,7 @@ export default function VercelSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">视频</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示</p>
           <p className="text-gray-500 max-w-3xl mx-auto text-sm font-mono mt-4">

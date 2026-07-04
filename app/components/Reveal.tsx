@@ -47,23 +47,30 @@ export default function Reveal({
     return () => observer.disconnect()
   }, [])
 
-  const offsetClass = {
-    up: "translate-y-8",
-    down: "-translate-y-8",
-    left: "translate-x-8",
-    right: "-translate-x-8",
-    none: "",
+  const offset = {
+    up: "translateY(30px)",
+    down: "translateY(-30px)",
+    left: "translateX(30px)",
+    right: "translateX(-30px)",
+    none: "translateY(0)",
   }[direction]
 
   const Tag = as as any
 
+  // 与首页 heroReveal 一致的"模糊 + 上浮 + 微缩放"入场
   return (
     <Tag
       ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out will-change-transform ${
-        visible ? "opacity-100 translate-x-0 translate-y-0" : `opacity-0 ${offsetClass}`
-      } ${className}`}
+      style={{
+        transitionProperty: "opacity, transform, filter",
+        transitionDuration: "1000ms",
+        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+        transitionDelay: `${delay}ms`,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translate3d(0,0,0) scale(1)" : `${offset} scale(0.97)`,
+        filter: visible ? "blur(0px)" : "blur(14px)",
+      }}
+      className={`will-change-transform ${className}`}
     >
       {children}
     </Tag>

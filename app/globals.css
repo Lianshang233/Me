@@ -333,15 +333,6 @@ nav button:hover {
   }
 }
 
-.shimmer-text {
-  background: linear-gradient(90deg, currentColor 0%, currentColor 40%, rgba(150, 150, 150, 0.4) 50%, currentColor 60%, currentColor 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 5s linear infinite;
-}
-
 /* Expanding underline sweep */
 @keyframes lineExpand {
   from {

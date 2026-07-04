@@ -139,7 +139,7 @@ export default function Hero() {
         </h1>
 
         <div
-          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed animate-heroReveal"
+          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono leading-relaxed animate-heroReveal"
           style={{ animationDelay: "0.3s" }}
         >
           恋殇

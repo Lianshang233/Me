@@ -53,7 +53,7 @@ export default function AISection() {
     <section id="ai" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono shimmer-text">游戏项目</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目，点击切换查看项目视频预览</p>
         </Reveal>
