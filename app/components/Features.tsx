@@ -30,19 +30,21 @@ export default function Features() {
 
   return (
     <section id="features" className="py-32 bg-gray-50 relative">
-      <div className="absolute inset-0 opacity-8">
+      <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
         <svg width="100%" height="100%" className="absolute inset-0">
           <defs>
-            <pattern id="circuit" width="120" height="120" patternUnits="userSpaceOnUse">
-              <path d="M 0 60 L 30 60 L 30 30 L 90 30 L 90 90 L 120 90" fill="none" stroke="#000" strokeWidth="1" />
-              <circle cx="30" cy="60" r="3" fill="#000" />
-              <circle cx="90" cy="30" r="3" fill="#000" />
-              <rect x="85" y="85" width="10" height="10" fill="none" stroke="#000" strokeWidth="1" />
+            <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+              <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#000" strokeWidth="1" />
+            </pattern>
+            <pattern id="dots" width="64" height="64" patternUnits="userSpaceOnUse">
+              <circle cx="0" cy="0" r="1.5" fill="#000" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#circuit)" />
+          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#dots)" />
         </svg>
       </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-transparent to-gray-50 pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
