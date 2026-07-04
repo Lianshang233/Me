@@ -264,6 +264,10 @@ export default function Hero() {
             <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
             <span className="group-hover:text-gray-600 transition-colors">游戏策划</span>
           </div>
+          <div className="flex items-center space-x-2 group">
+            <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
+            <span className="group-hover:text-gray-600 transition-colors">运维</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
