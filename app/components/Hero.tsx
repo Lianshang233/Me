@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import CountUp from "./CountUp"
 import ParticleGlobe from "./ParticleGlobe"
 
@@ -8,6 +8,7 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
 
 export default function Hero() {
   const [progress, setProgress] = useState(0)
+  const tiltRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let raf = 0
@@ -23,6 +24,32 @@ export default function Hero() {
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener("scroll", onScroll)
+    }
+  }, [])
+
+  // 鼠标晃动时文案轻微 3D 视差（幅度很小，保持可读）
+  useEffect(() => {
+    const el = tiltRef.current
+    if (!el) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    let raf = 0
+    let tx = 0
+    let ty = 0
+    const onMove = (e: MouseEvent) => {
+      const nx = (e.clientX / window.innerWidth) * 2 - 1
+      const ny = (e.clientY / window.innerHeight) * 2 - 1
+      tx = -ny * 3
+      ty = nx * 3
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `rotateX(${tx.toFixed(2)}deg) rotateY(${ty.toFixed(2)}deg)`
+      })
+    }
+    window.addEventListener("mousemove", onMove, { passive: true })
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      cancelAnimationFrame(raf)
     }
   }, [])
 
@@ -92,7 +119,12 @@ export default function Hero() {
       {/* 主内容：位于地球之上，文案凸显 */}
       <div
         className="relative z-10 text-center max-w-6xl mx-auto px-6 flex flex-col items-center will-change-transform"
-        style={{ opacity: contentOpacity, transform: `translateY(${contentShift}px)`, transition: "none" }}
+        style={{
+          opacity: contentOpacity,
+          transform: `translateY(${contentShift}px)`,
+          transition: "none",
+          perspective: "1200px",
+        }}
       >
         {/* 文案后方白色光晕，确保在地球上清晰可读 */}
         <div
@@ -104,6 +136,11 @@ export default function Hero() {
           aria-hidden="true"
         />
 
+        <div
+          ref={tiltRef}
+          className="relative flex flex-col items-center w-full"
+          style={{ transition: "transform 0.2s ease-out", transformStyle: "preserve-3d" }}
+        >
         <h1
           className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono animate-heroReveal"
           style={{ animationDelay: "0.15s", textShadow: "0 4px 40px rgba(255,255,255,0.95)" }}
@@ -164,6 +201,7 @@ export default function Hero() {
             </div>
             <div className="text-xs text-gray-500 font-mono">及时/准时率</div>
           </div>
+        </div>
         </div>
       </div>
 

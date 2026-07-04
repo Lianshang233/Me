@@ -112,7 +112,20 @@ export default function ParticleGlobe() {
 
     const fov = 3.2
 
+    // 分桶批量绘制：按透明度量化到若干层，减少 fillStyle 切换与逐帧排序开销
+    const BUCKETS = 14
+    const bX: number[][] = Array.from({ length: BUCKETS }, () => [])
+    const bY: number[][] = Array.from({ length: BUCKETS }, () => [])
+    const bR: number[][] = Array.from({ length: BUCKETS }, () => [])
+    const bN: number[] = new Array(BUCKETS).fill(0)
+
+    let visible = true
+
     const render = () => {
+      if (!visible) {
+        raf.current = 0
+        return
+      }
       const now = performance.now()
       progress = Math.min(1, (now - startTime) / convergeDuration)
       const e = easeOutCubic(progress)
@@ -131,16 +144,8 @@ export default function ParticleGlobe() {
 
       ctx.clearRect(0, 0, size, size)
 
-      // 先算屏幕坐标与深度，按深度排序（远的先画）
-      const projected: Array<{
-        sx: number
-        sy: number
-        scale: number
-        depth: number
-        rf: number
-        af: number
-        tw: number
-      }> = []
+      // 重置分桶计数（复用数组，避免逐帧分配）
+      for (let b = 0; b < BUCKETS; b++) bN[b] = 0
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -162,22 +167,38 @@ export default function ParticleGlobe() {
         const scale = fov / (fov + z2)
         const screenX = cx + x1 * radius * scale
         const screenY = cy + y2 * radius * scale
-        projected.push({ sx: screenX, sy: screenY, scale, depth: z2, rf: p.rf, af: p.af, tw: p.tw })
+
+        // 深度归一 (-1 近 -> 1 远)，用于透明度
+        const dn = (z2 + 1) / 2
+        const twinkle = 0.85 + Math.sin(p.tw) * 0.15
+        const alpha = Math.min(1, ((1 - dn) * 0.7 + 0.12) * p.af * twinkle)
+        const r = Math.max(0.18, scale * 0.62 * p.rf)
+
+        // 按透明度量化到桶（低透明度桶先画，近似由远及近）
+        let b = (alpha * (BUCKETS - 1)) | 0
+        if (b < 0) b = 0
+        else if (b > BUCKETS - 1) b = BUCKETS - 1
+        const n = bN[b]
+        bX[b][n] = screenX
+        bY[b][n] = screenY
+        bR[b][n] = r
+        bN[b] = n + 1
       }
 
-      projected.sort((a, b) => b.depth - a.depth)
-
-      for (let i = 0; i < projected.length; i++) {
-        const { sx, sy, scale, depth, rf, af, tw } = projected[i]
-        // 深度归一 (-1 近 -> 1 远)，用于透明度
-        const dn = (depth + 1) / 2 // 0 近 -> 1 远
-        // 闪烁：轻微亮度波动
-        const twinkle = 0.85 + Math.sin(tw) * 0.15
-        const alpha = Math.min(1, ((1 - dn) * 0.7 + 0.12) * af * twinkle)
-        const r = Math.max(0.18, scale * 0.62 * rf)
+      const TWO_PI = Math.PI * 2
+      for (let b = 1; b < BUCKETS; b++) {
+        const n = bN[b]
+        if (!n) continue
+        ctx.fillStyle = `rgba(0,0,0,${(b / (BUCKETS - 1)).toFixed(3)})`
         ctx.beginPath()
-        ctx.fillStyle = `rgba(0,0,0,${alpha.toFixed(3)})`
-        ctx.arc(sx, sy, r, 0, Math.PI * 2)
+        const xs = bX[b]
+        const ys = bY[b]
+        const rs = bR[b]
+        for (let k = 0; k < n; k++) {
+          const rr = rs[k]
+          ctx.moveTo(xs[k] + rr, ys[k])
+          ctx.arc(xs[k], ys[k], rr, 0, TWO_PI)
+        }
         ctx.fill()
       }
 
@@ -196,13 +217,13 @@ export default function ParticleGlobe() {
     const handleMouseMove = (e: MouseEvent) => {
       const nx = (e.clientX / window.innerWidth) * 2 - 1
       const ny = (e.clientY / window.innerHeight) * 2 - 1
-      targetRotY = nx * 0.7
-      targetRotX = ny * 0.5
+      targetRotY = nx * 0.32
+      targetRotX = ny * 0.22
     }
     const handleDeviceOrient = (e: DeviceOrientationEvent) => {
       if (e.gamma == null || e.beta == null) return
-      targetRotY = (e.gamma / 45) * 0.6
-      targetRotX = (e.beta / 90) * 0.4
+      targetRotY = (e.gamma / 45) * 0.28
+      targetRotX = (e.beta / 90) * 0.18
     }
 
     const handleResize = () => {
@@ -210,12 +231,24 @@ export default function ParticleGlobe() {
       resize()
     }
 
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0].isIntersecting
+        if (visible && !prefersReduced && !raf.current) {
+          raf.current = requestAnimationFrame(render)
+        }
+      },
+      { threshold: 0 },
+    )
+    io.observe(canvas)
+
     window.addEventListener("mousemove", handleMouseMove)
     window.addEventListener("deviceorientation", handleDeviceOrient)
     window.addEventListener("resize", handleResize)
 
     return () => {
       cancelAnimationFrame(raf.current)
+      io.disconnect()
       window.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("deviceorientation", handleDeviceOrient)
       window.removeEventListener("resize", handleResize)
