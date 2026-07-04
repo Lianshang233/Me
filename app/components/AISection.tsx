@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Gamepad2, Puzzle, Swords } from "lucide-react"
+import Reveal from "./Reveal"
 
 export default function AISection() {
   const [activePanel, setActivePanel] = useState(0)
@@ -39,14 +40,14 @@ export default function AISection() {
   return (
     <section id="ai" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
+        <Reveal className="text-center mb-20">
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目，点击切换查看项目视频预览</p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <div className="space-y-6">
+          <Reveal direction="left" className="space-y-6">
             {projects.map((project, index) => {
               const IconComponent = project.icon
               return (
@@ -89,9 +90,9 @@ export default function AISection() {
                 </div>
               )
             })}
-          </div>
+          </Reveal>
 
-          <div className="lg:sticky lg:top-24">
+          <Reveal direction="right" delay={120} className="lg:sticky lg:top-24">
             <div className="border-2 border-gray-200 bg-gray-50 p-8">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="font-mono font-bold text-lg">项目预览</h4>
@@ -131,7 +132,7 @@ export default function AISection() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

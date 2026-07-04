@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Monitor, ShieldCheck, Cpu, HardDrive, Wifi, Terminal, Activity } from "lucide-react"
+import Reveal from "./Reveal"
 
 export default function OpsSection() {
   const [tick, setTick] = useState(0)
@@ -41,22 +42,22 @@ export default function OpsSection() {
       <div className="absolute left-0 right-0 h-px bg-white/30 animate-scan pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
+        <Reveal className="text-center mb-20">
           <div className="inline-flex items-center space-x-2 border border-white/20 px-4 py-1 mb-6">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-xs font-mono tracking-widest text-gray-400">SYSTEM ONLINE</span>
           </div>
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">运维</h2>
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">运维</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8" />
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">桌面运维 · 保障设备与系统稳定高效运行</p>
-        </div>
+        </Reveal>
 
         {/* live metrics bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
-          {metrics.map((m) => {
+          {metrics.map((m, mi) => {
             const Icon = m.icon
             return (
-              <div key={m.label} className="border-2 border-gray-800 bg-gray-950 p-6 group hover:border-white/40 transition-colors">
+              <Reveal key={m.label} delay={mi * 100} className="border-2 border-gray-800 bg-gray-950 p-6 group hover:border-white/40 transition-colors">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <Icon size={18} className="text-gray-400" />
@@ -70,7 +71,7 @@ export default function OpsSection() {
                     style={{ width: `${m.value}%` }}
                   />
                 </div>
-              </div>
+              </Reveal>
             )
           })}
         </div>
@@ -80,8 +81,9 @@ export default function OpsSection() {
           {services.map((s, i) => {
             const Icon = s.icon
             return (
-              <div
+              <Reveal
                 key={s.title}
+                delay={(i % 2) * 120}
                 className="relative border-2 border-gray-800 bg-gray-950 p-8 overflow-hidden group hover:bg-gray-900 hover:border-white/40 transition-all duration-300"
               >
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/30 group-hover:border-white transition-colors pointer-events-none" />
@@ -98,7 +100,7 @@ export default function OpsSection() {
                     <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             )
           })}
         </div>

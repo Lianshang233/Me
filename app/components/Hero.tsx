@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import CountUp from "./CountUp"
 
 export default function Hero() {
   const [rotation, setRotation] = useState(0)
@@ -265,21 +266,29 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-8 max-w-2xl mx-auto">
-          <div className="text-center">
-            <div className="text-3xl font-mono font-bold">5+</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl mx-auto w-full">
+          <div className="text-center group">
+            <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
+              <CountUp end={5} suffix="+" />
+            </div>
             <div className="text-xs text-gray-500 font-mono">年经验</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-mono font-bold">120+</div>
+          <div className="text-center group">
+            <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
+              <CountUp end={120} suffix="+" />
+            </div>
             <div className="text-xs text-gray-500 font-mono">作品</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-mono font-bold">60+</div>
+          <div className="text-center group">
+            <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
+              <CountUp end={60} suffix="+" />
+            </div>
             <div className="text-xs text-gray-500 font-mono">合作客户</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-mono font-bold">100%</div>
+          <div className="text-center group">
+            <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
+              <CountUp end={100} suffix="%" />
+            </div>
             <div className="text-xs text-gray-500 font-mono">好评率</div>
           </div>
         </div>

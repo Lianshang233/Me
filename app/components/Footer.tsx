@@ -1,6 +1,7 @@
 "use client"
 
 import { Mail, MessageCircle, MessageSquare } from "lucide-react"
+import Reveal from "./Reveal"
 
 export default function Footer() {
   const services = [
@@ -35,11 +36,11 @@ export default function Footer() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
+        <Reveal className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">欢迎洽谈合作、约稿与项目委托</p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="md:col-span-1">
@@ -67,13 +68,15 @@ export default function Footer() {
           <div>
             <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">联系方式</h4>
             <div className="space-y-6">
-              <a href="mailto:lianshang@example.com" className="group flex items-center space-x-3">
+              <a href="mailto:lianshangowo@outlook.com" className="group flex items-center space-x-3">
                 <div className="w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
                   <Mail size={18} />
                 </div>
                 <div>
                   <div className="text-xs font-mono text-gray-500">邮箱</div>
-                  <div className="font-mono group-hover:text-gray-600 transition-colors">lianshang@example.com</div>
+                  <div className="font-mono group-hover:text-gray-600 transition-colors break-all">
+                    lianshangowo@outlook.com
+                  </div>
                 </div>
               </a>
               <div className="group flex items-center space-x-3">
@@ -100,10 +103,10 @@ export default function Footer() {
 
         <div className="flex justify-center mb-16">
           <a
-            href="mailto:lianshang@example.com"
-            className="font-mono border-2 border-black px-10 py-4 text-lg hover:bg-black hover:text-white transition-colors tracking-wide"
+            href="mailto:lianshangowo@outlook.com"
+            className="group font-mono border-2 border-black px-10 py-4 text-lg hover:bg-black hover:text-white transition-colors tracking-wide"
           >
-            开始合作 →
+            开始合作 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
 
@@ -113,7 +116,7 @@ export default function Footer() {
               © 2024 Lianshang · 恋殇. 保留所有权利。
             </div>
 
-            <div className="flex items-center space-x-8 text-sm font-mono">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-mono">
               <span className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-black animate-pulse"></div>
                 <span className="group-hover:text-gray-600 transition-colors">平面设计</span>

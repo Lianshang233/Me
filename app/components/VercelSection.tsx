@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Reveal from "./Reveal"
 
 type VideoItem = {
   title: string
@@ -59,16 +60,16 @@ export default function VercelSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
+        <Reveal className="text-center mb-20">
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
           <div className="w-32 h-px bg-white mx-auto mb-8"></div>
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示</p>
           <p className="text-gray-500 max-w-3xl mx-auto text-sm font-mono mt-4">
             如需了解更多请转到下面《联系》
           </p>
-        </div>
+        </Reveal>
 
-        <div className="mb-12 border-2 border-gray-700 bg-gray-900 p-4 md:p-6">
+        <Reveal className="mb-12 border-2 border-gray-700 bg-gray-900 p-4 md:p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <span className="text-xs font-mono text-gray-500">{videos[activeVideo].code}</span>
@@ -95,14 +96,19 @@ export default function VercelSection() {
           </div>
 
           <p className="text-sm text-gray-400 leading-relaxed mt-4 font-mono">{videos[activeVideo].description}</p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {videos.map((video, index) => (
-            <button
+            <Reveal
               key={video.code}
+              delay={index * 100}
+              as="span"
+              className="block"
+            >
+            <button
               onClick={() => setActiveVideo(index)}
-              className={`group text-left border-2 bg-gray-900 p-4 transition-all duration-300 hover:-translate-y-1 ${
+              className={`group text-left w-full border-2 bg-gray-900 p-4 transition-all duration-300 hover:-translate-y-1 ${
                 activeVideo === index ? "border-white" : "border-gray-700 hover:border-gray-500"
               }`}
             >
@@ -122,6 +128,7 @@ export default function VercelSection() {
                 {activeVideo === index && <div className="w-2 h-2 bg-white animate-pulse"></div>}
               </div>
             </button>
+            </Reveal>
           ))}
         </div>
       </div>

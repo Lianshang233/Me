@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { X } from "lucide-react"
+import Reveal from "./Reveal"
 
 type GalleryItem = {
   title: string
@@ -120,11 +121,11 @@ export default function Features() {
       <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-transparent to-gray-50 pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
+        <Reveal className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">平面设计、摄影与视觉作品精选，点击作品可展开查看全图</p>
-        </div>
+        </Reveal>
 
         <div className="flex justify-center flex-wrap gap-3 mb-12">
           {categories.map((cat) => (
@@ -144,9 +145,9 @@ export default function Features() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filtered.map((item, index) => (
+            <Reveal key={item.code} delay={(index % 4) * 90}>
             <div
-              key={item.code}
-              className="group relative bg-white border-2 border-gray-200 hover:border-black transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              className="group relative bg-white border-2 border-gray-200 hover:border-black transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full"
               onMouseEnter={() => setActiveItem(index)}
               onMouseLeave={() => setActiveItem(null)}
               onClick={() => item.image && setSelected(item)}
@@ -186,6 +187,7 @@ export default function Features() {
                 <div className="w-2 h-2 bg-black group-hover:animate-pulse"></div>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>
