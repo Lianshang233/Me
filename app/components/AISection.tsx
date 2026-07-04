@@ -1,80 +1,54 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Brain, Zap, Settings } from "lucide-react"
+import { useState } from "react"
+import { Gamepad2, Puzzle, Swords } from "lucide-react"
 
 export default function AISection() {
   const [activePanel, setActivePanel] = useState(0)
-  const [processingData, setProcessingData] = useState(false)
-  const [metrics, setMetrics] = useState({
-    throughput: 1247,
-    accuracy: 99.8,
-    latency: 47,
-    efficiency: 94.2,
-  })
 
-  const panels = [
+  const projects = [
     {
-      title: "工作流自动化",
-      description: "基于机器学习算法的智能流程优化与任务调度",
-      metrics: ["99.9% 可用率", "< 50ms 响应", "自动扩缩容", "ML 驱动"],
-      processes: ["数据摄取", "模式识别", "决策制定", "动作执行"],
-      icon: Settings,
+      title: "像素冒险：回声",
+      role: "主策划 / 关卡设计",
+      description: "一款 2D 像素平台冒险游戏，负责世界观设定、关卡节奏与核心玩法循环设计。",
+      tags: ["关卡设计", "数值策划", "叙事"],
+      stats: ["12 关卡", "3 结局", "8 小时流程"],
+      icon: Gamepad2,
+      color: "#111111",
     },
     {
-      title: "预测分析",
-      description: "使用深度学习模型进行先进的模式识别与用量预测",
-      metrics: ["实时分析", "95% 准确率", "数据驱动", "趋势预测"],
-      processes: ["数据采集", "特征提取", "模型训练", "预测输出"],
-      icon: Brain,
+      title: "谜境：齿轮之城",
+      role: "玩法策划 / 谜题设计",
+      description: "解谜类独立游戏，主导机关谜题体系与难度曲线，注重玩家心流体验。",
+      tags: ["谜题设计", "系统策划", "体验优化"],
+      stats: ["40+ 谜题", "5 章节", "Steam 上架"],
+      icon: Puzzle,
+      color: "#2b2b2b",
     },
     {
-      title: "智能配置",
-      description: "自动化 eSIM 部署与配置管理，实现零接触运维",
-      metrics: ["零接触部署", "批量操作", "错误恢复", "自动修复"],
-      processes: ["配置文件创建", "验证", "部署", "监控"],
-      icon: Zap,
+      title: "群星战线",
+      role: "系统策划 / 平衡设计",
+      description: "多人策略对战游戏，负责兵种平衡、经济系统与匹配机制的设计与调优。",
+      tags: ["平衡设计", "经济系统", "多人对战"],
+      stats: ["24 兵种", "PVP", "赛季机制"],
+      icon: Swords,
+      color: "#3d3d3d",
     },
   ]
-
-  useEffect(() => {
-    const metricsInterval = setInterval(() => {
-      setMetrics((prev) => ({
-        throughput: prev.throughput + Math.floor(Math.random() * 20 - 10),
-        accuracy: Math.max(95, Math.min(100, prev.accuracy + (Math.random() - 0.5) * 0.2)),
-        latency: Math.max(30, Math.min(80, prev.latency + Math.floor(Math.random() * 10 - 5))),
-        efficiency: Math.max(90, Math.min(100, prev.efficiency + (Math.random() - 0.5) * 0.5)),
-      }))
-    }, 2000)
-
-    const processingInterval = setInterval(() => {
-      setProcessingData(true)
-      setTimeout(() => setProcessingData(false), 1500)
-    }, 5000)
-
-    return () => {
-      clearInterval(metricsInterval)
-      clearInterval(processingInterval)
-    }
-  }, [])
 
   return (
     <section id="ai" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">
-            ONE<span className="font-bold">X</span>™ AI 引擎
-          </h2>
+          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            先进的人工智能，驱动新一代 eSIM 管理与自动化
-          </p>
+          <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目（封面为占位色块，可替换为真实截图）</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-6">
-            {panels.map((panel, index) => {
-              const IconComponent = panel.icon
+            {projects.map((project, index) => {
+              const IconComponent = project.icon
               return (
                 <div
                   key={index}
@@ -83,43 +57,30 @@ export default function AISection() {
                   }`}
                   onClick={() => setActivePanel(index)}
                 >
-                  {activePanel === index && processingData && (
-                    <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                      <div className="text-sm font-mono text-black animate-pulse">处理中...</div>
-                    </div>
-                  )}
-
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <IconComponent size={24} className="text-gray-600" />
-                      <h3 className="font-mono font-bold text-xl">{panel.title}</h3>
+                      <h3 className="font-mono font-bold text-xl">{project.title}</h3>
                     </div>
-                    <div
-                      className={`w-4 h-4 ${activePanel === index ? "bg-black animate-pulse" : "bg-gray-300"}`}
-                    ></div>
+                    <div className={`w-4 h-4 ${activePanel === index ? "bg-black animate-pulse" : "bg-gray-300"}`}></div>
                   </div>
 
-                  <p className="text-gray-600 mb-6 leading-relaxed">{panel.description}</p>
+                  <div className="text-xs font-mono text-gray-400 mb-4">{project.role}</div>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
 
                   {activePanel === index && (
                     <div className="space-y-6 animate-fadeIn">
-                      <div className="grid grid-cols-2 gap-3">
-                        {panel.metrics.map((metric, i) => (
-                          <span key={i} className="bg-black text-white px-3 py-2 text-xs font-mono text-center">
-                            {metric}
+                      <div className="flex flex-wrap gap-3">
+                        {project.tags.map((tag, i) => (
+                          <span key={i} className="bg-black text-white px-3 py-2 text-xs font-mono">
+                            {tag}
                           </span>
                         ))}
                       </div>
-
-                      <div className="space-y-3">
-                        <div className="text-sm font-mono text-gray-500 mb-3">流程：</div>
-                        {panel.processes.map((process, i) => (
-                          <div key={i} className="flex items-center space-x-3 text-sm">
-                            <div
-                              className={`w-3 h-3 ${processingData && i <= 2 ? "bg-black animate-pulse" : "bg-gray-400"}`}
-                            ></div>
-                            <span className="font-mono">{process}</span>
-                            {i < panel.processes.length - 1 && <div className="flex-1 h-px bg-gray-300 ml-2"></div>}
+                      <div className="grid grid-cols-3 gap-3">
+                        {project.stats.map((stat, i) => (
+                          <div key={i} className="border border-gray-300 px-2 py-3 text-center">
+                            <span className="font-mono text-sm">{stat}</span>
                           </div>
                         ))}
                       </div>
@@ -130,172 +91,38 @@ export default function AISection() {
             })}
           </div>
 
-          <div className="space-y-8">
-            <div className="relative h-96 border-2 border-gray-200 bg-gray-50 p-8">
-              <h4 className="font-mono font-bold text-lg mb-6">神经网络活动</h4>
-              <div className="relative h-full">
-                <svg width="100%" height="100%" className="absolute inset-0">
-                  <g>
-                    {[0, 1, 2, 3].map((i) => (
-                      <circle
-                        key={`input-${i}`}
-                        cx="60"
-                        cy={60 + i * 60}
-                        r="8"
-                        fill="#000"
-                        opacity={processingData ? "0.8" : "0.4"}
-                      >
-                        {processingData && (
-                          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1s" repeatCount="indefinite" />
-                        )}
-                      </circle>
-                    ))}
-                  </g>
+          <div className="lg:sticky lg:top-24">
+            <div className="border-2 border-gray-200 bg-gray-50 p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h4 className="font-mono font-bold text-lg">项目预览</h4>
+                <span className="text-xs font-mono text-gray-400">{`0${activePanel + 1} / 0${projects.length}`}</span>
+              </div>
 
-                  <g>
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <circle
-                        key={`hidden1-${i}`}
-                        cx="180"
-                        cy={40 + i * 50}
-                        r="6"
-                        fill="#000"
-                        opacity={processingData ? "0.6" : "0.3"}
-                      >
-                        {processingData && (
-                          <animate
-                            attributeName="opacity"
-                            values="0.3;0.6;0.3"
-                            dur="1s"
-                            begin={`${i * 0.1}s`}
-                            repeatCount="indefinite"
-                          />
-                        )}
-                      </circle>
-                    ))}
-                  </g>
+              <div
+                className="aspect-video w-full flex items-center justify-center relative border-2 border-black transition-colors duration-500"
+                style={{ backgroundColor: projects[activePanel].color }}
+              >
+                <span className="font-mono text-white/40 text-sm tracking-widest">GAME PREVIEW</span>
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/40"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/40"></div>
+              </div>
 
-                  <g>
-                    {[0, 1, 2].map((i) => (
-                      <circle
-                        key={`hidden2-${i}`}
-                        cx="300"
-                        cy={80 + i * 60}
-                        r="6"
-                        fill="#000"
-                        opacity={processingData ? "0.6" : "0.3"}
-                      >
-                        {processingData && (
-                          <animate
-                            attributeName="opacity"
-                            values="0.3;0.6;0.3"
-                            dur="1s"
-                            begin={`${i * 0.15}s`}
-                            repeatCount="indefinite"
-                          />
-                        )}
-                      </circle>
-                    ))}
-                  </g>
+              <div className="mt-6">
+                <div className="font-mono font-bold text-xl mb-2">{projects[activePanel].title}</div>
+                <div className="text-sm text-gray-500 font-mono">{projects[activePanel].role}</div>
+              </div>
 
-                  <g>
-                    {[0, 1].map((i) => (
-                      <circle
-                        key={`output-${i}`}
-                        cx="420"
-                        cy={100 + i * 60}
-                        r="8"
-                        fill="#000"
-                        opacity={processingData ? "0.8" : "0.4"}
-                      >
-                        {processingData && (
-                          <animate
-                            attributeName="opacity"
-                            values="0.4;0.8;0.4"
-                            dur="1s"
-                            begin="0.5s"
-                            repeatCount="indefinite"
-                          />
-                        )}
-                      </circle>
-                    ))}
-                  </g>
-
-                  {[0, 1, 2, 3].map((i) =>
-                    [0, 1, 2, 3, 4].map((j) => (
-                      <line
-                        key={`conn-input-${i}-${j}`}
-                        x1="60"
-                        y1={60 + i * 60}
-                        x2="180"
-                        y2={40 + j * 50}
-                        stroke="#000"
-                        strokeWidth="1"
-                        opacity={processingData ? "0.3" : "0.1"}
-                      />
-                    )),
-                  )}
-
-                  {[0, 1, 2, 3, 4].map((i) =>
-                    [0, 1, 2].map((j) => (
-                      <line
-                        key={`conn-hidden1-${i}-${j}`}
-                        x1="180"
-                        y1={40 + i * 50}
-                        x2="300"
-                        y2={80 + j * 60}
-                        stroke="#000"
-                        strokeWidth="1"
-                        opacity={processingData ? "0.3" : "0.1"}
-                      />
-                    )),
-                  )}
-
-                  {[0, 1, 2].map((i) =>
-                    [0, 1].map((j) => (
-                      <line
-                        key={`conn-hidden2-${i}-${j}`}
-                        x1="300"
-                        y1={80 + i * 60}
-                        x2="420"
-                        y2={100 + j * 60}
-                        stroke="#000"
-                        strokeWidth="1"
-                        opacity={processingData ? "0.3" : "0.1"}
-                      />
-                    )),
-                  )}
-                </svg>
-
-                <div className="absolute bottom-4 left-0 right-0 flex justify-between text-xs font-mono text-gray-500">
-                  <span>输入</span>
-                  <span>隐藏层</span>
-                  <span>隐藏层</span>
-                  <span>输出</span>
+              <div className="mt-8 grid grid-cols-2 gap-6">
+                <div className="border-2 border-gray-200 p-6 bg-white">
+                  <div className="text-xs font-mono text-gray-500 mb-2">参与项目</div>
+                  <div className="text-3xl font-mono font-bold">8+</div>
+                  <div className="text-xs text-gray-500">独立 / 商业</div>
                 </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">吞吐量</div>
-                <div className="text-3xl font-mono font-bold">{metrics.throughput.toLocaleString()}</div>
-                <div className="text-xs text-gray-500">请求/秒</div>
-              </div>
-              <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">准确率</div>
-                <div className="text-3xl font-mono font-bold">{metrics.accuracy.toFixed(1)}%</div>
-                <div className="text-xs text-gray-500">预测</div>
-              </div>
-              <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">延迟</div>
-                <div className="text-3xl font-mono font-bold">{metrics.latency}ms</div>
-                <div className="text-xs text-gray-500">平均响应</div>
-              </div>
-              <div className="border-2 border-gray-200 p-6 bg-white">
-                <div className="text-xs font-mono text-gray-500 mb-2">效率</div>
-                <div className="text-3xl font-mono font-bold">{metrics.efficiency.toFixed(1)}%</div>
-                <div className="text-xs text-gray-500">资源利用率</div>
+                <div className="border-2 border-gray-200 p-6 bg-white">
+                  <div className="text-xs font-mono text-gray-500 mb-2">设计文档</div>
+                  <div className="text-3xl font-mono font-bold">50+</div>
+                  <div className="text-xs text-gray-500">策划案</div>
+                </div>
               </div>
             </div>
           </div>

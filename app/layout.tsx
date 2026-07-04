@@ -16,23 +16,22 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台 | 缅甸",
-  description:
-    "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台。由 AI 驱动的先进解决方案，覆盖全球，基于 Vercel 基础设施。",
-  keywords: "eSIM, 物联网, 缅甸, GSMA, AI, 连接, 电信, Vercel, 边缘计算, SGP.22",
-  authors: [{ name: "NexoraSIM" }],
+  title: "Lianshang · 恋殇 - 个人创作作品集",
+  description: "Lianshang（恋殇）的个人作品集，专注平面设计、摄影与游戏策划。",
+  keywords: "作品集, 平面设计, 摄影, 游戏策划, 恋殇, Lianshang, 设计师",
+  authors: [{ name: "Lianshang" }],
   robots: "index, follow",
   openGraph: {
-    title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台",
-    description: "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台",
+    title: "Lianshang · 恋殇 - 个人创作作品集",
+    description: "专注平面设计、摄影与游戏策划的个人作品集",
     type: "website",
     locale: "zh_CN",
-    siteName: "NexoraSIM",
+    siteName: "Lianshang",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NexoraSIM™ - AI 驱动的 eSIM 与物联网平台",
-    description: "面向缅甸的符合 GSMA 标准的 eSIM 与物联网连接平台",
+    title: "Lianshang · 恋殇 - 个人创作作品集",
+    description: "专注平面设计、摄影与游戏策划的个人作品集",
   },
   generator: 'v0.app'
 }

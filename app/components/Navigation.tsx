@@ -14,10 +14,10 @@ export default function Navigation() {
 
   const navItems = [
     { id: "hero", label: "首页" },
-    { id: "features", label: "核心功能" },
-    { id: "ai", label: "AI 引擎" },
-    { id: "vercel", label: "基础设施" },
-    { id: "contact", label: "联系我们" },
+    { id: "features", label: "图片展示" },
+    { id: "ai", label: "游戏项目" },
+    { id: "vercel", label: "视频" },
+    { id: "contact", label: "联系" },
   ]
 
   useEffect(() => {
@@ -88,8 +88,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="font-mono font-bold text-xl tracking-wider shrink-0">
-            NEXORA<span className="font-light">SIM</span>
-            <sup className="text-xs">™</sup>
+            Lianshang<span className="font-light"> · 恋殇</span>
           </div>
 
           <div className="hidden md:flex items-center relative max-w-[60%]">

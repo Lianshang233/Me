@@ -1,92 +1,32 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Search, Cpu, QrCode } from "lucide-react"
+import { useState } from "react"
+
+type GalleryItem = {
+  title: string
+  category: string
+  code: string
+  color: string
+}
 
 export default function Features() {
-  const [activeFeature, setActiveFeature] = useState(0)
-  const [connectionLines, setConnectionLines] = useState<Array<{ from: number; to: number; active: boolean }>>([])
+  const [activeItem, setActiveItem] = useState<number | null>(null)
 
-  const features = [
-    {
-      title: "ICCID 查询",
-      description: "实时 ICCID 校验与查询系统，集成全球数据库，提供即时验证协议",
-      code: "SEARCH_001",
-      metrics: { 准确率: "99.9%", 速度: "<100ms", 覆盖范围: "全球", 数据库: "实时" },
-      status: "运行中",
-      icon: Search,
-      schematic: (
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <rect x="10" y="20" width="60" height="20" fill="none" stroke="#000" strokeWidth="1" />
-          <line x1="70" y1="30" x2="90" y2="30" stroke="#000" strokeWidth="1" />
-          <circle cx="100" cy="30" r="8" fill="none" stroke="#000" strokeWidth="1" />
-          <line x1="108" y1="30" x2="130" y2="30" stroke="#000" strokeWidth="1" />
-          <rect x="130" y="20" width="60" height="20" fill="none" stroke="#000" strokeWidth="1" />
-        </svg>
-      ),
-    },
-    {
-      title: "SM-DP+ 集成",
-      description: "无缝集成订阅管理器进行配置文件管理，采用符合 GSMA 标准的协议与安全机制",
-      code: "SMDP_002",
-      metrics: { 合规: "SGP.22", 安全: "TLS 1.3", 可用性: "24/7", 配置文件: "无限" },
-      status: "已就绪",
-      icon: Cpu,
-      schematic: (
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <rect x="20" y="15" width="40" height="30" fill="none" stroke="#000" strokeWidth="1" />
-          <path d="M60 30 Q80 20 100 30 Q120 40 140 30" fill="none" stroke="#000" strokeWidth="1" />
-          <rect x="140" y="15" width="40" height="30" fill="none" stroke="#000" strokeWidth="1" />
-          <circle cx="100" cy="30" r="3" fill="#000" />
-        </svg>
-      ),
-    },
-    {
-      title: "二维码激活",
-      description: "通过安全的二维码生成实现 eSIM 即时激活，配置文件加密传输与验证",
-      code: "QR_003",
-      metrics: { 生成: "即时", 加密: "AES-256", 成功率: "99.8%", 传输: "安全" },
-      status: "就绪",
-      icon: QrCode,
-      schematic: (
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <rect x="30" y="10" width="40" height="40" fill="none" stroke="#000" strokeWidth="1" />
-          <rect x="35" y="15" width="10" height="10" fill="#000" />
-          <rect x="50" y="15" width="10" height="10" fill="#000" />
-          <rect x="35" y="35" width="10" height="10" fill="#000" />
-          <line x1="70" y1="30" x2="130" y2="30" stroke="#000" strokeWidth="1" />
-          <rect x="130" y="20" width="40" height="20" fill="none" stroke="#000" strokeWidth="1" />
-        </svg>
-      ),
-    },
+  const categories = ["全部", "平面设计", "摄影", "视觉"]
+  const [activeCategory, setActiveCategory] = useState("全部")
+
+  const items: GalleryItem[] = [
+    { title: "品牌视觉 01", category: "平面设计", code: "GD_001", color: "#111111" },
+    { title: "海报设计 02", category: "平面设计", code: "GD_002", color: "#2b2b2b" },
+    { title: "城市剪影", category: "摄影", code: "PH_001", color: "#3d3d3d" },
+    { title: "人像光影", category: "摄影", code: "PH_002", color: "#1c1c1c" },
+    { title: "包装设计", category: "平面设计", code: "GD_003", color: "#4a4a4a" },
+    { title: "自然纪实", category: "摄影", code: "PH_003", color: "#242424" },
+    { title: "UI 概念稿", category: "视觉", code: "VS_001", color: "#333333" },
+    { title: "字体实验", category: "视觉", code: "VS_002", color: "#0f0f0f" },
   ]
 
-  useEffect(() => {
-    const lines = [
-      { from: 0, to: 1, active: false },
-      { from: 1, to: 2, active: false },
-      { from: 0, to: 2, active: false },
-    ]
-    setConnectionLines(lines)
-
-    const interval = setInterval(() => {
-      setConnectionLines((prev) =>
-        prev.map((line) => ({
-          ...line,
-          active: Math.random() > 0.7,
-        })),
-      )
-    }, 2000)
-
-    const featureInterval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length)
-    }, 5000)
-
-    return () => {
-      clearInterval(interval)
-      clearInterval(featureInterval)
-    }
-  }, [])
+  const filtered = activeCategory === "全部" ? items : items.filter((i) => i.category === activeCategory)
 
   return (
     <section id="features" className="py-32 bg-gray-50 relative">
@@ -105,138 +45,64 @@ export default function Features() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">核心功能</h2>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
           <div className="w-32 h-px bg-black mx-auto mb-8"></div>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            由 AI 驱动、符合 GSMA 合规标准的先进 eSIM 管理能力
-          </p>
+          <p className="text-gray-600 max-w-3xl mx-auto text-lg">平面设计与摄影作品精选（封面为占位色块，可替换为真实作品）</p>
         </div>
 
-        <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon
-              return (
+        <div className="flex justify-center flex-wrap gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 text-sm font-mono border-2 transition-all duration-300 ${
+                activeCategory === cat
+                  ? "border-black bg-black text-white"
+                  : "border-gray-300 text-gray-600 hover:border-gray-500"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filtered.map((item, index) => (
+            <div
+              key={item.code}
+              className="group relative bg-white border-2 border-gray-200 hover:border-black transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              onMouseEnter={() => setActiveItem(index)}
+              onMouseLeave={() => setActiveItem(null)}
+            >
+              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-black z-10 transition-all duration-300 group-hover:w-10 group-hover:h-10"></div>
+              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-black z-10 transition-all duration-300 group-hover:w-10 group-hover:h-10"></div>
+
+              <div
+                className="aspect-square w-full flex items-center justify-center relative overflow-hidden"
+                style={{ backgroundColor: item.color }}
+              >
+                <span className="font-mono text-white/40 text-sm tracking-widest">{item.code}</span>
                 <div
-                  key={index}
-                  className={`group relative bg-white border-2 p-8 transition-all duration-500 cursor-pointer ${
-                    activeFeature === index
-                      ? "border-black shadow-xl transform -translate-y-4 bg-gray-50"
-                      : "border-gray-200 hover:border-gray-400 hover:shadow-lg hover:-translate-y-1"
+                  className={`absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 ${
+                    activeItem === index ? "opacity-100" : "opacity-0"
                   }`}
-                  onClick={() => setActiveFeature(index)}
                 >
-                  <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black transition-all duration-300 group-hover:w-12 group-hover:h-12"></div>
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-black transition-all duration-300 group-hover:w-12 group-hover:h-12"></div>
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-black transition-all duration-300 group-hover:w-12 group-hover:h-12"></div>
-                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black transition-all duration-300 group-hover:w-12 group-hover:h-12"></div>
-
-                  <div className="flex justify-between items-start mb-6">
-                    <span className="text-xs font-mono text-gray-400">{feature.code}</span>
-                    <div className="flex items-center space-x-2">
-                      <IconComponent size={20} className="text-gray-600" />
-                      <div
-                        className={`w-3 h-3 ${activeFeature === index ? "bg-black animate-pulse" : "bg-gray-300"}`}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-mono font-bold mb-4 tracking-wide">{feature.title}</h3>
-
-                  <div className="mb-6">{feature.schematic}</div>
-
-                  <p className="text-gray-600 leading-relaxed mb-6">{feature.description}</p>
-
-                  {activeFeature === index && (
-                    <div className="space-y-3 mb-6 animate-fadeIn">
-                      {Object.entries(feature.metrics).map(([key, value]) => (
-                        <div key={key} className="flex justify-between text-xs font-mono">
-                          <span className="text-gray-500">{key}:</span>
-                          <span className="text-black font-bold">{value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="flex items-center space-x-2">
-                    <div className="flex-1 h-px bg-gray-300 relative">
-                      {activeFeature === index && (
-                        <div
-                          className="absolute left-0 top-0 h-full bg-black animate-pulse"
-                          style={{ width: "100%" }}
-                        ></div>
-                      )}
-                    </div>
-                    <div className={`w-2 h-2 ${activeFeature === index ? "bg-black" : "bg-gray-400"}`}></div>
-                    <span className="text-xs font-mono">{feature.status}</span>
-                  </div>
+                  <span className="text-white font-mono text-sm tracking-wide border border-white/50 px-4 py-2">
+                    查看作品
+                  </span>
                 </div>
-              )
-            })}
-          </div>
-
-          <svg className="absolute inset-0 pointer-events-none" width="100%" height="100%">
-            {connectionLines.map((line, index) => {
-              const positions = [
-                { x: "16.66%", y: "50%" },
-                { x: "50%", y: "50%" },
-                { x: "83.33%", y: "50%" },
-              ]
-              return (
-                <line
-                  key={index}
-                  x1={positions[line.from].x}
-                  y1={positions[line.from].y}
-                  x2={positions[line.to].x}
-                  y2={positions[line.to].y}
-                  stroke="#000"
-                  strokeWidth="2"
-                  opacity={line.active ? "0.6" : "0.2"}
-                  strokeDasharray={line.active ? "none" : "8,8"}
-                  className="transition-all duration-500"
-                />
-              )
-            })}
-          </svg>
-        </div>
-
-        <div className="mt-20 bg-white border-2 border-gray-200 p-8">
-          <h3 className="font-mono font-bold text-xl mb-8 text-center">实时数据流</h3>
-          <div className="flex justify-center items-center space-x-12">
-            <div className="text-center">
-              <div className="w-16 h-16 border-2 border-black flex items-center justify-center mb-3 relative">
-                <span className="text-sm font-mono">REQ</span>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-black animate-ping"></div>
               </div>
-              <span className="text-xs text-gray-500 font-mono">请求</span>
-            </div>
 
-            <div className="flex-1 h-px bg-gray-300 relative">
-              <div className="absolute top-0 left-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-black animate-bounce"></div>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 border-2 border-black flex items-center justify-center mb-3">
-                <span className="text-sm font-mono">AI</span>
+              <div className="p-4 flex items-center justify-between">
+                <div>
+                  <div className="font-mono font-bold text-sm">{item.title}</div>
+                  <div className="text-xs text-gray-400 font-mono mt-1">{item.category}</div>
+                </div>
+                <div className="w-2 h-2 bg-black group-hover:animate-pulse"></div>
               </div>
-              <span className="text-xs text-gray-500 font-mono">处理</span>
             </div>
-
-            <div className="flex-1 h-px bg-gray-300 relative">
-              <div className="absolute top-0 left-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-black animate-bounce"></div>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 border-2 border-black flex items-center justify-center mb-3 relative">
-                <span className="text-sm font-mono">RES</span>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-black animate-ping"></div>
-              </div>
-              <span className="text-xs text-gray-500 font-mono">响应</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

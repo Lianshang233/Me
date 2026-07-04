@@ -232,54 +232,54 @@ export default function Hero() {
 
         <div className="mb-12">
           <h1 className="text-8xl font-light tracking-wider mb-6 font-mono">
-            NEXORA<span className="font-bold">SIM</span>
-            <sup className="text-2xl">™</sup>
+            Lian<span className="font-bold">shang</span>
           </h1>
+          <div className="text-3xl font-light tracking-[0.3em] mb-6 font-mono">恋 殇</div>
           <div className="w-40 h-px bg-black mx-auto mb-8 relative">
             <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
           </div>
           <p className="text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            缅甸新一代 eSIM 基础设施
+            个人创作作品集
             <br />
-            <span className="font-mono text-lg">AI 驱动 • 符合 GSMA 标准 • Vercel 加持</span>
+            <span className="font-mono text-lg">平面设计 • 摄影 • 游戏策划</span>
           </p>
         </div>
 
         <div className="flex justify-center space-x-16 text-sm font-mono mb-12">
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="group-hover:text-gray-600 transition-colors">系统运行中</span>
+            <span className="group-hover:text-gray-600 transition-colors">接单中</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">GSMA 认证</span>
+            <span className="group-hover:text-gray-600 transition-colors">平面设计</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-black rounded-full animate-ping"></div>
-            <span className="group-hover:text-gray-600 transition-colors">AI 已启用</span>
+            <span className="group-hover:text-gray-600 transition-colors">摄影</span>
           </div>
           <div className="flex items-center space-x-2 group">
             <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <span className="group-hover:text-gray-600 transition-colors">Vercel 边缘</span>
+            <span className="group-hover:text-gray-600 transition-colors">游戏策划</span>
           </div>
         </div>
 
         <div className="grid grid-cols-4 gap-8 max-w-2xl mx-auto">
           <div className="text-center">
-            <div className="text-3xl font-mono font-bold">99.9%</div>
-            <div className="text-xs text-gray-500 font-mono">可用率</div>
+            <div className="text-3xl font-mono font-bold">5+</div>
+            <div className="text-xs text-gray-500 font-mono">年经验</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-mono font-bold">{"<30ms"}</div>
-            <div className="text-xs text-gray-500 font-mono">延迟</div>
+            <div className="text-3xl font-mono font-bold">120+</div>
+            <div className="text-xs text-gray-500 font-mono">作品</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-mono font-bold">24/7</div>
-            <div className="text-xs text-gray-500 font-mono">技术支持</div>
+            <div className="text-3xl font-mono font-bold">60+</div>
+            <div className="text-xs text-gray-500 font-mono">合作客户</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-mono font-bold">SGP.22</div>
-            <div className="text-xs text-gray-500 font-mono">合规标准</div>
+            <div className="text-3xl font-mono font-bold">100%</div>
+            <div className="text-xs text-gray-500 font-mono">好评率</div>
           </div>
         </div>
       </div>
