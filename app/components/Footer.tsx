@@ -8,6 +8,7 @@ export default function Footer() {
     { name: "平面设计", desc: "海报 · 品牌 · 包装" },
     { name: "摄影约拍", desc: "人像 · 纪实 · 商业" },
     { name: "游戏策划", desc: "关卡 · 系统 · 数值" },
+    { name: "桌面运维", desc: "终端 · 安全 · 网络" },
   ]
 
   return (
