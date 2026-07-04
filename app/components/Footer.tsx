@@ -101,7 +101,7 @@ export default function Footer() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">微信</div>
-                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">Lianshang_design</div>
+                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">LianshangOwO</div>
                 </div>
               </div>
               <div className="group flex items-center space-x-3">
