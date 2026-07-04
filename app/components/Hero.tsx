@@ -4,24 +4,41 @@ import { useEffect, useState } from "react"
 import CountUp from "./CountUp"
 import ParticleGlobe from "./ParticleGlobe"
 
+const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
+
 export default function Hero() {
-  const [pulseScale, setPulseScale] = useState(1)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const pulseInterval = setInterval(() => {
-      setPulseScale((prev) => (prev === 1 ? 1.03 : 1))
-    }, 3000)
-
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const p = clamp(window.scrollY / (window.innerHeight * 0.7), 0, 1)
+        setProgress(p)
+      })
+    }
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
-      clearInterval(pulseInterval)
+      cancelAnimationFrame(raf)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
+
+  // 向下滑动：地球逐渐放大并淡出，仿佛穿越进入地球
+  const globeScale = 1 + progress * 2.4
+  const globeOpacity = clamp(1 - progress * 1.5, 0, 1)
+  // 文案随之上移淡出，让位给下一屏
+  const contentOpacity = clamp(1 - progress * 1.4, 0, 1)
+  const contentShift = -progress * 60
 
   return (
     <section
       id="hero"
       className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
+      {/* 背景网格 */}
       <div className="absolute inset-0 opacity-[0.04] animate-gridDrift pointer-events-none">
         <div
           className="h-full w-full"
@@ -35,15 +52,16 @@ export default function Hero() {
         />
       </div>
 
-      {/* radial spotlight vignette for depth */}
+      {/* 径向光晕，增强纵深 */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 50% 38%, rgba(0,0,0,0.05) 0%, transparent 55%), radial-gradient(circle at 50% 100%, rgba(0,0,0,0.06) 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 45%, rgba(0,0,0,0.05) 0%, transparent 55%), radial-gradient(circle at 50% 100%, rgba(0,0,0,0.06) 0%, transparent 60%)",
         }}
       />
 
+      {/* 漂浮装饰 */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-4 h-4 border border-black opacity-20 rotate-45 animate-pulse"></div>
         <div className="absolute bottom-32 right-32 w-6 h-6 border border-black opacity-15 animate-bounce"></div>
@@ -52,41 +70,76 @@ export default function Hero() {
         <div className="absolute top-1/2 left-10 w-8 h-8 border border-black opacity-10 rotate-45"></div>
       </div>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-20 pb-16 flex flex-col items-center gap-0">
-        <div className="mb-4 sm:mb-6 flex justify-center">
+      {/* 粒子地球：居中背景层，与文案穿插；向下滑动时放大淡出 */}
+      <div
+        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform"
+        style={{ transform: `scale(${globeScale})`, opacity: globeOpacity, transition: "none" }}
+        aria-hidden="true"
+      >
+        <div className="relative aspect-square w-[min(94vw,660px)] opacity-[0.55] animate-heroReveal" style={{ animationDelay: "0.1s" }}>
+          <ParticleGlobe />
           <div
-            className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72"
-            style={{ transform: `scale(${pulseScale})`, transition: "transform 3s ease-in-out" }}
-          >
-            <ParticleGlobe />
+            className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
+            style={{ animationDuration: "36s" }}
+          ></div>
+          <div
+            className="absolute inset-[12%] border border-gray-400 rounded-full opacity-[0.1] animate-spin"
+            style={{ animationDuration: "24s", animationDirection: "reverse" }}
+          ></div>
+        </div>
+      </div>
 
-            <div
-              className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
-              style={{ animationDuration: "30s" }}
-            ></div>
-            <div
-              className="absolute inset-8 border border-gray-400 rounded-full opacity-[0.12] animate-spin"
-              style={{ animationDuration: "20s", animationDirection: "reverse" }}
-            ></div>
-          </div>
+      {/* 主内容：位于地球之上，文案凸显 */}
+      <div
+        className="relative z-10 text-center max-w-6xl mx-auto px-6 flex flex-col items-center will-change-transform"
+        style={{ opacity: contentOpacity, transform: `translateY(${contentShift}px)`, transition: "none" }}
+      >
+        {/* 文案后方白色光晕，确保在地球上清晰可读 */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[90%] pointer-events-none -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.65) 42%, transparent 74%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <h1
+          className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono animate-heroReveal"
+          style={{ animationDelay: "0.15s", textShadow: "0 4px 40px rgba(255,255,255,0.95)" }}
+        >
+          Lian<span className="font-bold">shang</span>
+        </h1>
+
+        <div
+          className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed animate-heroReveal"
+          style={{ animationDelay: "0.3s" }}
+        >
+          恋殇
         </div>
 
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-wider mb-2 sm:mb-4 font-mono">
-            Lian<span className="font-bold">shang</span>
-          </h1>
-          <div className="text-xl sm:text-3xl font-light tracking-wider mb-4 sm:mb-6 font-mono shimmer-text leading-relaxed">恋殇</div>
-          <div className="w-32 sm:w-40 h-px bg-black mx-auto mb-4 sm:mb-6 relative animate-lineExpand">
-            <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
-          </div>
-          <p className="text-lg sm:text-2xl font-light tracking-wide text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            个人作品集/在线简历
-            <br />
-            <span className="font-mono text-xs md:text-sm mt-4 sm:mt-9 block">平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购</span>
-          </p>
+        <div
+          className="w-32 sm:w-40 h-px bg-black mx-auto mb-4 sm:mb-6 relative animate-lineExpand"
+          style={{ animationDelay: "0.45s" }}
+        >
+          <div className="absolute left-0 top-0 h-full bg-black animate-pulse" style={{ width: "100%" }}></div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-2xl mx-auto w-full">
+        <p
+          className="text-lg sm:text-2xl font-light tracking-wide text-gray-700 max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-8 animate-heroReveal"
+          style={{ animationDelay: "0.55s", textShadow: "0 2px 24px rgba(255,255,255,0.95)" }}
+        >
+          个人作品集/在线简历
+          <br />
+          <span className="font-mono text-xs md:text-sm mt-4 sm:mt-9 block text-gray-600">
+            平面设计 • 拍摄/制片/编导 • 游戏策划/PM • 桌面运维/采购
+          </span>
+        </p>
+
+        <div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-2xl mx-auto w-full animate-heroReveal"
+          style={{ animationDelay: "0.7s" }}
+        >
           <div className="text-center group">
             <div className="text-3xl font-mono font-bold group-hover:scale-110 transition-transform">
               <CountUp end={3} suffix="+" />
@@ -116,7 +169,8 @@ export default function Hero() {
 
       <button
         onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
-        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer z-10"
+        style={{ opacity: contentOpacity }}
         aria-label="向下滑动了解更多"
       >
         <span className="hidden sm:block text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">

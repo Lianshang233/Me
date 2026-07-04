@@ -400,6 +400,28 @@ nav button:hover {
   animation: spinSlow 24s linear infinite;
 }
 
+/* Hero staggered blur-rise entrance */
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    filter: blur(16px);
+  }
+  60% {
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-heroReveal {
+  opacity: 0;
+  animation: heroReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* Pop-in for badges / tags */
 @keyframes popIn {
   0% {
