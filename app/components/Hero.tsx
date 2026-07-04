@@ -123,11 +123,6 @@ export default function Hero() {
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-28 pb-32 flex flex-col items-center">
         <div className="mb-8 flex justify-center">
           <div className="relative w-56 h-56 md:w-72 md:h-72" style={{ transform: `scale(${pulseScale})` }}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-sm font-mono text-black opacity-70 tracking-widest">可约稿</div>
-              </div>
-            </div>
             <svg
               viewBox="0 0 384 384"
               className="absolute inset-0 w-full h-full"
