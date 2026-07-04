@@ -1,188 +1,19 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import CountUp from "./CountUp"
+import ParticleGlobe from "./ParticleGlobe"
 
 export default function Hero() {
-  const [rotation, setRotation] = useState(0)
   const [pulseScale, setPulseScale] = useState(1)
-  const [connectionNodes, setConnectionNodes] = useState<Array<{ x: number; y: number; active: boolean }>>([])
-  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const nodes = [
-      { x: 80, y: 100, active: false },
-      { x: 240, y: 120, active: false },
-      { x: 120, y: 220, active: false },
-      { x: 200, y: 200, active: false },
-      { x: 160, y: 80, active: false },
-      { x: 280, y: 180, active: false },
-    ]
-    setConnectionNodes(nodes)
-
-    const rotationInterval = setInterval(() => {
-      setRotation((prev) => prev + 0.2)
-    }, 50)
-
     const pulseInterval = setInterval(() => {
       setPulseScale((prev) => (prev === 1 ? 1.03 : 1))
     }, 3000)
 
-    const nodeInterval = setInterval(() => {
-      setConnectionNodes((prev) =>
-        prev.map((node) => ({
-          ...node,
-          active: Math.random() > 0.8,
-        })),
-      )
-    }, 2000)
-
     return () => {
-      clearInterval(rotationInterval)
       clearInterval(pulseInterval)
-      clearInterval(nodeInterval)
-    }
-  }, [])
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const prefersReduced =
-      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-    let width = 0
-    let height = 0
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-
-    const isMobile = () => window.innerWidth < 768
-    const mouse = { x: -9999, y: -9999 }
-
-    type P = { x: number; y: number; vx: number; vy: number; r: number }
-    let particles: P[] = []
-
-    const buildParticles = () => {
-      const count = isMobile() ? 42 : 84
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.4 + 0.6,
-      }))
-    }
-
-    const resizeCanvas = () => {
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      canvas.width = width * dpr
-      canvas.height = height * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      buildParticles()
-    }
-
-    resizeCanvas()
-
-    const linkDist = () => (isMobile() ? 95 : 140)
-    const mouseDist = 170
-
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height)
-      const maxDist = linkDist()
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i]
-        p.x += p.vx
-        p.y += p.vy
-
-        if (p.x < 0 || p.x > width) p.vx *= -1
-        if (p.y < 0 || p.y > height) p.vy *= -1
-
-        // subtle attraction toward cursor for an interactive tech feel
-        const mdx = mouse.x - p.x
-        const mdy = mouse.y - p.y
-        const md = Math.hypot(mdx, mdy)
-        if (md < mouseDist && md > 0.001) {
-          const pull = (1 - md / mouseDist) * 0.04
-          p.vx += (mdx / md) * pull
-          p.vy += (mdy / md) * pull
-        }
-        // damping to keep speeds calm
-        p.vx = Math.max(-0.8, Math.min(0.8, p.vx * 0.99))
-        p.vy = Math.max(-0.8, Math.min(0.8, p.vy * 0.99))
-
-        // connect to nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j]
-          const dx = p.x - q.x
-          const dy = p.y - q.y
-          const dist = Math.hypot(dx, dy)
-          if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.18
-            ctx.strokeStyle = `rgba(0,0,0,${alpha})`
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(q.x, q.y)
-            ctx.stroke()
-          }
-        }
-
-        // connect to cursor
-        if (md < mouseDist) {
-          const alpha = (1 - md / mouseDist) * 0.35
-          ctx.strokeStyle = `rgba(0,0,0,${alpha})`
-          ctx.lineWidth = 1
-          ctx.beginPath()
-          ctx.moveTo(p.x, p.y)
-          ctx.lineTo(mouse.x, mouse.y)
-          ctx.stroke()
-        }
-
-        ctx.fillStyle = "rgba(0,0,0,0.55)"
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fill()
-      }
-
-      rafRef.current = requestAnimationFrame(animate)
-    }
-
-    const rafRef = { current: 0 as number }
-    if (!prefersReduced) {
-      rafRef.current = requestAnimationFrame(animate)
-    } else {
-      // draw a single static frame
-      ctx.fillStyle = "rgba(0,0,0,0.4)"
-      particles.forEach((p) => {
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fill()
-      })
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      mouse.x = e.clientX - rect.left
-      mouse.y = e.clientY - rect.top
-    }
-    const handleMouseLeave = () => {
-      mouse.x = -9999
-      mouse.y = -9999
-    }
-
-    window.addEventListener("resize", resizeCanvas)
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("mouseout", handleMouseLeave)
-
-    return () => {
-      cancelAnimationFrame(rafRef.current)
-      window.removeEventListener("resize", resizeCanvas)
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("mouseout", handleMouseLeave)
     }
   }, [])
 
@@ -191,8 +22,6 @@ export default function Hero() {
       id="hero"
       className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-40 pointer-events-none" />
-
       <div className="absolute inset-0 opacity-[0.04] animate-gridDrift pointer-events-none">
         <div
           className="h-full w-full"
@@ -226,112 +55,17 @@ export default function Hero() {
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6 pt-20 pb-16 flex flex-col items-center gap-0">
         <div className="mb-4 sm:mb-6 flex justify-center">
           <div
-            className="relative w-36 h-36 sm:w-52 sm:h-52 md:w-64 md:h-64"
-            style={{ transform: `scale(${pulseScale})` }}
+            className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72"
+            style={{ transform: `scale(${pulseScale})`, transition: "transform 3s ease-in-out" }}
           >
-            <svg
-              viewBox="0 0 384 384"
-              className="absolute inset-0 w-full h-full"
-              style={{ transform: `rotate(${rotation}deg)` }}
-            >
-              <defs>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-                <pattern id="worldMap" patternUnits="userSpaceOnUse" width="384" height="384">
-                  <path
-                    d="M100 150 Q120 140 140 150 Q160 160 180 150 Q200 140 220 150"
-                    fill="none"
-                    stroke="#000"
-                    strokeWidth="1"
-                    opacity="0.3"
-                  />
-                  <path
-                    d="M80 200 Q100 190 120 200 Q140 210 160 200"
-                    fill="none"
-                    stroke="#000"
-                    strokeWidth="1"
-                    opacity="0.2"
-                  />
-                </pattern>
-              </defs>
-
-              <circle
-                cx="192"
-                cy="192"
-                r="180"
-                fill="none"
-                stroke="#000"
-                strokeWidth="1"
-                opacity="0.4"
-                filter="url(#glow)"
-              />
-
-              <circle cx="192" cy="192" r="150" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <circle cx="192" cy="192" r="120" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <circle cx="192" cy="192" r="90" fill="none" stroke="#000" strokeWidth="1" opacity="0.15" />
-              <circle cx="192" cy="192" r="60" fill="none" stroke="#000" strokeWidth="1" opacity="0.1" />
-
-              <path d="M 192 12 Q 192 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.4" />
-              <path d="M 192 12 Q 120 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <path d="M 192 12 Q 264 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <path d="M 192 12 Q 156 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <path d="M 192 12 Q 228 192 192 372" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-
-              <ellipse cx="192" cy="192" rx="180" ry="60" fill="none" stroke="#000" strokeWidth="1" opacity="0.3" />
-              <ellipse cx="192" cy="192" rx="180" ry="120" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-              <ellipse cx="192" cy="192" rx="150" ry="40" fill="none" stroke="#000" strokeWidth="1" opacity="0.2" />
-
-              {connectionNodes.map((node, index) => (
-                <g key={index}>
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={node.active ? "4" : "2"}
-                    fill="#000"
-                    opacity={node.active ? "0.9" : "0.5"}
-                  />
-                  {node.active && (
-                    <circle cx={node.x} cy={node.y} r="8" fill="none" stroke="#000" strokeWidth="1" opacity="0.4">
-                      <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                  )}
-                </g>
-              ))}
-
-              <line x1="100" y1="120" x2="280" y2="140" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
-              </line>
-              <line x1="140" y1="260" x2="240" y2="240" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.5s" repeatCount="indefinite" />
-              </line>
-              <line x1="192" y1="100" x2="320" y2="220" stroke="#000" strokeWidth="1" opacity="0.4">
-                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite" />
-              </line>
-
-              <circle cx="100" cy="120" r="1" fill="#000">
-                <animateMotion dur="3s" repeatCount="indefinite">
-                  <path d="M 0 0 L 180 20 L 140 140" />
-                </animateMotion>
-              </circle>
-              <circle cx="280" cy="140" r="1" fill="#000">
-                <animateMotion dur="4s" repeatCount="indefinite">
-                  <path d="M 0 0 L -140 100 L -40 -40" />
-                </animateMotion>
-              </circle>
-            </svg>
+            <ParticleGlobe />
 
             <div
               className="absolute inset-0 border border-gray-300 rounded-full opacity-10 animate-spin"
               style={{ animationDuration: "30s" }}
             ></div>
             <div
-              className="absolute inset-8 border border-gray-400 rounded-full opacity-15 animate-spin"
+              className="absolute inset-8 border border-gray-400 rounded-full opacity-[0.12] animate-spin"
               style={{ animationDuration: "20s", animationDirection: "reverse" }}
             ></div>
           </div>
