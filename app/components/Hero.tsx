@@ -10,19 +10,90 @@ export default function Hero() {
   const [progress, setProgress] = useState(0)
   const tiltRef = useRef<HTMLDivElement>(null)
 
+  // 主页首屏：阻尼滚动 —— 在顶部时劫持滚轮/触摸，把滚动意图累积为带阻力的进度，
+  // 越过阈值后自动吸附滑入下一屏（Features）。其余区域保持原生滚动，此效果仅首屏有。
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reduced) return
+
+    const THRESHOLD = 700 // 需要累积的滚动量，越大越"重"
+    let intent = 0
+    let released = false // 是否已吸附进入下一屏
+    let locked = false // 吸附动画进行中，锁定输入
     let raf = 0
-    const onScroll = () => {
+    let touchY = 0
+
+    const setP = (v: number) => {
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const p = clamp(window.scrollY / (window.innerHeight * 0.7), 0, 1)
-        setProgress(p)
-      })
+      raf = requestAnimationFrame(() => setProgress(v))
     }
-    onScroll()
+
+    const atTop = () => window.scrollY <= 2
+
+    const snap = () => {
+      if (locked) return
+      locked = true
+      released = true
+      intent = 0
+      setP(1)
+      document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })
+      window.setTimeout(() => {
+        locked = false
+      }, 750)
+    }
+
+    const rearm = () => {
+      released = false
+      intent = 0
+      setP(0)
+    }
+
+    const push = (delta: number, prevent: () => void) => {
+      if (locked) {
+        prevent()
+        return
+      }
+      if (!released && atTop()) {
+        if (delta > 0) {
+          prevent()
+          intent += delta
+          const p = clamp(intent / THRESHOLD, 0, 1)
+          setP(p)
+          if (p >= 1) snap()
+        } else if (delta < 0) {
+          // 顶部反向：回退阻尼进度
+          intent = Math.max(0, intent + delta)
+          setP(clamp(intent / THRESHOLD, 0, 1))
+        }
+      } else if (released && atTop() && delta < 0) {
+        // 从下方回到顶部，重新装填首屏效果
+        rearm()
+      }
+    }
+
+    const onWheel = (e: WheelEvent) => push(e.deltaY, () => e.preventDefault())
+    const onTouchStart = (e: TouchEvent) => {
+      touchY = e.touches[0].clientY
+    }
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0].clientY
+      const dy = (touchY - y) * 2.2 // 手指上滑（内容下滑）为正，放大触摸位移
+      touchY = y
+      push(dy, () => e.preventDefault())
+    }
+    const onScroll = () => {
+      if (released && atTop() && !locked) rearm()
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false })
+    window.addEventListener("touchstart", onTouchStart, { passive: true })
+    window.addEventListener("touchmove", onTouchMove, { passive: false })
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(raf)
+      window.removeEventListener("wheel", onWheel)
+      window.removeEventListener("touchstart", onTouchStart)
+      window.removeEventListener("touchmove", onTouchMove)
       window.removeEventListener("scroll", onScroll)
     }
   }, [])
@@ -100,7 +171,11 @@ export default function Hero() {
       {/* 粒子标志：居中背景层，粒子从四面八方汇聚成 Logo；向下滑动时放大淡出 */}
       <div
         className="absolute inset-0 z-0 pointer-events-none will-change-transform"
-        style={{ transform: `scale(${logoScale})`, opacity: logoOpacity, transition: "none" }}
+        style={{
+          transform: `scale(${logoScale})`,
+          opacity: logoOpacity,
+          transition: "transform 0.25s ease-out, opacity 0.25s ease-out",
+        }}
         aria-hidden="true"
       >
         <ParticleLogo />
@@ -112,7 +187,7 @@ export default function Hero() {
         style={{
           opacity: contentOpacity,
           transform: `translateY(${contentShift}px)`,
-          transition: "none",
+          transition: "transform 0.25s ease-out, opacity 0.25s ease-out",
           perspective: "1200px",
         }}
       >
@@ -196,7 +271,10 @@ export default function Hero() {
       </div>
 
       <button
-        onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => {
+          setProgress(1)
+          document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })
+        }}
         className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer z-10"
         style={{ opacity: contentOpacity }}
         aria-label="向下滑动了解更多"
