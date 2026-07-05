@@ -63,14 +63,18 @@ export default function Reveal({
       ref={ref}
       style={{
         transitionProperty: "opacity, transform, filter",
-        transitionDuration: "1000ms",
+        transitionDuration: "900ms",
         transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         transitionDelay: `${delay}ms`,
         opacity: visible ? 1 : 0,
-        transform: visible ? "translate3d(0,0,0) scale(1)" : `${offset} scale(0.97)`,
-        filter: visible ? "blur(0px)" : "blur(14px)",
+        transform: visible ? "translate3d(0,0,0) scale(1)" : `${offset} translateZ(0) scale(0.97)`,
+        filter: visible ? "blur(0px)" : "blur(6px)",
+        // 提升到稳定的 GPU 合成层，避免 blur 每帧在主线程离散重绘导致的"分级跳变"
+        willChange: "opacity, transform, filter",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
       }}
-      className={`will-change-transform ${className}`}
+      className={className}
     >
       {children}
     </Tag>
