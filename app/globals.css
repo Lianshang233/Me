@@ -16,14 +16,18 @@
   margin: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+/* 仅桌面（细指针）启用平滑滚动；移动端保留浏览器原生惯性动量，避免松手后卡顿 */
+@media (pointer: fine) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  /* 用 clip 而非 hidden：hidden 会在部分移动浏览器上建立滚动容器，破坏原生动量滚动 */
+  overflow-x: clip;
 }
 
 body {

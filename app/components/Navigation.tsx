@@ -24,24 +24,43 @@ export default function Navigation() {
   ]
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+    const sections = navItems.map((item) => item.id)
+    let ticking = false
+    let lastScrolled = false
+    let lastActive = "hero"
 
-      const sections = navItems.map((item) => item.id)
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= 100) {
-            setActiveSection(section)
-            break
-          }
+    // 用 rAF 节流：每帧最多处理一次，且只在值变化时 setState，
+    // 避免惯性滚动期间的持续回流与 React 重渲染（这是移动端动量卡顿的主因）。
+    const compute = () => {
+      ticking = false
+      const isScrolled = window.scrollY > 50
+      if (isScrolled !== lastScrolled) {
+        lastScrolled = isScrolled
+        setScrolled(isScrolled)
+      }
+      let active = lastActive
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i])
+        if (element && element.getBoundingClientRect().top <= 100) {
+          active = sections[i]
+          break
         }
+      }
+      if (active !== lastActive) {
+        lastActive = active
+        setActiveSection(active)
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(compute)
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   useEffect(() => {
@@ -85,7 +104,7 @@ export default function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-sm border-b border-gray-200" : "bg-transparent"
+        scrolled ? "bg-white border-b border-gray-200" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
