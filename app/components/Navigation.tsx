@@ -94,7 +94,7 @@ export default function Navigation() {
             <img
               src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/lianshang-logo.png`}
               alt="Lianshang - Project Producer"
-              className="h-7 sm:h-9 w-auto"
+              className="h-5 sm:h-6 w-auto"
             />
           </a>
 
