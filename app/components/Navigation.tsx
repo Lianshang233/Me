@@ -121,7 +121,7 @@ export default function Navigation() {
             {showLeftScroll && (
               <button
                 onClick={() => scrollNav("left")}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
                 aria-label="向左滚动"
               >
                 <ChevronLeft size={16} />
@@ -150,7 +150,7 @@ export default function Navigation() {
             {showRightScroll && (
               <button
                 onClick={() => scrollNav("right")}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-50 transition-colors"
                 aria-label="向右滚动"
               >
                 <ChevronRight size={16} />
@@ -178,7 +178,7 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200 animate-fadeIn">
+        <div className="md:hidden bg-white border-t border-gray-200 animate-fadeIn">
           <div className="px-4 py-2 space-y-1 max-h-96 overflow-y-auto">
             {navItems.map((item) => (
               <a

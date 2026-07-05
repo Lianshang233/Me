@@ -436,3 +436,26 @@ nav button:hover {
 .animate-popIn {
   animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
+
+/* ============================================================
+   移动端（粗指针）：禁用所有装饰性无限循环动画。
+   scan 动画 top（每帧布局+重绘）、gridDrift 动画 background-position
+   （每帧整块重绘）、spinSlow 旋转 900px 大图层、shimmer/dataFlow 等
+   在每个区块持续运行，与滚动合成争抢 GPU/主线程，
+   是整站上滑卡顿的根源。一次性入场动画不受影响。
+   ============================================================ */
+@media (pointer: coarse) {
+  .animate-scan,
+  .animate-gridDrift,
+  .animate-spinSlow,
+  .animate-float,
+  .animate-breathe,
+  .animate-blink,
+  .data-flow,
+  .animate-pulse,
+  .animate-bounce,
+  .animate-ping,
+  [class*="animate-["] {
+    animation: none !important;
+  }
+}

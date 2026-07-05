@@ -8,6 +8,9 @@ export default function OpsSection() {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
+    // 移动端不启用滚动数字定时器：每 1.2s 的 setState 会重渲染整个区块，
+    // 若恰逢惯性滚动会造成掉帧
+    if (window.matchMedia("(pointer: coarse)").matches) return
     const timer = setInterval(() => setTick((t) => (t + 1) % 1000), 1200)
     return () => clearInterval(timer)
   }, [])
