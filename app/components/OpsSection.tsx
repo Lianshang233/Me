@@ -57,8 +57,9 @@ export default function OpsSection() {
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-xs font-mono tracking-widest text-gray-400">SYSTEM ONLINE</span>
           </div>
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-500 mb-5">04 — OPERATIONS</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">运维</h2>
-          <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand" />
+          <div className="w-16 h-px bg-white mx-auto mb-8 animate-lineExpand" />
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">桌面运维 · 保障设备与系统稳定高效运行</p>
           <div className="text-gray-400 max-w-3xl mx-auto mt-8 space-y-3 text-sm font-light leading-relaxed text-left sm:text-center">
             <p>桌面运维负责人，主导公司内部办公设备与终端系统的全量运维管理工作，确保设备与网络的稳定高效。</p>
@@ -74,7 +75,7 @@ export default function OpsSection() {
           {metrics.map((m, mi) => {
             const Icon = m.icon
             return (
-              <Reveal key={m.label} delay={mi * 100} className="border-2 border-gray-800 bg-gray-950 p-6 group hover:border-white/40 transition-colors">
+              <Reveal key={m.label} delay={mi * 100} className="border border-white/15 bg-white/[0.03] p-6 group hover:border-white/60 transition-colors">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <Icon size={18} className="text-gray-400" />
@@ -103,13 +104,13 @@ export default function OpsSection() {
               <Reveal
                 key={s.title}
                 delay={(i % 2) * 120}
-                className="relative border-2 border-gray-800 bg-gray-950 p-8 overflow-hidden group hover:bg-gray-900 hover:border-white/40 hover:-translate-y-1 transition-all duration-300"
+                className="relative border border-white/15 bg-white/[0.03] p-8 overflow-hidden group hover:border-white/60 transition-colors duration-300"
               >
                 <div className="absolute inset-y-0 -left-full w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:left-full transition-all duration-700 ease-out pointer-events-none" />
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/30 group-hover:w-12 group-hover:h-12 group-hover:border-white transition-all duration-300 pointer-events-none" />
                 <div className="flex items-start space-x-5">
-                  <div className="shrink-0 w-14 h-14 border-2 border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:rotate-6 transition-all duration-300">
+                  <div className="shrink-0 w-14 h-14 border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-300">
                     <Icon size={24} className="group-hover:animate-float" />
                   </div>
                   <div>

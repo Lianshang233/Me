@@ -61,15 +61,16 @@ export default function VercelSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-500 mb-5">03 — FILMS</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">视频</h2>
-          <div className="w-32 h-px bg-white mx-auto mb-8 animate-lineExpand"></div>
+          <div className="w-16 h-px bg-white mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">视频作品与动态展示</p>
           <p className="text-gray-500 max-w-3xl mx-auto text-sm font-mono mt-4">
             如需了解更多请转到下面《联系》
           </p>
         </Reveal>
 
-        <Reveal className="mb-12 border-2 border-gray-700 bg-gray-900 p-4 md:p-6">
+        <Reveal className="mb-12 border border-white/15 bg-white/[0.03] p-4 md:p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <span className="text-xs font-mono text-gray-500">{videos[activeVideo].code}</span>
@@ -80,9 +81,9 @@ export default function VercelSection() {
             </span>
           </div>
 
-          <div className="relative border-2 border-white/20">
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white z-10 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white z-10 pointer-events-none"></div>
+          <div className="relative border border-white/20">
+            <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white z-10 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white z-10 pointer-events-none"></div>
             <video
               key={videos[activeVideo].src}
               controls
@@ -108,8 +109,8 @@ export default function VercelSection() {
             >
             <button
               onClick={() => setActiveVideo(index)}
-              className={`group text-left w-full border-2 bg-gray-900 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 ${
-                activeVideo === index ? "border-white" : "border-gray-700 hover:border-gray-500"
+              className={`group text-left w-full border bg-white/[0.03] p-3 sm:p-4 transition-colors duration-300 flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 ${
+                activeVideo === index ? "border-white" : "border-white/15 hover:border-white/50"
               }`}
             >
               <div className="w-24 shrink-0 aspect-video sm:w-full bg-black border border-gray-700 flex items-center justify-center sm:mb-3 relative overflow-hidden">

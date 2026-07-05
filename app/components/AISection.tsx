@@ -53,8 +53,9 @@ export default function AISection() {
     <section id="ai" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-400 mb-5">02 — GAME PROJECTS</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">游戏项目</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
+          <div className="w-16 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">参与策划与设计的游戏项目，点击切换查看项目视频预览</p>
         </Reveal>
 
@@ -65,7 +66,7 @@ export default function AISection() {
               return (
                 <div
                   key={index}
-                  className={`group border-2 p-8 cursor-pointer transition-all duration-300 relative overflow-hidden ${
+                  className={`group border p-8 cursor-pointer transition-all duration-300 relative overflow-hidden ${
                     activePanel === index ? "border-black bg-gray-50" : "border-gray-200 hover:border-gray-400"
                   }`}
                   onClick={() => setActivePanel(index)}
@@ -95,7 +96,7 @@ export default function AISection() {
                         {project.tags.map((tag, i) => (
                           <span
                             key={i}
-                            className="bg-black text-white px-3 py-2 text-xs font-mono animate-popIn hover:scale-105 transition-transform"
+                            className="bg-black text-white px-3 py-2 text-xs font-mono animate-popIn"
                             style={{ animationDelay: `${i * 80}ms` }}
                           >
                             {tag}
@@ -106,7 +107,7 @@ export default function AISection() {
                         {project.stats.map((stat, i) => (
                           <div
                             key={i}
-                            className="border border-gray-300 px-2 py-3 text-center animate-popIn hover:border-black hover:-translate-y-1 transition-all duration-300"
+                            className="border border-gray-300 px-2 py-3 text-center animate-popIn hover:border-black transition-colors duration-300"
                             style={{ animationDelay: `${i * 80 + 120}ms` }}
                           >
                             <span className="font-mono text-sm">{stat}</span>
@@ -121,15 +122,15 @@ export default function AISection() {
           </Reveal>
 
           <Reveal direction="right" delay={120} className="lg:sticky lg:top-24">
-            <div className="border-2 border-gray-200 bg-gray-50 p-8">
+            <div className="border border-gray-200 bg-gray-50 p-8">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="font-mono font-bold text-lg">项目预览</h4>
                 <span className="text-xs font-mono text-gray-400">{`0${activePanel + 1} / 0${projects.length}`}</span>
               </div>
 
-              <div className="relative border-2 border-black">
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/60 z-10 pointer-events-none"></div>
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/60 z-10 pointer-events-none"></div>
+              <div className="relative border border-black">
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/60 z-10 pointer-events-none"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/60 z-10 pointer-events-none"></div>
                 <video
                   key={projects[activePanel].video}
                   controls
@@ -149,7 +150,7 @@ export default function AISection() {
 
               <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
                 {projects[activePanel].preview.map((item, i) => (
-                  <div key={i} className="border-2 border-gray-200 p-4 sm:p-6 bg-white min-w-0">
+                  <div key={i} className="border border-gray-200 p-4 sm:p-6 bg-white min-w-0">
                     <div className="text-xs font-mono text-gray-500 mb-2">{item.label}</div>
                     <div className="text-xl sm:text-3xl font-mono font-bold break-words leading-tight">
                       {item.value}

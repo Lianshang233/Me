@@ -130,8 +130,9 @@ export default function Features() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-400 mb-5">01 — WORKS</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">图片展示</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
+          <div className="w-16 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <div className="text-gray-600 max-w-3xl mx-auto text-lg">
             <p>平面设计、摄影与视觉作品精选，点击作品可展开查看全图</p>
             <p className="mx-auto px-7 text-xs font-light leading-relaxed mt-3 text-gray-500">覆盖商业品牌、线下演出、游戏美术、零售终端、广电栏目五大领域，累计服务 7 家企业 / 独立项目，具备商业实拍 — 平面设计 —3D 美术 — 动态视觉全链路创作能力。累计产出商业摄影素材 150 + 组、平面视觉设计作品 120 + 件、3D 美术与动态视觉资产 60 + 套；作品落地于短视频平台、线下舞台、游戏客户端、官方宣传渠道、实体门店等多元载体，直接服务于品牌曝光、产品引流与用户增长。</p>
@@ -143,10 +144,10 @@ export default function Features() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 text-sm font-mono border-2 transition-all duration-300 hover:-translate-y-0.5 ${
+              className={`px-6 py-2.5 text-xs tracking-widest font-mono border transition-colors duration-300 ${
                 activeCategory === cat
-                  ? "border-black bg-black text-white scale-105"
-                  : "border-gray-300 text-gray-600 hover:border-gray-500"
+                  ? "border-black bg-black text-white"
+                  : "border-gray-300 text-gray-500 hover:border-black hover:text-black"
               }`}
             >
               {cat}
@@ -158,13 +159,13 @@ export default function Features() {
           {filtered.map((item, index) => (
             <Reveal key={item.code} delay={(index % 4) * 90}>
             <div
-              className="group relative bg-white border-2 border-gray-200 hover:border-black transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full"
+              className="group relative bg-white border border-gray-200 hover:border-black transition-colors duration-500 cursor-pointer h-full"
               onMouseEnter={() => setActiveItem(index)}
               onMouseLeave={() => setActiveItem(null)}
               onClick={() => item.image && setSelected(item)}
             >
-              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-black z-10 transition-all duration-300 group-hover:w-10 group-hover:h-10"></div>
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-black z-10 transition-all duration-300 group-hover:w-10 group-hover:h-10"></div>
+              <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-black z-10 transition-all duration-500 group-hover:w-8 group-hover:h-8 opacity-0 group-hover:opacity-100"></div>
+              <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-black z-10 transition-all duration-500 group-hover:w-8 group-hover:h-8 opacity-0 group-hover:opacity-100"></div>
 
               <div
                 className="aspect-square w-full flex items-center justify-center relative overflow-hidden"
@@ -176,7 +177,7 @@ export default function Features() {
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                       />
                 ) : (
                   <span className="font-mono text-white/40 text-sm tracking-widest">{item.code}</span>
@@ -214,13 +215,13 @@ export default function Features() {
           aria-label={selected.title}
         >
           <div
-            className="relative bg-gray-50 border-2 border-black flex flex-col w-full max-w-4xl max-h-[92vh] overflow-hidden"
+            className="relative bg-gray-50 border border-black flex flex-col w-full max-w-4xl max-h-[92vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black z-10 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black z-10 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-black z-10 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-black z-10 pointer-events-none"></div>
 
-            <div className="flex items-center justify-between border-b-2 border-black px-6 py-4 shrink-0">
+            <div className="flex items-center justify-between border-b border-black px-6 py-4 shrink-0">
               <div className="flex items-center gap-4 min-w-0">
                 <span className="text-xs font-mono text-gray-400 shrink-0">{selected.code}</span>
                 <span className="font-mono font-bold text-lg truncate">{selected.title}</span>
@@ -228,14 +229,14 @@ export default function Features() {
               <button
                 onClick={() => setSelected(null)}
                 aria-label="关闭"
-                className="w-9 h-9 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors shrink-0"
+                className="w-9 h-9 border border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors shrink-0"
               >
                 <X size={18} />
               </button>
             </div>
 
             <div className="flex flex-col md:flex-row min-h-0 flex-1">
-              <div className="flex items-center justify-center bg-black/5 p-4 md:w-1/2 md:border-r-2 md:border-black shrink-0">
+              <div className="flex items-center justify-center bg-black/5 p-4 md:w-1/2 md:border-r md:border-black shrink-0">
                 <img
                   src={selected.image || "/placeholder.svg"}
                   alt={selected.title}

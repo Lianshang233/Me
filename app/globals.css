@@ -449,3 +449,33 @@ nav button:hover {
 
 /* 装饰性无限动画已全部改造为纯 transform/opacity（合成器直通、零布局零重绘），
    并通过 will-change 提升到独立图层，移动端可安全运行，不与滚动合成争抢资源。 */
+
+/* ===== 高级质感细节 ===== */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 反色选区：黑白品牌的一贯延伸 */
+::selection {
+  background: #000;
+  color: #fff;
+}
+
+/* 细滚动条（桌面） */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #000;
+  }
+}

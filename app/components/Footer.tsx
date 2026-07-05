@@ -12,10 +12,10 @@ export default function Footer() {
   ]
 
   return (
-    <footer id="contact" className="bg-gray-50 border-t-2 border-gray-200 py-20 relative">
-      <div className="absolute inset-0 opacity-5">
+    <footer id="contact" className="bg-gray-50 border-t border-gray-200 py-20 relative">
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
         <div
-          className="h-full w-full animate-pulse"
+          className="h-full w-full"
           style={{
             backgroundImage: `
             linear-gradient(to right, #000 1px, transparent 1px),
@@ -26,20 +26,11 @@ export default function Footer() {
         />
       </div>
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-12 left-12 w-4 h-4 border border-black opacity-20 rotate-45 animate-spin"
-          style={{ animationDuration: "15s" }}
-        ></div>
-        <div className="absolute bottom-20 right-20 w-6 h-6 border border-black opacity-15 animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/4 w-3 h-12 bg-black opacity-10 rotate-12"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-8 h-8 border border-black opacity-10 rotate-45"></div>
-      </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-400 mb-5">05 — CONTACT</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
-          <div className="w-32 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
+          <div className="w-16 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">欢迎洽谈合作、约稿与项目委托</p>
         </Reveal>
 
@@ -62,7 +53,7 @@ export default function Footer() {
             <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">服务方向</h4>
             <div className="space-y-6">
               {services.map((service) => (
-                <div key={service.name} className="group border-l-2 border-gray-300 pl-4 hover:border-black transition-colors">
+                <div key={service.name} className="group border-l border-gray-300 pl-4 hover:border-black transition-colors">
                   <div className="font-mono font-bold">{service.name}</div>
                   <div className="text-sm text-gray-500 font-mono mt-1">{service.desc}</div>
                 </div>
@@ -74,7 +65,7 @@ export default function Footer() {
             <h4 className="font-mono font-bold mb-8 tracking-wide text-xl">联系方式</h4>
             <div className="space-y-6">
               <a href="mailto:lianshangowo@outlook.com" className="group flex items-center space-x-3">
-                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   <Mail size={18} />
                 </div>
                 <div className="min-w-0">
@@ -85,7 +76,7 @@ export default function Footer() {
                 </div>
               </a>
               <a href="mailto:lianshangowo@163.com" className="group flex items-center space-x-3">
-                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   <Mail size={18} />
                 </div>
                 <div className="min-w-0">
@@ -96,7 +87,7 @@ export default function Footer() {
                 </div>
               </a>
               <div className="group flex items-center space-x-3">
-                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   <MessageCircle size={18} />
                 </div>
                 <div className="min-w-0">
@@ -105,7 +96,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="group flex items-center space-x-3">
-                <div className="shrink-0 w-10 h-10 border-2 border-black flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                <div className="shrink-0 w-10 h-10 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   <MessageSquare size={18} />
                 </div>
                 <div className="min-w-0">
@@ -122,13 +113,13 @@ export default function Footer() {
             href="https://qm.qq.com/q/5JkkFDevxS"
             target="_blank"
             rel="noopener noreferrer"
-            className="group font-mono border-2 border-black px-10 py-4 text-lg hover:bg-black hover:text-white transition-colors tracking-wide"
+            className="group font-mono border border-black px-10 py-4 text-lg hover:bg-black hover:text-white transition-colors tracking-wide"
           >
             面试邀约/合作 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
 
-        <div className="pt-10 border-t-2 border-gray-300">
+        <div className="pt-10 border-t border-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-gray-500 font-mono mb-6 md:mb-0">
               © 2026 Lianshang · 恋殇. 保留所有权利。
