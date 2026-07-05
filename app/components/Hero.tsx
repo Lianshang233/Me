@@ -1,15 +1,35 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import CountUp from "./CountUp"
 import ParticleLogo from "./ParticleLogo"
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
 
 export default function Hero() {
-  const [progress, setProgress] = useState(0)
   const tiltRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
+  const logoWrapRef = useRef<HTMLDivElement>(null)
+  const contentWrapRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  // 命令式应用"穿越"进度：直接改 DOM 样式，滚动时完全不触发 React 重渲染，
+  // 这是消除移动端上滑永久卡顿的关键（refs 稳定，useCallback 依赖为空安全）。
+  const applyProgress = useCallback((p: number) => {
+    const logoScale = 1 + p * 2.4
+    const logoOpacity = clamp(1 - p * 1.5, 0, 1)
+    const contentOpacity = clamp(1 - p * 1.4, 0, 1)
+    const contentShift = -p * 60
+    if (logoWrapRef.current) {
+      logoWrapRef.current.style.transform = `scale(${logoScale})`
+      logoWrapRef.current.style.opacity = String(logoOpacity)
+    }
+    if (contentWrapRef.current) {
+      contentWrapRef.current.style.opacity = String(contentOpacity)
+      contentWrapRef.current.style.transform = `translateY(${contentShift}px)`
+    }
+    if (buttonRef.current) buttonRef.current.style.opacity = String(contentOpacity)
+  }, [])
 
   // 主页首屏：阻尼滚动 —— 在顶部时劫持滚轮/触摸，把滚动意图累积为带阻力的进度，
   // 越过阈值后自动吸附滑入下一屏（Features）。其余区域保持原生滚动，此效果仅首屏有。
@@ -20,17 +40,24 @@ export default function Hero() {
     if (!section) return
 
     let raf = 0
+    let lastP = -1
+    // 只在进度真正变化时写 DOM（用 rAF 批处理），避免滚动时的无谓布局写入
     const setP = (v: number) => {
+      if (Math.abs(v - lastP) < 0.002) return
+      lastP = v
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => setProgress(v))
+      raf = requestAnimationFrame(() => applyProgress(v))
     }
 
     // 移动端（粗指针）：完全不劫持触摸，使用被动 scroll 把滚动位置映射为进度。
-    // 这样滚动全程走浏览器合成器线程，上滑/下滑都零卡顿；Logo 穿越效果仍随滚动呈现。
+    // 命令式改样式 + 去重，滚动全程零 React 重渲染、走合成器线程，上滑/下滑都零卡顿。
     const coarse = window.matchMedia("(pointer: coarse)").matches
     if (coarse) {
+      const vhFactor = () => window.innerHeight * 0.7
       const onScrollMobile = () => {
-        setP(clamp(window.scrollY / (window.innerHeight * 0.7), 0, 1))
+        const y = window.scrollY
+        // 滚出首屏范围后进度恒为 1，setP 的去重会直接跳过，杜绝无谓写入
+        setP(y >= vhFactor() ? 1 : clamp(y / vhFactor(), 0, 1))
       }
       onScrollMobile()
       window.addEventListener("scroll", onScrollMobile, { passive: true })
@@ -179,21 +206,14 @@ export default function Hero() {
     }
   }, [])
 
-  // 向下滑动：标志逐渐放大并淡出，仿佛穿越进入
-  const logoScale = 1 + progress * 2.4
-  const logoOpacity = clamp(1 - progress * 1.5, 0, 1)
-  // 文案随之上移淡出，让位给下一屏
-  const contentOpacity = clamp(1 - progress * 1.4, 0, 1)
-  const contentShift = -progress * 60
-
   return (
     <section
       ref={sectionRef}
       id="hero"
       className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
-      {/* 背景网格 */}
-      <div className="absolute inset-0 opacity-[0.04] animate-gridDrift pointer-events-none">
+      {/* 背景网格（网格漂移动画仅桌面，减少移动端常驻合成负担） */}
+      <div className="absolute inset-0 opacity-[0.04] sm:animate-gridDrift pointer-events-none">
         <div
           className="h-full w-full"
           style={{
@@ -215,8 +235,8 @@ export default function Hero() {
         }}
       />
 
-      {/* 漂浮装饰 */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* 漂浮装饰（含无限动画，移动端隐藏以消除常驻合成层导致的滚动卡顿） */}
+      <div className="absolute inset-0 pointer-events-none hidden sm:block">
         <div className="absolute top-20 left-20 w-4 h-4 border border-black opacity-20 rotate-45 animate-pulse"></div>
         <div className="absolute bottom-32 right-32 w-6 h-6 border border-black opacity-15 animate-bounce"></div>
         <div className="absolute top-1/3 right-20 w-2 h-2 bg-black opacity-30 animate-ping"></div>
@@ -226,10 +246,11 @@ export default function Hero() {
 
       {/* 粒子标志：居中背景层，粒子从四面八方汇聚成 Logo；向下滑动时放大淡出 */}
       <div
+        ref={logoWrapRef}
         className="absolute inset-0 z-0 pointer-events-none will-change-transform"
         style={{
-          transform: `scale(${logoScale})`,
-          opacity: logoOpacity,
+          transform: "scale(1)",
+          opacity: 1,
           transition: "transform 0.25s ease-out, opacity 0.25s ease-out",
         }}
         aria-hidden="true"
@@ -239,10 +260,11 @@ export default function Hero() {
 
       {/* 主内容：位于地球之上，文案凸显 */}
       <div
+        ref={contentWrapRef}
         className="relative z-10 text-center max-w-6xl mx-auto px-6 flex flex-col items-center will-change-transform"
         style={{
-          opacity: contentOpacity,
-          transform: `translateY(${contentShift}px)`,
+          opacity: 1,
+          transform: "translateY(0px)",
           transition: "transform 0.25s ease-out, opacity 0.25s ease-out",
           perspective: "1200px",
         }}
@@ -327,12 +349,13 @@ export default function Hero() {
       </div>
 
       <button
+        ref={buttonRef}
         onClick={() => {
-          setProgress(1)
+          applyProgress(1)
           document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })
         }}
         className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group cursor-pointer z-10"
-        style={{ opacity: contentOpacity }}
+        style={{ opacity: 1 }}
         aria-label="向下滑动了解更多"
       >
         <span className="hidden sm:block text-xs font-mono tracking-[0.25em] text-gray-500 group-hover:text-black transition-colors">
