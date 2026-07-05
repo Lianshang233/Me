@@ -49,6 +49,7 @@ export default function ParticleLogo() {
     let cy = 0
     let particles: Particle[] = []
     let startTime = 0
+    const bucketPaths: Path2D[] = []
     const raf = { current: 0 }
     let visible = true
 
@@ -176,6 +177,11 @@ export default function ParticleLogo() {
       const breathScale = 1 + breath * 0.06 // 明显向外扩张/回收
       const waveT = now * 0.0018
 
+      // 按透明度分桶批量绘制：把数千次独立 fill() 降到十几次，避免上滑恢复时的卡顿
+      const TAU = Math.PI * 2
+      const BUCKETS = 12
+      for (let b = 0; b < BUCKETS; b++) bucketPaths[b] = new Path2D()
+
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
         const t = Math.max(0, Math.min(1, (elapsed - p.delay) / p.dur))
@@ -219,10 +225,20 @@ export default function ParticleLogo() {
         // 星光闪烁：叠加波峰时更亮
         const twinkle = 0.55 + 0.45 * Math.sin(now * 0.0022 * p.tws + p.twk)
         const wavePulse = 1 + 0.8 * Math.max(0, Math.sin(waveT - baseX * 0.008 + p.ph * 0.3))
-        ctx.globalAlpha = p.a * (0.15 + e * 0.85) * twinkle
-        ctx.beginPath()
-        ctx.arc(x, y, p.r * (drift < 1 ? 1 : wavePulse), 0, Math.PI * 2)
-        ctx.fill()
+        const alpha = p.a * (0.15 + e * 0.85) * twinkle
+        if (alpha <= 0.02) continue
+        const rad = p.r * (drift < 1 ? 1 : wavePulse)
+        // 归入最接近的透明度桶
+        const bi = Math.round(alpha * (BUCKETS - 1))
+        const path = bucketPaths[bi]
+        path.moveTo(x + rad, y)
+        path.arc(x, y, rad, 0, TAU)
+      }
+
+      // 每个透明度桶只填充一次
+      for (let b = 1; b < BUCKETS; b++) {
+        ctx.globalAlpha = b / (BUCKETS - 1)
+        ctx.fill(bucketPaths[b])
       }
       ctx.globalAlpha = 1
 
