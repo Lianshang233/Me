@@ -70,8 +70,8 @@ export default function Footer() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">邮箱</div>
-                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">
-                    lianshangowo@outlook.com
+                  <div className="font-mono text-sm sm:text-base break-all">
+                    <span className="link-underline">lianshangowo@outlook.com</span>
                   </div>
                 </div>
               </a>
@@ -81,8 +81,8 @@ export default function Footer() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-xs font-mono text-gray-500">备用邮箱</div>
-                  <div className="font-mono text-sm sm:text-base group-hover:text-gray-600 transition-colors break-all">
-                    lianshangowo@163.com
+                  <div className="font-mono text-sm sm:text-base break-all">
+                    <span className="link-underline">lianshangowo@163.com</span>
                   </div>
                 </div>
               </a>
@@ -118,6 +118,15 @@ export default function Footer() {
             面试邀约/合作 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
+
+        <Reveal className="overflow-hidden mb-2" delay={100}>
+          <div
+            className="font-mono font-bold text-outline-black select-none text-center leading-none tracking-tight text-[17vw] sm:text-[13vw] lg:text-[10rem]"
+            aria-hidden="true"
+          >
+            LIANSHANG
+          </div>
+        </Reveal>
 
         <div className="pt-10 border-t border-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">

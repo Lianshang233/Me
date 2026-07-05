@@ -198,7 +198,9 @@ export default function Features() {
                   <div className="font-mono font-bold text-sm">{item.title}</div>
                   <div className="text-xs text-gray-400 font-mono mt-1">{item.category}</div>
                 </div>
-                <div className="w-2 h-2 bg-black group-hover:animate-pulse"></div>
+                <div className="font-mono text-[10px] tracking-widest text-gray-300 group-hover:text-black transition-colors duration-500">
+                  {item.code}
+                </div>
               </div>
             </div>
             </Reveal>
@@ -215,7 +217,7 @@ export default function Features() {
           aria-label={selected.title}
         >
           <div
-            className="relative bg-gray-50 border border-black flex flex-col w-full max-w-4xl max-h-[92vh] overflow-hidden"
+            className="relative bg-gray-50 border border-black flex flex-col w-full max-w-4xl max-h-[92vh] overflow-hidden animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-black z-10 pointer-events-none"></div>

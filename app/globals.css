@@ -479,3 +479,70 @@ body {
     background: #000;
   }
 }
+
+/* ===== 现代高级动效元素（全部 transform/opacity，合成器直通） ===== */
+
+/* 无缝跑马灯：内容渲染两份，平移 -50% 后循环 */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  will-change: transform;
+  animation: marquee 36s linear infinite;
+}
+
+/* 描边空心大字（黑底用白描边，白底用黑描边） */
+.text-outline-white {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+}
+
+.text-outline-black {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.14);
+}
+
+/* 链接下划线：从左展开的 1px 线（纯 transform） */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover::after,
+.group:hover .link-underline::after {
+  transform: scaleX(1);
+}
+
+/* 弹窗内容优雅缩入 */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
