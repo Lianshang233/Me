@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Menu, X, ChevronLeft, ChevronRight } from "lucide-react"
+import { useVisitor } from "./VisitorGate"
 
 export default function Navigation() {
+  const { count } = useVisitor()
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -88,9 +90,13 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="font-mono font-bold text-xl tracking-wider shrink-0">
-            Lianshang
-          </div>
+          <a href="#hero" className="shrink-0" aria-label="Lianshang 首页">
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/lianshang-logo.png`}
+              alt="Lianshang - Project Producer"
+              className="h-7 sm:h-9 w-auto"
+            />
+          </a>
 
           <div className="hidden md:flex items-center relative max-w-[60%]">
             {showLeftScroll && (
@@ -143,9 +149,11 @@ export default function Navigation() {
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center space-x-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0" aria-label="累计访问数量">
             <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-            <span className="text-xs font-mono">在线</span>
+            <span className="text-xs font-mono whitespace-nowrap">
+              累计访问 {count === null ? "…" : count.toLocaleString()}
+            </span>
           </div>
         </div>
       </div>

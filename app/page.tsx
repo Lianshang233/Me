@@ -7,19 +7,22 @@ import OpsSection from "./components/OpsSection"
 import Footer from "./components/Footer"
 import Navigation from "./components/Navigation"
 import LoadingSpinner from "./components/LoadingSpinner"
+import VisitorGate from "./components/VisitorGate"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black overflow-hidden">
-      <Navigation />
-      <Suspense fallback={<LoadingSpinner />}>
-        <Hero />
-        <Features />
-        <AISection />
-        <VercelSection />
-        <OpsSection />
-        <Footer />
-      </Suspense>
-    </main>
+    <VisitorGate>
+      <main className="min-h-screen bg-white text-black overflow-hidden">
+        <Navigation />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Hero />
+          <Features />
+          <AISection />
+          <VercelSection />
+          <OpsSection />
+          <Footer />
+        </Suspense>
+      </main>
+    </VisitorGate>
   )
 }
