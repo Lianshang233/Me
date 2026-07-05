@@ -8,6 +8,10 @@ const nextConfig = {
   output: 'export',
   basePath: repoBasePath,
   assetPrefix: repoBasePath || undefined,
+  // 暴露给客户端代码，便于在 JS 里手动拼接静态资源路径（如 canvas 里 new Image().src）
+  env: {
+    NEXT_PUBLIC_BASE_PATH: repoBasePath,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

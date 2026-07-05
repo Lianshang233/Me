@@ -220,7 +220,7 @@ export default function ParticleLogo() {
         raf.current = requestAnimationFrame(render)
       }
     }
-    imgRef.src = "/logo-mark.png"
+    imgRef.src = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo-mark.png`
 
     const onMove = (ev: MouseEvent) => {
       mnx = (ev.clientX / window.innerWidth) * 2 - 1
