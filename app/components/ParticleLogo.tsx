@@ -279,7 +279,14 @@ export default function ParticleLogo() {
     }
 
     let resizeTimer = 0
+    let lastW = window.innerWidth
     const onResize = () => {
+      const w = window.innerWidth
+      // iOS Safari 滚动时地址栏收起/展开会改变视口高度并触发 resize。
+      // 若宽度未变（即仅高度变化 = 地址栏动作），跳过重建，
+      // 避免惯性滚动期间反复重采样粒子导致卡顿——这是移动端滚动卡顿的根因。
+      if (isMobile() && w === lastW) return
+      lastW = w
       window.clearTimeout(resizeTimer)
       resizeTimer = window.setTimeout(resize, 150)
     }
