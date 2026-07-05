@@ -16,7 +16,7 @@ export default function Hero() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced) return
 
-    const THRESHOLD = 700 // 需要累积的滚动量，越大越"重"
+    const THRESHOLD = 420 // 需要累积的滚动量，越大越"重"
     let intent = 0
     let released = false // 是否已吸附进入下一屏
     let locked = false // 吸附动画进行中，锁定输入
