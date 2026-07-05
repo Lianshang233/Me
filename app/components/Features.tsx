@@ -27,7 +27,7 @@ export default function Features() {
       code: "GD_001",
       color: "#3a3128",
       image:
-        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/eSb7/2480X3508/%E7%AE%80%E5%8E%86%281%29.png",
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/eSb7/2480X3508/%E7%AE%80%E5%8E%86%281%29.png/webp",
       description: "复古做旧风格个人简介版面设计，撕纸拼贴与半调质感结合，平面排版作品。",
     },
     {
@@ -67,13 +67,13 @@ export default function Features() {
       description: "线下演出活动《韵临律界 II》宣传主视觉海报设计，科技感排版与人物立绘结合。",
     },
     {
-      title: "Mars Ashes 荧临余烬",
+      title: "Orzmic Sphalerite",
       category: "视觉",
       code: "VS_001",
       color: "#0b0f14",
       image:
-        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/niB9/1920X818/%E5%90%88%E6%88%90_1_00000.png",
-      description: "赛博朋克风格场景合成，青色霓虹光效与数据流氛围营造，主视觉设计。",
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/Lp8a/1920X1080/59a010651df870c83bb103acc13f6542441010995.png",
+      description: "音乐游戏 Orzmic《Sphalerite》主题场景合成，晶体折射与霓虹光效结合，主视觉设计。",
     },
     {
       title: "LIANSHANG 钢琴",
