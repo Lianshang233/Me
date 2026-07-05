@@ -39,8 +39,9 @@ export default function ParticleLogo() {
     if (!ctx) return
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const isMobile = () => window.innerWidth < 768
+    // 移动端将 DPR 限制到 1.5，显著降低每帧填充像素量，避免滚动卡顿
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile() ? 1.5 : 2)
 
     let width = 0
     let height = 0
@@ -96,7 +97,7 @@ export default function ParticleLogo() {
 
     const buildParticles = () => {
       const targets = buildTargets()
-      const MAX = isMobile() ? 1500 : 2800
+      const MAX = isMobile() ? 900 : 2800
       // 若点过多则随机降采样
       let selected = targets
       if (targets.length > MAX) {
@@ -256,5 +257,5 @@ export default function ParticleLogo() {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
+    return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full pointer-events-none" aria-hidden="true" />
 }
