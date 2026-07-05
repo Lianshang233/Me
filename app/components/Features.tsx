@@ -171,11 +171,13 @@ export default function Features() {
                 style={{ backgroundColor: item.color }}
               >
                 {item.image ? (
-                  <img
-                    src={item.image || "/placeholder.svg"}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+                      <img
+                        src={item.image || "/placeholder.svg"}
+                        alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                 ) : (
                   <span className="font-mono text-white/40 text-sm tracking-widest">{item.code}</span>
                 )}

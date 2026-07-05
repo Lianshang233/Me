@@ -250,7 +250,8 @@ export default function ParticleLogo() {
     const onMove = (ev: MouseEvent) => {
       mnx = (ev.clientX / window.innerWidth) * 2 - 1
       mny = (ev.clientY / window.innerHeight) * 2 - 1
-      // 转换到 canvas 局部坐标用于吸附
+      // 即时读取 canvas 位置（仅桌面 mousemove 触发，不在滚动时强制重排）
+      rect = canvas.getBoundingClientRect()
       mouseX = ev.clientX - rect.left
       mouseY = ev.clientY - rect.top
       // 仅当光标位于 canvas 区域内时启用吸附
@@ -267,10 +268,6 @@ export default function ParticleLogo() {
       resizeTimer = window.setTimeout(resize, 150)
     }
 
-    const onScroll = () => {
-      rect = canvas.getBoundingClientRect()
-    }
-
     const io = new IntersectionObserver(
       (entries) => {
         visible = entries[0].isIntersecting
@@ -285,7 +282,6 @@ export default function ParticleLogo() {
     window.addEventListener("mousemove", onMove, { passive: true })
     window.addEventListener("mouseleave", onLeave)
     window.addEventListener("resize", onResize)
-    window.addEventListener("scroll", onScroll, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf.current)
@@ -294,7 +290,6 @@ export default function ParticleLogo() {
       window.removeEventListener("mousemove", onMove)
       window.removeEventListener("mouseleave", onLeave)
       window.removeEventListener("resize", onResize)
-      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
