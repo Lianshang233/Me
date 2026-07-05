@@ -9,12 +9,15 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
 export default function Hero() {
   const [progress, setProgress] = useState(0)
   const tiltRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   // 主页首屏：阻尼滚动 —— 在顶部时劫持滚轮/触摸，把滚动意图累积为带阻力的进度，
   // 越过阈值后自动吸附滑入下一屏（Features）。其余区域保持原生滚动，此效果仅首屏有。
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced) return
+    const section = sectionRef.current
+    if (!section) return
 
     const THRESHOLD = 420 // 需要累积的滚动量，越大越"重"
     let intent = 0
@@ -48,52 +51,56 @@ export default function Hero() {
       setP(0)
     }
 
-    const push = (delta: number, prevent: () => void) => {
-      if (locked) {
-        prevent()
-        return
+    // 累积滚动意图（仅在顶部且未释放时生效），返回是否需要阻止默认滚动
+    const accumulate = (delta: number): boolean => {
+      if (locked) return true
+      if (released || !atTop()) return false // 已进入下一屏或已离开顶部：走原生滚动
+      if (delta > 0) {
+        intent += delta
+        const p = clamp(intent / THRESHOLD, 0, 1)
+        setP(p)
+        if (p >= 1) snap()
+        return true
       }
-      if (!released && atTop()) {
-        if (delta > 0) {
-          prevent()
-          intent += delta
-          const p = clamp(intent / THRESHOLD, 0, 1)
-          setP(p)
-          if (p >= 1) snap()
-        } else if (delta < 0) {
-          // 顶部反向：回退阻尼进度
-          intent = Math.max(0, intent + delta)
-          setP(clamp(intent / THRESHOLD, 0, 1))
-        }
-      } else if (released && atTop() && delta < 0) {
-        // 从下方回到顶部，重新装填首屏效果
-        rearm()
+      if (delta < 0) {
+        // 顶部反向：回退阻尼进度（此时本就在顶部，无原生滚动可做）
+        intent = Math.max(0, intent + delta)
+        setP(clamp(intent / THRESHOLD, 0, 1))
       }
+      return false
     }
 
-    const onWheel = (e: WheelEvent) => push(e.deltaY, () => e.preventDefault())
+    // 桌面滚轮（绑在 window）
+    const onWheel = (e: WheelEvent) => {
+      if (accumulate(e.deltaY)) e.preventDefault()
+    }
+
+    // 移动端触摸：仅绑在 Hero 元素上，避免 window 级非被动监听拖垮整页滚动线程
     const onTouchStart = (e: TouchEvent) => {
       touchY = e.touches[0].clientY
     }
     const onTouchMove = (e: TouchEvent) => {
+      // 已释放或已离开顶部：完全不干预，交给浏览器的线程化原生滚动
+      if (!locked && (released || !atTop())) return
       const y = e.touches[0].clientY
       const dy = (touchY - y) * 2.2 // 手指上滑（内容下滑）为正，放大触摸位移
       touchY = y
-      push(dy, () => e.preventDefault())
+      if (accumulate(dy)) e.preventDefault()
     }
+
     const onScroll = () => {
       if (released && atTop() && !locked) rearm()
     }
 
     window.addEventListener("wheel", onWheel, { passive: false })
-    window.addEventListener("touchstart", onTouchStart, { passive: true })
-    window.addEventListener("touchmove", onTouchMove, { passive: false })
+    section.addEventListener("touchstart", onTouchStart, { passive: true })
+    section.addEventListener("touchmove", onTouchMove, { passive: false })
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener("wheel", onWheel)
-      window.removeEventListener("touchstart", onTouchStart)
-      window.removeEventListener("touchmove", onTouchMove)
+      section.removeEventListener("touchstart", onTouchStart)
+      section.removeEventListener("touchmove", onTouchMove)
       window.removeEventListener("scroll", onScroll)
     }
   }, [])
@@ -133,6 +140,7 @@ export default function Hero() {
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
