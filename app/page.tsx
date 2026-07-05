@@ -4,6 +4,7 @@ import Features from "./components/Features"
 import AISection from "./components/AISection"
 import VercelSection from "./components/VercelSection"
 import OpsSection from "./components/OpsSection"
+import ExperienceSection from "./components/ExperienceSection"
 import Footer from "./components/Footer"
 import Navigation from "./components/Navigation"
 import LoadingSpinner from "./components/LoadingSpinner"
@@ -23,6 +24,7 @@ export default function Home() {
           <AISection />
           <VercelSection />
           <OpsSection />
+          <ExperienceSection />
           <MarqueeBand />
           <Footer />
         </Suspense>

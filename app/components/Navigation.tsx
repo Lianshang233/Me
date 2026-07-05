@@ -20,6 +20,7 @@ export default function Navigation() {
     { id: "ai", label: "游戏项目" },
     { id: "vercel", label: "视频" },
     { id: "ops", label: "运维" },
+    { id: "experience", label: "项目经历" },
     { id: "contact", label: "联系" },
   ]
 

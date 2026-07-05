@@ -28,7 +28,7 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <div className="font-mono text-xs tracking-[0.4em] text-gray-400 mb-5">05 — CONTACT</div>
+          <div className="font-mono text-xs tracking-[0.4em] text-gray-400 mb-5">06 — CONTACT</div>
           <h2 className="text-4xl sm:text-5xl font-light tracking-wider mb-6 font-mono">联系</h2>
           <div className="w-16 h-px bg-black mx-auto mb-8 animate-lineExpand"></div>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">欢迎洽谈合作、约稿与项目委托</p>
