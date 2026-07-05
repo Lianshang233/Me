@@ -287,7 +287,7 @@ export default function ParticleLogo() {
     const io = new IntersectionObserver(
       (entries) => {
         visible = entries[0].isIntersecting
-        if (visible && !prefersReduced && !raf.current) {
+        if (visible && !scrolling && !prefersReduced && !raf.current) {
           raf.current = requestAnimationFrame(render)
         }
       },
@@ -295,17 +295,39 @@ export default function ParticleLogo() {
     )
     io.observe(canvas)
 
+    // 关键：滚动期间彻底暂停粒子绘制，把 canvas 移出滚动关键路径，
+    // 滚动停止后再恢复。这样上滑进入 Hero 时不会与滚动合成争抢主/合成线程。
+    let scrolling = false
+    let scrollTimer = 0
+    const onScrollPause = () => {
+      if (!scrolling) {
+        scrolling = true
+        cancelAnimationFrame(raf.current)
+        raf.current = 0
+      }
+      window.clearTimeout(scrollTimer)
+      scrollTimer = window.setTimeout(() => {
+        scrolling = false
+        if (visible && !prefersReduced && !raf.current) {
+          raf.current = requestAnimationFrame(render)
+        }
+      }, 160)
+    }
+
     window.addEventListener("mousemove", onMove, { passive: true })
     window.addEventListener("mouseleave", onLeave)
     window.addEventListener("resize", onResize)
+    window.addEventListener("scroll", onScrollPause, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf.current)
       io.disconnect()
       window.clearTimeout(resizeTimer)
+      window.clearTimeout(scrollTimer)
       window.removeEventListener("mousemove", onMove)
       window.removeEventListener("mouseleave", onLeave)
       window.removeEventListener("resize", onResize)
+      window.removeEventListener("scroll", onScrollPause)
     }
   }, [])
 

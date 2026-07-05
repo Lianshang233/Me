@@ -21,6 +21,8 @@ export default function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null)
   const [visible, setVisible] = useState(false)
+  // 动画完成后释放合成层，避免几十个元素长期持有 will-change/filter 拖累移动端滚动
+  const [done, setDone] = useState(false)
 
   useEffect(() => {
     const el = ref.current
@@ -47,6 +49,12 @@ export default function Reveal({
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (!visible) return
+    const t = setTimeout(() => setDone(true), 1000)
+    return () => clearTimeout(t)
+  }, [visible])
+
   const offset = {
     up: "translateY(30px)",
     down: "translateY(-30px)",
@@ -67,10 +75,10 @@ export default function Reveal({
         transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         transitionDelay: `${delay}ms`,
         opacity: visible ? 1 : 0,
-        transform: visible ? "translate3d(0,0,0) scale(1)" : `${offset} translateZ(0) scale(0.97)`,
-        filter: visible ? "blur(0px)" : "blur(6px)",
-        // 提升到稳定的 GPU 合成层，避免 blur 每帧在主线程离散重绘导致的"分级跳变"
-        willChange: "opacity, transform, filter",
+        transform: done ? "none" : visible ? "translate3d(0,0,0) scale(1)" : `${offset} translateZ(0) scale(0.97)`,
+        filter: done ? "none" : visible ? "blur(0px)" : "blur(6px)",
+        // 动画期间提升到稳定 GPU 合成层避免 blur 分级跳变；完成后释放，避免长期占用图层
+        willChange: done ? "auto" : "opacity, transform, filter",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
       }}
