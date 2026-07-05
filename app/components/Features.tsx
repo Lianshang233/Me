@@ -238,11 +238,12 @@ export default function Features() {
             </div>
 
             <div className="flex flex-col md:flex-row min-h-0 flex-1">
-              <div className="flex items-center justify-center bg-black/5 p-4 md:w-1/2 md:border-r md:border-black shrink-0">
+              {/* 固定高度的图片区：弹窗尺寸在图片加载前后保持一致，杜绝加载时跳变 */}
+              <div className="bg-black/5 p-4 md:w-1/2 md:border-r md:border-black shrink-0 h-[38vh] md:h-[70vh]">
                 <img
                   src={selected.image || "/placeholder.svg"}
                   alt={selected.title}
-                  className="block w-auto h-auto max-w-full max-h-[38vh] md:max-h-[74vh] object-contain"
+                  className="block w-full h-full object-contain"
                 />
               </div>
 
