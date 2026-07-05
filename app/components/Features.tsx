@@ -67,15 +67,6 @@ export default function Features() {
       description: "线下演出活动《韵临律界 II》宣传主视觉海报设计，科技感排版与人物立绘结合。",
     },
     {
-      title: "Orzmic Sphalerite",
-      category: "视觉",
-      code: "VS_001",
-      color: "#0b0f14",
-      image:
-        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/Lp8a/1920X1080/59a010651df870c83bb103acc13f6542441010995.png",
-      description: "音乐游戏 Orzmic《Sphalerite》主题场景合成，晶体折射与霓虹光效结合，主视觉设计。",
-    },
-    {
       title: "LIANSHANG 钢琴",
       category: "视觉",
       code: "VS_002",
@@ -92,6 +83,15 @@ export default function Features() {
       image:
         "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/7YVW/3000X3000/Replace.png",
       description: "故障艺术专辑封面设计，等距结构与棱镜光效结合噪点质感（CHEN ING MUSIC）。",
+    },
+    {
+      title: "Orzmic Sphalerite",
+      category: "视觉",
+      code: "VS_004",
+      color: "#0b0f14",
+      image:
+        "https://img.pagehost.cn/autoupload/Z-L8Ui8QwfyR3HS4UBOv_BFKraXKJIJ9E6aPixPcCpg/20260705/Lp8a/1920X1080/59a010651df870c83bb103acc13f6542441010995.png",
+      description: "音乐游戏 Orzmic《Sphalerite》主题场景合成，晶体折射与霓虹光效结合，主视觉设计。",
     },
   ]
 
