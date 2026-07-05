@@ -8,9 +8,6 @@ export default function OpsSection() {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
-    // 移动端不启用滚动数字定时器：每 1.2s 的 setState 会重渲染整个区块，
-    // 若恰逢惯性滚动会造成掉帧
-    if (window.matchMedia("(pointer: coarse)").matches) return
     const timer = setInterval(() => setTick((t) => (t + 1) % 1000), 1200)
     return () => clearInterval(timer)
   }, [])
@@ -30,21 +27,29 @@ export default function OpsSection() {
 
   return (
     <section id="ops" className="py-32 bg-black text-white relative overflow-hidden">
-      {/* animated grid backdrop */}
-      <div className="absolute inset-0 opacity-[0.07]">
+      {/* animated grid backdrop（40px 周期与 gridDrift 平移量一致，无缝循环） */}
+      <div className="absolute inset-0 opacity-[0.07] overflow-hidden">
         <div
-          className="absolute inset-0 animate-gridDrift"
+          className="absolute animate-gridDrift"
           style={{
             backgroundImage:
               "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
       {/* rotating glow */}
       <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full opacity-[0.08] animate-spinSlow pointer-events-none bg-[conic-gradient(from_0deg,transparent,#fff,transparent)]" />
-      {/* scanning line */}
-      <div className="absolute left-0 right-0 h-px bg-white/30 animate-scan pointer-events-none" />
+      {/* scanning line：全高图层顶部 1px 渐变线，transform 平移扫过（纯合成器） */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-x-0 top-0 h-full animate-scan"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 1px, transparent 1px)",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-20">

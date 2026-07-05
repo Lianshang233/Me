@@ -212,10 +212,10 @@ export default function Hero() {
       id="hero"
       className="relative h-[100svh] min-h-[560px] flex items-center justify-center bg-white overflow-hidden"
     >
-      {/* 背景网格（网格漂移动画仅桌面，减少移动端常驻合成负担） */}
-      <div className="absolute inset-0 opacity-[0.04] sm:animate-gridDrift pointer-events-none">
+      {/* 背景网格（transform 平移漂移，纯合成器，移动端安全） */}
+      <div className="absolute inset-0 opacity-[0.04] overflow-hidden pointer-events-none">
         <div
-          className="h-full w-full"
+          className="absolute animate-gridDrift"
           style={{
             backgroundImage: `
             linear-gradient(to right, #000 1px, transparent 1px),
@@ -235,8 +235,8 @@ export default function Hero() {
         }}
       />
 
-      {/* 漂浮装饰（含无限动画，移动端隐藏以消除常驻合成层导致的滚动卡顿） */}
-      <div className="absolute inset-0 pointer-events-none hidden sm:block">
+      {/* 漂浮装饰（pulse/bounce/ping 均为 transform/opacity 动画，合成器直通） */}
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-4 h-4 border border-black opacity-20 rotate-45 animate-pulse"></div>
         <div className="absolute bottom-32 right-32 w-6 h-6 border border-black opacity-15 animate-bounce"></div>
         <div className="absolute top-1/3 right-20 w-2 h-2 bg-black opacity-30 animate-ping"></div>
