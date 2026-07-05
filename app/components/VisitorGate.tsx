@@ -9,6 +9,8 @@ const GET_URL = `https://api.counterapi.dev/v1/${COUNTER_NS}/${COUNTER_KEY}/`
 const UP_URL = `https://api.counterapi.dev/v1/${COUNTER_NS}/${COUNTER_KEY}/up`
 // 同一会话内已同意则不再弹窗、不重复计数
 const SESSION_KEY = "ls_visit_consent"
+// 展示基数：计入站点上线前未被统计的历史访问
+const DISPLAY_OFFSET = 1024
 
 type Status = "pending" | "agreed" | "declined"
 
@@ -26,7 +28,7 @@ export function useVisitor() {
 function parseCount(data: unknown): number | null {
   if (data && typeof data === "object" && "count" in data) {
     const c = (data as { count: unknown }).count
-    if (typeof c === "number") return c
+    if (typeof c === "number") return c + DISPLAY_OFFSET
   }
   return null
 }
