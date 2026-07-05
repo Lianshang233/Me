@@ -58,6 +58,15 @@ export default function ParticleLogo() {
     let px = 0
     let py = 0
 
+    // 鼠标在 canvas 局部坐标下的位置（用于粒子吸附）及其平滑值、强度
+    let mouseX = 0
+    let mouseY = 0
+    let smx = 0
+    let smy = 0
+    let mouseStrength = 0 // 0..1，鼠标离开时衰减
+    let targetStrength = 0
+    let rect = canvas.getBoundingClientRect()
+
     // 由 SVG 生成目标点
     const buildTargets = (): Array<{ x: number; y: number }> => {
       // 宽版标志：以宽度为主导等比缩放，并限制高度不超过视口
@@ -68,7 +77,7 @@ export default function ParticleLogo() {
         logoH = maxH
         logoW = logoH * LOGO_ASPECT
       }
-      const gap = isMobile() ? 4 : 3
+      const gap = isMobile() ? 3 : 2
       const off = document.createElement("canvas")
       off.width = Math.round(logoW)
       off.height = Math.round(logoH)
@@ -97,7 +106,7 @@ export default function ParticleLogo() {
 
     const buildParticles = () => {
       const targets = buildTargets()
-      const MAX = isMobile() ? 900 : 2800
+      const MAX = isMobile() ? 1400 : 4200
       // 若点过多则随机降采样
       let selected = targets
       if (targets.length > MAX) {
@@ -116,7 +125,7 @@ export default function ParticleLogo() {
           ty: t.y,
           sx: cx + Math.cos(ang) * dist,
           sy: cy + Math.sin(ang) * dist,
-          r: 0.7 + Math.random() * 1.5,
+          r: 0.5 + Math.random() * 1.0,
           a: 0.16 + Math.random() * 0.22,
           delay: Math.random() * 500,
           dur: 900 + Math.random() * 800,
@@ -139,6 +148,7 @@ export default function ParticleLogo() {
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      rect = canvas.getBoundingClientRect()
       if (imgLoaded) buildParticles()
     }
 
@@ -153,6 +163,11 @@ export default function ParticleLogo() {
       // 平滑跟随鼠标
       px += (mnx - px) * 0.06
       py += (mny - py) * 0.06
+
+      // 平滑鼠标局部坐标与吸附强度
+      smx += (mouseX - smx) * 0.12
+      smy += (mouseY - smy) * 0.12
+      mouseStrength += (targetStrength - mouseStrength) * 0.06
 
       ctx.clearRect(0, 0, width, height)
 
@@ -189,8 +204,17 @@ export default function ParticleLogo() {
         const parX = px * 14 * p.depth * drift
         const parY = py * 14 * p.depth * drift
 
-        const x = baseX + brX + idleX + parX
-        const y = baseY + brY + waveY + idleY + parY
+        // 5) 鼠标吸附：粒子被光标轻微拉近，近距离更强（二次衰减）
+        const adx = smx - baseX
+        const ady = smy - baseY
+        const ad = Math.hypot(adx, ady) || 1
+        const pull = Math.max(0, 1 - ad / 170)
+        const attractStr = pull * pull * 22 * p.depth * drift * mouseStrength
+        const atX = (adx / ad) * attractStr
+        const atY = (ady / ad) * attractStr
+
+        const x = baseX + brX + idleX + parX + atX
+        const y = baseY + brY + waveY + idleY + parY + atY
 
         // 星光闪烁：叠加波峰时更亮
         const twinkle = 0.55 + 0.45 * Math.sin(now * 0.0022 * p.tws + p.twk)
@@ -226,12 +250,25 @@ export default function ParticleLogo() {
     const onMove = (ev: MouseEvent) => {
       mnx = (ev.clientX / window.innerWidth) * 2 - 1
       mny = (ev.clientY / window.innerHeight) * 2 - 1
+      // 转换到 canvas 局部坐标用于吸附
+      mouseX = ev.clientX - rect.left
+      mouseY = ev.clientY - rect.top
+      // 仅当光标位于 canvas 区域内时启用吸附
+      targetStrength = mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height ? 1 : 0
+    }
+
+    const onLeave = () => {
+      targetStrength = 0
     }
 
     let resizeTimer = 0
     const onResize = () => {
       window.clearTimeout(resizeTimer)
       resizeTimer = window.setTimeout(resize, 150)
+    }
+
+    const onScroll = () => {
+      rect = canvas.getBoundingClientRect()
     }
 
     const io = new IntersectionObserver(
@@ -246,14 +283,18 @@ export default function ParticleLogo() {
     io.observe(canvas)
 
     window.addEventListener("mousemove", onMove, { passive: true })
+    window.addEventListener("mouseleave", onLeave)
     window.addEventListener("resize", onResize)
+    window.addEventListener("scroll", onScroll, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf.current)
       io.disconnect()
       window.clearTimeout(resizeTimer)
       window.removeEventListener("mousemove", onMove)
+      window.removeEventListener("mouseleave", onLeave)
       window.removeEventListener("resize", onResize)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
